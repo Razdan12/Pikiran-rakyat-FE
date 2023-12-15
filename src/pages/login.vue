@@ -1,0 +1,122 @@
+<template>
+  <div class="q-pa-md bg-image">
+    <q-page class="col .self-center">
+      <br><br> <br><br><br><br>
+      <div class="row">
+        <div class="col-2"></div>
+
+        <div class="col-8">
+
+          <q-card style="width: 100%; height: 67vh;">
+            <q-card-section>
+
+              <div class="row">
+                <div class="col-6 text-center q-my-sm" style="height: 52vh;">
+                  <br>
+                  <p class="text-center text-blue-6 q-ml-xl text-bold" style="font-size: x-large;">SALES INFORMATION SYSTEM <br>
+                     <span class="text-blue-6" style="font-size: large;">PIKIRAN RAKYAT MEDIA NETWORK</span> </p>
+                     <div class="text-center q-ml-xl">
+                      <q-img class="q-my-xl" src="../assets/lock.png" style="width: 20%;" />
+
+                     </div>
+
+                  <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-10">
+                      <q-form @submit.prevent="loginUser" class="tw-w-full flex justify-center">
+                          <q-input v-model="email" class="text-center " bottom-slots filled type="text"
+                            label="Username/Email" style="width: 70%">
+                            <template v-slot:prepend>
+                              <q-icon name="email" />
+                            </template>
+                          </q-input>
+
+                          <q-input v-model="password" class="tw-w-full" bottom-slots filled type="password"
+                            label="Password" style="width: 70%">
+                            <template v-slot:prepend>
+                              <q-icon name="key" />
+                            </template>
+                          </q-input>
+                          <q-btn type="submit" color="blue-grey-6" glossy label="Login" style="width: 40%" />
+                        </q-form>
+                    </div>
+                    <div class="col-1"></div>
+                  </div>
+
+                </div>
+                <div class="col-6 text-center">
+                  <q-img class="full-width" src="../assets/media.jpg" style="width: 100%;" flat />
+                </div>
+                <!-- <div class="col-1"></div> -->
+              </div>
+
+            </q-card-section>
+          </q-card>
+        </div>
+        <div class="col-2"></div>
+      </div>
+
+
+    </q-page>
+  </div>
+</template>
+<script>
+import Swal from 'sweetalert2';
+
+export default {
+
+  methods: {
+    async loginUser() {
+      const loginData = {
+        email: this.email,
+        password: this.password,
+      };
+      try {
+        const response = await this.$api.post("/user/login", loginData);
+        const token = response.data.accessToken
+        const name = response.data.name
+        const email = response.data.email
+        const role = response.data.role
+        sessionStorage.setItem("token", token)
+        sessionStorage.setItem("name", name )
+        sessionStorage.setItem("email", email )
+        sessionStorage.setItem("role", role )
+        token ? this.$router.push("/customer") : ""
+
+    
+      } catch (error) {
+       
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Email atau Password salah!",
+
+        });
+      }
+    },
+  },
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+}
+</script>
+
+
+<style>
+.bg-image {
+  background-image: url('../assets/bg.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+.bg-image2 {
+  background-image: url('.../assets/media.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+
+}
+</style>
