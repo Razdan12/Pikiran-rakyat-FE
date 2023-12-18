@@ -22,57 +22,23 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td class="text-left">1</td>
-                      <td class="text-right">Curaweda</td>
-                      <td class="text-right">16 November 2023</td>
-                      <td class="text-right">291/Q-CRW/PRMN/VIII/2023</td>
-                      <td class="text-right">November 2023 - Desember 2023</td>
-                      <td class="text-right">291/Q-CRW/PRMN/VIII/2023 </td>
+                    <tr v-for="(item, index) in orderList" :key="item.idOrder">
+                      <td class="text-left">{{ index + 1 }}</td>
+                      <td class="text-right">{{ item.client_name }}</td>
+                      <td class="text-right">{{ item.tgl_order }}</td>
+                      <td class="text-right">{{ item.no_quo }}</td>
+                      <td class="text-right">{{ item.period_start }} - {{ item.period_end }}</td>
+                      <td class="text-right">{{ item.media_order }}</td>
                       <td class="text-right">
-                        <q-btn color="secondary" label="MO" to="/mo" />
+                        <q-btn color="secondary" label="MO" to="/mo" @click="clickBtn(item.idOrder)" />
                       </td>
-
-                    </tr>
-                    <tr>
-                      <td class="text-left">1</td>
-                      <td class="text-right">Locus</td>
-                      <td class="text-right">16 November 2023</td>
-                      <td class="text-right">292/Q-LCS/PRMN/VIII/2023</td>
-                      <td class="text-right">November 2023 - Desember 2023</td>
-                      <td class="text-right">291/MO-LCS/PRMN/VIII/2023 </td>
-                      <td class="text-right">
-                        <q-btn color="secondary" label="MO" to="/mo" />
-                      </td>
-
-                    </tr>
-                    <tr>
-                      <td class="text-left">3</td>
-                      <td class="text-right">Curaweda</td>
-                      <td class="text-right">17 November 2023</td>
-                      <td class="text-right">293/Q-CRW/PRMN/VIII/2023</td>
-                      <td class="text-right">November 2023 - Desember 2023</td>
-                      <td class="text-right">291/Q-CRW/PRMN/VIII/2023 </td>
-                      <td class="text-right">
-                        <q-btn color="secondary" label="MO" to="/mo" />
-                      </td>
-
-                    </tr>
-                    <tr>
-                      <td class="text-left">4</td>
-                      <td class="text-right">Nabati</td>
-                      <td class="text-right">16 November 2023</td>
-                      <td class="text-right">294/Q-NBT/PRMN/VIII/2023</td>
-                      <td class="text-right">November 2023 - Desember 2023</td>
-                      <td class="text-right">291/MO-NBT/PRMN/VIII/2023 </td>
-                      <td class="text-right">
-                        <q-btn color="secondary" label="MO" to="/mo" />
-                      </td>
-
                     </tr>
 
                   </tbody>
                 </q-markup-table>
+                <div class="q-pa-lg flex flex-center">
+                  <q-pagination  v-model="current" :max="totalPage" input />
+                </div>
               </div>
 
 
@@ -87,3 +53,55 @@
     </div>
   </q-page>
 </template>
+
+
+<script>
+import { ref } from 'vue';
+
+
+export default {
+
+  setup() {
+    return {
+      orderList: ref([]),
+      current: ref(1),
+      totalPage: ref(1)
+    }
+  },
+
+  mounted() {
+    this.getMoData()
+  },
+  watch: {
+    current(newVal) {
+      this.getMoData()
+    },
+
+  },
+  methods: {
+    async getMoData() {
+      try {
+        const response = await this.$api.get(`quotation/mo/all?pageNumber=${this.current}`, {
+          headers: {
+            'Authorization': `Bearer ${this.token}`
+          }
+        });
+
+        this.orderList = response.data.data
+        this.current = response.data.pageNumber
+        this.totalPage = response.data.totalPage
+
+      } catch (error) {
+        console.log(error);
+      }
+
+    },
+
+    clickBtn(idOrder) {
+      sessionStorage.setItem('idMo', idOrder)
+    }
+  }
+
+}
+
+</script>

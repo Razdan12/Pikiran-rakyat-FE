@@ -24,47 +24,66 @@
                             CAMPAIGN PERIOD
                           </div>
                           <div class="q-mt-md">
-                            AGENCY
+                            {{ cust_type }}
                           </div>
-                          <div class="q-mt-md">
-                            BRAND
-                          </div>
+
                         </div>
                         <div class="col-8">
                           <div>
-                            PRMN
+                           : {{ camp_name }}
                           </div>
                           <div class="q-mt-md">
-                            Regular
+                           : {{ camp_type }}
                           </div>
                           <div class="q-mt-md">
-                            Agustus-September 2023
+                           : {{ camp_period }}
                           </div>
                           <div class="q-mt-md">
-                            -
+                           : {{ cust_name }}
                           </div>
-                          <div class="q-mt-md">
-                            PKB
-                          </div>
+
                         </div>
                       </div>
                     </div>
 
                     <div class="col-md-6">
-                      <div>
-                        PACKAGE NUMBER :
-                      </div>
-                      <div class="q-mt-md">
-                        PERIOD PACKAGE :
-                      </div>
-                      <div class="q-mt-md">
-                        PIC CLIENT :
-                      </div>
-                      <div class="q-mt-md">
-                        PIC PIC CONTACT NUMBER :
+                      <div class="row">
+                        <div class="col-4">
+                          <div>
+                            PACKAGE NUMBER
+                          </div>
+                          <div class="q-mt-md">
+                            PERIOD PACKAGE
+                          </div>
+
+                          <div class="q-mt-md">
+                            PIC CLIENT
+                          </div>
+                          <div class="q-mt-md">
+                            PIC CONTACT NUMBER
+                          </div>
+                        </div>
+
+                        <div class="col-8">
+                          <div>
+                            : 1234314
+                          </div>
+                          <div class="q-mt-md">
+                            : {{ camp_period }}
+                          </div>
+
+                          <div class="q-mt-md">
+                            : {{ pic_name }}
+                          </div>
+                          <div class="q-mt-md">
+                            : {{ pic_contact }}
+                          </div>
+                        </div>
                       </div>
                     </div>
+
                   </div>
+
                   <div class=" q-mt-xl text-center">
                     <span style="font-size: xx-large;">
                       Pikiran Rakyat Media Network (PRMN)
@@ -74,6 +93,7 @@
                     </span>
 
                     <q-table class="q-mt-xl" :rows="rows" :columns="columns" row-key="name" hide-bottom dense />
+
                   </div>
                   <div class="row q-m-t-xl">
                     <div class="col-md-8">
@@ -136,43 +156,9 @@
 
                     </div>
                   </div>
-                  <div class="row q-mt-xl">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-8">
-                      <!-- <q-markup-table separator="cell" flat bordered>
-                        <thead class="bg-blue-grey-2">
-                          <tr>
-                            <th colspan="3" class="text-center">PRMN</th>
-                            <th rowspan="2" class="text-center">Client Approval</th>
-                          </tr>
-                          <tr>
-                            <th class="text-center">Request By</th>
-                            <th class="text-center">Confirmaed By</th>
-                            <th class="text-center">acknowledge By</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr style="height: 20vh;">
-                            <td class="text-left"></td>
-                            <td class="text-right"></td>
-                            <td class="text-right"></td>
-                            <td class="text-right"></td>
 
-                          </tr>
-                          <tr>
-                            <td class="text-left"></td>
-                            <td class="text-right"></td>
-                            <td class="text-right"></td>
-                            <td class="text-right"></td>
-                          </tr>
-
-                        </tbody>
-                      </q-markup-table> -->
-                    </div>
-                    <div class="col-md-1"></div>
-                  </div>
-                  <div class="text-right q-mt-md" >
-                    <q-btn class="q-mr-sm bg-blue" color="gray-2" icon="mail"  />
+                  <div class="text-right q-mt-md">
+                    <q-btn class="q-mr-sm bg-blue" color="gray-2" icon="mail" />
                     <q-btn class="q-mr-sm bg-blue" color="primary" icon="print" />
                     <q-btn class=" bg-blue" color="primary" icon="list" label="Next" to="/molist" />
                   </div>
@@ -190,6 +176,7 @@
 </template>
 
 <script>
+import { ref } from 'vue'
 const columns = [
   {
     name: 'no',
@@ -264,7 +251,41 @@ export default {
     return {
       columns,
       rows,
+      camp_name: ref('name'),
+      camp_type: ref('type'),
+      camp_period: ref('period'),
+      cust_type: ref('cust_name'),
+      cust_name: ref('name'),
+      pic_name: ref('pic'),
+      pic_contact: ref('contact'),
     }
+  },
+  mounted() {
+    this.getQuoData()
+  },
+  methods : {
+    async getQuoData() {
+      const id = localStorage.getItem("idOrder")
+      try {
+        const response = await this.$api.get(`/quotation/${id}`, {
+          headers: {
+            'Authorization': `Bearer ${this.token}`
+          }
+        });
+        console.log(response);
+        this.camp_name = response.data.camp_name
+        this.camp_type = response.data.camp_type
+        this.camp_period = `${response.data.period_start} - ${response.data.period_end}`
+        this.cust_type = response.data.cust_type
+        this.cust_name = response.data.cust_name
+        this.pic_name = response.data.pic_name
+        this.pic_contact = response.data.pic_contact
+
+      } catch (error) {
+        console.log(error);
+      }
+
+    },
   }
 }
 </script>

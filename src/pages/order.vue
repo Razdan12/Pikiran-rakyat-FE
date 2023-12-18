@@ -66,6 +66,7 @@
                       </p>
                       <q-radio v-model="sales" val="Sales" label="Sales" />
                       <q-radio v-model="sales" val="Walkin" label="Walkin" />
+
                     </div>
                     <div class="row q-mx-md">
                       <div class="col-md-6">
@@ -74,7 +75,9 @@
                             <q-icon name="portrait" />
                             <span class="text-bold" style="font-size: medium;"> Campaign Name</span>
                           </p>
-                          <q-input class="q-my-md" dense outlined placeholder="Campaign Name" style="width: 90%;" />
+                          <q-input class="q-my-md" v-model="camp_name" dense outlined placeholder="Campaign Name"
+                            style="width: 90%;" />
+                         
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -88,7 +91,7 @@
                             <template v-slot:append>
                               <q-icon name="event" class="cursor-pointer">
                                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                                  <q-date v-model="date">
+                                  <q-date v-model="date" color="cyan">
                                     <div class="row items-center justify-end">
                                       <q-btn v-close-popup label="Close" color="primary" flat />
                                     </div>
@@ -97,6 +100,7 @@
                               </q-icon>
                             </template>
                           </q-input>
+                         
                         </div>
                       </div>
                     </div>
@@ -111,12 +115,13 @@
                             <q-checkbox class="text-light-blue-10" style="font-size: large;" v-model="prmn"
                               val="pikiran-rakyat.com" label="PikiranRakyat.com" keep-color color="light-blue-10" />
                           </div>
+                     
 
                         </div>
                         <div class="col-md-4">
                           <div>
                             <q-select outlined use-chips v-model="networklist" multiple :options="networkOption"
-                              label="Network" style="width: 300px;" />
+                              label="Network" style="width: 300px;"  />
 
                           </div>
 
@@ -139,12 +144,12 @@
                                 style="font-size: large;" />
                               <q-input class="q-mx-xl text-center" v-model.number="artikel_1" type="number" dense
                                 style="max-width:100px" :disable="!A1" placeholder="0" />
-                              
+
                               <q-checkbox class="ttext-light-blue-10" v-model="A2" checked-icon="task_alt"
                                 unchecked-icon="panorama_fish_eye" val="A1.2" label="Article & Content Network"
                                 style="font-size: large;" />
                               <q-input class="q-mx-xl text-center" v-model.number="artikel_2" type="number" dense
-                                style="max-width:100px" :disable="!A2" placeholder="0"/>
+                                style="max-width:100px" :disable="!A2" placeholder="0" />
                             </div>
                           </q-card-section>
                         </q-card>
@@ -197,7 +202,7 @@
                           <template v-slot:append>
                             <q-icon name="event" class="cursor-pointer">
                               <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                                <q-date v-model="date2">
+                                <q-date v-model="date2" color="cyan">
                                   <div class="row items-center justify-end">
                                     <q-btn v-close-popup label="Close" color="primary" flat />
                                   </div>
@@ -215,7 +220,7 @@
                           <template v-slot:append>
                             <q-icon name="event" class="cursor-pointer">
                               <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                                <q-date v-model="date3">
+                                <q-date v-model="date3"  color="cyan">
                                   <div class="row items-center justify-end">
                                     <q-btn v-close-popup label="Close" color="primary" flat />
                                   </div>
@@ -249,22 +254,22 @@
                       <q-radio size="lg" dense v-model="pay" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
                         val="deposit" label="Deposit" />
                     </div>
-                   
+
                     <div class="q-mt-md">
                       <!-- Your selection is: <strong>{{ pay }}</strong> -->
                       <div v-if="pay == 'cash'">
                         <div class="row">
                           <div class="col-md-4">
                             <p class="text-left text-bold" style="font-size: large;"> Total :</p>
-                            <q-input prefix="Rp" type="number" outlined dense style="width: 90%;" />
+                            <q-input prefix="Rp" v-model="cashPay" type="number" outlined dense style="width: 90%;" />
                           </div>
                           <div class="col-md-4">
                             <p class="text-left text-bold" style="font-size: large;"> Jatuh Tempo :</p>
-                            <q-input filled v-model="date" mask="date" :rules="['date']" dense style="width: 90%;">
+                            <q-input filled v-model="tempo" mask="date" :rules="['date']" dense style="width: 90%;">
                               <template v-slot:append>
                                 <q-icon name="event" class="cursor-pointer">
                                   <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                                    <q-date v-model="date">
+                                    <q-date v-model="tempo" color="cyan">
                                       <div class="row items-center justify-end">
                                         <q-btn v-close-popup label="Close" color="primary" flat />
                                       </div>
@@ -273,6 +278,7 @@
                                 </q-icon>
                               </template>
                             </q-input>
+
                           </div>
                         </div>
                       </div>
@@ -286,7 +292,7 @@
                               <template v-slot:append>
                                 <q-icon name="event" class="cursor-pointer">
                                   <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                                    <q-date v-model="date">
+                                    <q-date v-model="date" color="cyan">
                                       <div class="row items-center justify-end">
                                         <q-btn v-close-popup label="Close" color="primary" flat />
                                       </div>
@@ -313,7 +319,7 @@
                               <template v-slot:append>
                                 <q-icon name="event" class="cursor-pointer">
                                   <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                                    <q-date v-model="date">
+                                    <q-date v-model="date" color="cyan">
                                       <div class="row items-center justify-end">
                                         <q-btn v-close-popup label="Close" color="primary" flat />
                                       </div>
@@ -331,7 +337,7 @@
                               <template v-slot:append>
                                 <q-icon name="event" class="cursor-pointer">
                                   <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                                    <q-date v-model="date">
+                                    <q-date v-model="date" color="cyan">
                                       <div class="row items-center justify-end">
                                         <q-btn v-close-popup label="Close" color="primary" flat />
                                       </div>
@@ -360,7 +366,7 @@
                               <template v-slot:append>
                                 <q-icon name="event" class="cursor-pointer">
                                   <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                                    <q-date v-model="date">
+                                    <q-date v-model="date" color="cyan">
                                       <div class="row items-center justify-end">
                                         <q-btn v-close-popup label="Close" color="primary" flat />
                                       </div>
@@ -383,7 +389,7 @@
                               <template v-slot:append>
                                 <q-icon name="event" class="cursor-pointer">
                                   <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                                    <q-date v-model="date">
+                                    <q-date v-model="date" color="cyan">
                                       <div class="row items-center justify-end">
                                         <q-btn v-close-popup label="Close" color="primary" flat />
                                       </div>
@@ -401,7 +407,7 @@
                               <template v-slot:append>
                                 <q-icon name="event" class="cursor-pointer">
                                   <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                                    <q-date v-model="date">
+                                    <q-date v-model="date" color="cyan">
                                       <div class="row items-center justify-end">
                                         <q-btn v-close-popup label="Close" color="primary" flat />
                                       </div>
@@ -419,7 +425,7 @@
                               <template v-slot:append>
                                 <q-icon name="event" class="cursor-pointer">
                                   <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                                    <q-date v-model="date">
+                                    <q-date v-model="date" color="cyan">
                                       <div class="row items-center justify-end">
                                         <q-btn v-close-popup label="Close" color="primary" flat />
                                       </div>
@@ -437,11 +443,11 @@
                         <div class="row">
                           <div class="col-md-4">
                             <p class="text-left text-bold" style="font-size: large;"> Minimal Bayar / Deposit :</p>
-                            <q-input prefix="Rp" type="number" outlined dense style="width: 90%;" />
+                            <q-input prefix="Rp" v-model="minDeposit" type="number" outlined dense style="width: 90%;" />
                           </div>
                           <div class="col-md-4">
                             <p class="text-left text-bold" style="font-size: large;"> Nilai Deposit :</p>
-                            <q-input prefix="Rp" type="number" outlined dense style="width: 90%;" />
+                            <q-input prefix="Rp" v-model="deposit" type="number" outlined dense style="width: 90%;" />
                           </div>
                         </div>
                       </div>
@@ -452,11 +458,12 @@
                     <p class="text-left text-bold q-mt-md" style="font-size: larger;"> Diskon : {{ value }} %</p>
                     <q-slider class="q-mt-md" v-model="value" :min="0" :max="100" :step="1" label label-always
                       color="light-green" />
+                    
                   </div>
                   <div>
                   </div>
                   <div class="q-mt-md text-right">
-                    <q-btn class="q-mx-md" color="secondary" label="Create" to="/quotation" />
+                    <q-btn class="q-mx-md" color="secondary" label="Create" @click="createOrder" />
                     <q-btn color="secondary" label="Cancel" />
                   </div>
                 </q-card-section>
@@ -472,6 +479,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 import { ref } from 'vue'
 
 let optionsList = []
@@ -480,11 +488,10 @@ export default {
   setup() {
     const options = ref(optionsList)
 
-
     return {
-     
+
       sales: ref(),
-      
+
       type1: ref(true),
       type2: ref(false),
       type3: ref(false),
@@ -496,16 +503,14 @@ export default {
       type9: ref(false),
       type10: ref(false),
       type11: ref(false),
-      date: ref('2023/11/01'),
-      date2: ref('2023/11/01'),
-      date3: ref(''),
-      prmn: ref([]),
+
+
       network: ref(false),
       mitra: ref(false),
       model: ref(null),
-      pay: ref(null),
+
       value: ref(0),
-      diskon: ref(null),
+
       pay: ref(),
       options1: [
         'Cash', 'Barter'
@@ -540,8 +545,19 @@ export default {
       sosmedList: ref([]),
       A1: ref(false),
       A2: ref(false),
-      artikel_1 : ref(null),
-      artikel_2 : ref(null)
+      artikel_1: ref(null),
+      artikel_2: ref(null),
+      camp_name: ref(null),
+      prmn: ref(false),
+      pay: ref(null),
+      date: ref('2023/11/01'),
+      date2: ref('2023/11/01'),
+      date3: ref('2023/11/01'),
+      tempo: ref('2023/11/01'),
+      diskon: ref(null),
+      deposit: ref(null),
+      minDeposit: ref(null),
+      cashPay : ref(null)
 
 
     }
@@ -549,12 +565,12 @@ export default {
   watch: {
     A1(newVal) {
       if (!newVal) {
-       this.artikel_1 = null;
+        this.artikel_1 = null;
       }
     },
     A2(newVal) {
       if (!newVal) {
-       this.artikel_2 = null;
+        this.artikel_2 = null;
       }
     },
 
@@ -605,8 +621,6 @@ export default {
         this.picName = response.data.picName
         this.picNumber = response.data.phone
         this.custAddress = response.data.address
-        console.log(response);
-
 
       } catch (error) {
         console.log(error);
@@ -635,6 +649,67 @@ export default {
         console.error(error);
       }
     },
+
+    async createOrder() {
+      const token = sessionStorage.getItem('token')
+
+      const data = {
+        idCust: this.custname.value,
+        SalesType: this.sales,
+        camp_name: this.camp_name,
+        order_no: '123123',
+        order_date: new Date(this.date).toISOString(),
+        mtPikiranRakyat: this.prmn,
+        period_start: new Date(this.date2).toISOString(),
+        period_end: new Date(this.date3).toISOString(),
+        pay_type: this.pay,
+        OrderNetwork: this.networkOption.map(option => option.value),
+        OrderMitra: this.mitraOption.map(option => option.value),
+        OrderSosmed: this.sosmedList,
+        OrderArtikel: {
+          artikel_1: this.artikel_1,
+          artikel_2: this.artikel_2
+        },
+      }
+
+      if (this.pay === 'cash') {
+        data.payment = {
+          total: 12341411,
+          tempo: new Date(this.tempo).toISOString(),
+          diskon: this.value
+        }
+      }
+      if (this.pay === 'deposit') {
+        data.payment = {
+         deposit : this.deposit,
+         minDeposit : this.minDeposit 
+        }
+      }
+      try {
+        const response = await this.$api.post(`/order/new`, data, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+       
+        if(response.status == 200){
+          const id = response.data.data.id
+          localStorage.setItem('idOrder' , id)
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          this.$router.push("/quotation")
+        }
+       
+      } catch (error) {
+        console.log(error);
+      }
+
+    }
   },
 }
 </script>
