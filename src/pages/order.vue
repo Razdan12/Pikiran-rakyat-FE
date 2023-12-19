@@ -77,7 +77,7 @@
                           </p>
                           <q-input class="q-my-md" v-model="camp_name" dense outlined placeholder="Campaign Name"
                             style="width: 90%;" />
-                         
+
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -100,7 +100,7 @@
                               </q-icon>
                             </template>
                           </q-input>
-                         
+
                         </div>
                       </div>
                     </div>
@@ -115,13 +115,13 @@
                             <q-checkbox class="text-light-blue-10" style="font-size: large;" v-model="prmn"
                               val="pikiran-rakyat.com" label="PikiranRakyat.com" keep-color color="light-blue-10" />
                           </div>
-                     
+
 
                         </div>
                         <div class="col-md-4">
                           <div>
                             <q-select outlined use-chips v-model="networklist" multiple :options="networkOption"
-                              label="Network" style="width: 300px;"  />
+                              label="Network" style="width: 300px;" />
 
                           </div>
 
@@ -220,7 +220,7 @@
                           <template v-slot:append>
                             <q-icon name="event" class="cursor-pointer">
                               <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                                <q-date v-model="date3"  color="cyan">
+                                <q-date v-model="date3" color="cyan">
                                   <div class="row items-center justify-end">
                                     <q-btn v-close-popup label="Close" color="primary" flat />
                                   </div>
@@ -458,8 +458,9 @@
                     <p class="text-left text-bold q-mt-md" style="font-size: larger;"> Diskon : {{ value }} %</p>
                     <q-slider class="q-mt-md" v-model="value" :min="0" :max="100" :step="1" label label-always
                       color="light-green" />
-                    
+
                   </div>
+                  <p>{{ date }} ini date</p>
                   <div>
                   </div>
                   <div class="q-mt-md text-right">
@@ -550,14 +551,14 @@ export default {
       camp_name: ref(null),
       prmn: ref(false),
       pay: ref(null),
-      date: ref('2023/11/01'),
-      date2: ref('2023/11/01'),
-      date3: ref('2023/11/01'),
-      tempo: ref('2023/11/01'),
+      date: ref(null),
+      date2: ref(null),
+      date3: ref(null),
+      tempo: ref(null),
       diskon: ref(null),
       deposit: ref(null),
       minDeposit: ref(null),
-      cashPay : ref(null)
+      cashPay: ref(null)
 
 
     }
@@ -579,9 +580,24 @@ export default {
   mounted() {
     this.getCustomer()
     this.getMediaTayang()
+    this.getDate()
   },
 
   methods: {
+    getDate() {
+      const dateNow = new Date();
+      const year = dateNow.getFullYear();
+      const month = String(dateNow.getMonth() + 1).padStart(2, '0');
+      const day = String(dateNow.getDate()).padStart(2, '0');
+      const formattedDate = `${year}/${month}/${day}`;
+
+      this.date = formattedDate;
+      this.date2 = formattedDate;
+      this.date3 = formattedDate;
+      this.tempo = formattedDate;
+
+    },
+    
     updateSelection(value, id) {
       console.log(value, id);
       if (value && id !== null) {
@@ -681,8 +697,8 @@ export default {
       }
       if (this.pay === 'deposit') {
         data.payment = {
-         deposit : this.deposit,
-         minDeposit : this.minDeposit 
+          deposit: this.deposit,
+          minDeposit: this.minDeposit
         }
       }
       try {
@@ -691,10 +707,10 @@ export default {
             'Authorization': `Bearer ${token}`
           }
         });
-       
-        if(response.status == 200){
+
+        if (response.status == 200) {
           const id = response.data.data.id
-          localStorage.setItem('idOrder' , id)
+          localStorage.setItem('idOrder', id)
           Swal.fire({
             position: "center",
             icon: "success",
@@ -704,7 +720,7 @@ export default {
           });
           this.$router.push("/quotation")
         }
-       
+
       } catch (error) {
         console.log(error);
       }

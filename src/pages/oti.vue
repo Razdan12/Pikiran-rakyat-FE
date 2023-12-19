@@ -6,99 +6,53 @@
         <div class="col-md-10">
           <q-card class="full-width">
             <q-card-section>
-              <p class="text-center text-bold" style="font-size: x-large;" >ORDER TAYANG IKLAN</p>
+              <p class="text-center text-bold" style="font-size: x-large;">ORDER TAYANG IKLAN</p>
               <q-separator class="q-my-md" color="light-blue-7" inset />
               <div>
                 <q-markup-table separator="cell" flat bordered>
                   <thead>
                     <tr>
-                      <th class="text-left">No</th>
-                      <th class="text-right">Client</th>
-                      <th class="text-right">Tanggal Order</th>
-                      <th class="text-right">Periode</th>
-                      <th class="text-right">No Mo</th>
-                      <th class="text-right">Product</th>
-                      <th class="text-right">sub</th>
-                      <th class="text-right">OTI</th>
+                      <th class="text-center">No</th>
+                      <th class="text-center">Client</th>
+                      <th class="text-center">Tanggal Order</th>
+                      <th class="text-center">Periode</th>
+                      <th class="text-center">No Mo</th>
+                      <th class="text-center">Product</th>
+                      <th class="text-center">sub</th>
+                      <th class="text-center">OTI</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td rowspan="4" class="text-left">1</td>
-                      <td rowspan="4" class="text-right">Curaweda</td>
-                      <td rowspan="4"  class="text-right">16 November 2023</td>
-                      <td rowspan="4"  class="text-right">November 2023 - Desember 2023</td>
-                      <td rowspan="4"  class="text-right">291/MO-CRW/PRMN/VIII/2023 </td>
-                      <td class="text-right">Artikel</td>
-                      <td class="text-right">Article & Content</td>
-                      <td class="text-right">001/A01/291/OTI-CRW/VIII/2023</td>
-                    </tr>
-                    <tr>
+                    <tr v-for="(item, index) in otiList" :key="item.idOrder">
+                      <td v-if="shouldShowIndex(index)" :rowspan="countIdOrder(item.idOrder)">
+                        {{ getRowIndex(index) }}
+                      </td>
+                      <td v-if="!index || otiList[index - 1].idOrder !== item.idOrder"
+                        :rowspan="countIdOrder(item.idOrder)">
+                        {{ item.client }}
+                      </td>
+                      <td v-if="!index || otiList[index - 1].idOrder !== item.idOrder"
+                        :rowspan="countIdOrder(item.idOrder)">
+                        {{ item.tgl_order }}
+                      </td>
+                      <td v-if="!index || otiList[index - 1].idOrder !== item.idOrder"
+                        :rowspan="countIdOrder(item.idOrder)">
+                        {{ item.period_start }} - {{ item.period_end }}
+                      </td>
+                      <td v-if="!index || otiList[index - 1].idOrder !== item.idOrder"
+                        :rowspan="countIdOrder(item.idOrder)">
+                        {{ item.noMo }}
+                      </td>
 
-
-                      <td class="text-right">Artikel</td>
-                      <td class="text-right">Article & Content</td>
-                      <td class="text-right">002/A01/291/OTI-CRW/VIII/2023</td>
-                    </tr>
-                    <tr>
-
-                      <td class="text-right">Media Sosial</td>
-                      <td class="text-right">Instagram - Post / Feed</td>
-                      <td class="text-right">003/MS03/291/OTI-CRW/VIII/2023</td>
-                    </tr>
-                    <tr>
-                      <td class="text-right">Media Sosial</td>
-                      <td class="text-right">Youtube - Livestream</td>
-                      <td class="text-right">004/MS06/291/OTI-CRW/VIII/2023</td>
-                    </tr>
-
-                    <tr>
-                      <td rowspan="4" class="text-left">2</td>
-                      <td rowspan="4" class="text-right">Locus</td>
-                      <td rowspan="4"  class="text-right">17 November 2023</td>
-                      <td rowspan="4"  class="text-right">November 2023 - Desember 2023</td>
-                      <td rowspan="4"  class="text-right">292/MO-LCS/PRMN/VIII/2023 </td>
-                      <td class="text-right">Artikel</td>
-                      <td class="text-right">Article & Content</td>
-                      <td class="text-right">001/A01/291/OTI-LCS/VIII/2023</td>
-                    </tr>
-                    <tr>
-                      <td class="text-right">Artikel</td>
-                      <td class="text-right">Article & Content</td>
-                      <td class="text-right">002/A01/291/OTI-LCS/VIII/2023</td>
-                    </tr>
-                    <tr>
-                      <td class="text-right">Media Sosial</td>
-                      <td class="text-right">Instagram - Post / Feed</td>
-                      <td class="text-right">003/MS03/291/OTI-LCS/VIII/2023</td>
-                    </tr>
-                    <tr>
-                      <td class="text-right">Media Sosial</td>
-                      <td class="text-right">Youtube - Livestream</td>
-                      <td class="text-right">004/MS06/292/OTI-LCS/VIII/2023</td>
-                    </tr>
-                    <tr>
-                      <td  class="text-left">3</td>
-                      <td  class="text-right">Curaweda</td>
-                      <td   class="text-right">16 November 2023</td>
-                      <td   class="text-right">November 2023 - Desember 2023</td>
-                      <td   class="text-right">293/MO-CRW/PRMN/VIII/2023 </td>
-                      <td class="text-right">Display Ads</td>
-                      <td class="text-right">Display Ads</td>
-                      <td class="text-right">001/DA01/293/OTI-CRW/VIII/2023</td>
-                    </tr>
-                    <tr>
-                      <td  class="text-left">4</td>
-                      <td  class="text-right">Nabati</td>
-                      <td   class="text-right">16 November 2023</td>
-                      <td   class="text-right">November 2023 - Desember 2023</td>
-                      <td   class="text-right">294/MO-NBT/PRMN/VIII/2023 </td>
-                      <td class="text-right">Artikel</td>
-                      <td class="text-right">Article & Content Network</td>
-                      <td class="text-right">001/A02/294/OTI-CRW/VIII/2023</td>
+                      <td>{{ item.product }}</td>
+                      <td>{{ item.sub }}</td>
+                      <td>{{ item.oti }}</td>
                     </tr>
                   </tbody>
                 </q-markup-table>
+                <div class="q-pa-lg flex flex-center">
+                  <q-pagination v-model="current" :max="totalPage" input />
+                </div>
               </div>
             </q-card-section>
           </q-card>
@@ -110,3 +64,70 @@
     </div>
   </q-page>
 </template>
+
+<script>
+import { ref } from 'vue';
+
+
+export default {
+
+  setup() {
+    return {
+      otiList: ref([]),
+      current: 1,
+      totalPage: 1,
+      lastIdOrder: null,
+      rowIndex: 1
+    }
+  },
+
+  mounted() {
+    this.getMoData()
+  },
+  watch: {
+    current(newVal) {
+      this.getMoData()
+    },
+
+  },
+  methods: {
+    countIdOrder(idOrder) {
+      return this.otiList.filter(item => item.idOrder === idOrder).length;
+    },
+
+    getRowIndex(index) {
+      if (this.shouldShowIndex(index)) {
+        return this.rowIndex++;
+      }
+    },
+    shouldShowIndex(index) {
+      return index === 0 || this.otiList[index - 1].idOrder !== this.otiList[index].idOrder;
+    },
+    async getMoData() {
+      try {
+        const response = await this.$api.get(`/oti?pageNumber=${this.current}`, {
+          headers: {
+            'Authorization': `Bearer ${this.token}`
+          }
+        });
+
+        console.log(response.data.data);
+        this.otiList = response.data.data
+        this.current = response.data.pageNumber
+        this.totalPage = response.data.totalPage
+        this.rowIndex = 1;
+
+      } catch (error) {
+        console.log(error);
+      }
+
+    },
+
+    clickBtn(idOrder) {
+      sessionStorage.setItem('idMo', idOrder)
+    }
+  }
+
+}
+
+</script>
