@@ -9,7 +9,7 @@
               <p class="text-center text-bold" style="font-size: large;">REPORT </p>
               <div class="absolute-right q-gutter-sm q-mt-sm q-mr-xl">
                 <q-btn square color="blue" icon="print" />
-                <q-btn  color="blue" icon="table_view" />
+                <q-btn color="blue" icon="table_view" />
               </div>
               <q-separator class="q-my-md" color="light-blue-7" inset />
               <div class="row">
@@ -99,126 +99,22 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td class="text-left">1</td>
-                      <td class="text-right">Curaweda</td>
+                    <tr v-for="(item, index) in dataList" :key="item.idOrder">
+                      <td class="text-left">{{ index + 1 }}</td>
+                      <td class="text-right">{{ item.client }}</td>
+                      <td class="text-right">{{ item.campaign }}</td>
+                      <td class="text-right">{{ item.tgl_order }}</td>
+                      <td class="text-right">{{ item.noQuo }}</td>
                       <td class="text-right">-</td>
-                      <td class="text-right">16 November 2023</td>
-                      <td class="text-right">291/Q-CRW/PRMN/VIII/2023</td>
-                      <td class="text-right">-</td>
-                      <td class="text-right">-</td>
-                      <td class="text-right">291/MO-CRW/PRMN/VIII/2023</td>
-                      <td class="text-right">November 2023 - Desember 2023</td>
-                      <td class="text-right">001/A01/291/OTI-CRW/VIII/2023 </td>
-                      <td class="text-right text-red">
-                        Close
+                      <td class="text-right">{{ item.media_tayang }}</td>
+                      <td class="text-right">{{ item.noMo }}</td>
+                      <td class="text-right">{{ item.period_start }} - {{ item.period_end }}</td>
+                      <td class="text-right">{{ item.oti }}</td>
+                      <td class="text-right" :class="{ 'text-red': !item.status, 'text-green': item.status }">
+                        {{ item.status ? 'Open' : 'Close' }}
                       </td>
                     </tr>
-                    <tr>
-                      <td class="text-left">2</td>
-                      <td class="text-right">Curaweda</td>
-                      <td class="text-right">-</td>
-                      <td class="text-right">16 November 2023</td>
-                      <td class="text-right">291/Q-CRW/PRMN/VIII/2023</td>
-                      <td class="text-right">-</td>
-                      <td class="text-right">-</td>
-                      <td class="text-right">291/MO-CRW/PRMN/VIII/2023</td>
-                      <td class="text-right">November 2023 - Desember 2023</td>
-                      <td class="text-right">002/A01/291/OTI-CRW/VIII/2023 </td>
-                      <td class="text-right text-red">
-                        Close
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-left">3</td>
-                      <td class="text-right">Curaweda</td>
-                      <td class="text-right">-</td>
-                      <td class="text-right">16 November 2023</td>
-                      <td class="text-right">291/Q-CRW/PRMN/VIII/2023</td>
-                      <td class="text-right">-</td>
-                      <td class="text-right">-</td>
-                      <td class="text-right">291/MO-CRW/PRMN/VIII/2023</td>
-                      <td class="text-right">November 2023 - Desember 2023</td>
-                      <td class="text-right">003/MS03/291/OTI-CRW/VIII/2023 </td>
-                      <td class="text-right text-green">
-                        Open
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-left">4</td>
-                      <td class="text-right">Curaweda</td>
-                      <td class="text-right">-</td>
-                      <td class="text-right">16 November 2023</td>
-                      <td class="text-right">291/Q-CRW/PRMN/VIII/2023</td>
-                      <td class="text-right">-</td>
-                      <td class="text-right">-</td>
-                      <td class="text-right">291/MO-CRW/PRMN/VIII/2023</td>
-                      <td class="text-right">November 2023 - Desember 2023</td>
-                      <td class="text-right">004/MS06/291/OTI-CRW/VIII/2023 </td>
-                      <td class="text-right text-green">
-                        Open
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-left">5</td>
-                      <td class="text-right">Locus</td>
-                      <td class="text-right">-</td>
-                      <td class="text-right">16 November 2023</td>
-                      <td class="text-right">292/Q-LCS/PRMN/VIII/2023</td>
-                      <td class="text-right">-</td>
-                      <td class="text-right">-</td>
-                      <td class="text-right">292/MO-LCS/PRMN/VIII/2023</td>
-                      <td class="text-right">November 2023 - Desember 2023</td>
-                      <td class="text-right">001/A01/291/OTI-LCS/VIII/2023 </td>
-                      <td class="text-right text-red">
-                        Close
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-left">6</td>
-                      <td class="text-right">Locus</td>
-                      <td class="text-right">-</td>
-                      <td class="text-right">16 November 2023</td>
-                      <td class="text-right">292/Q-LCS/PRMN/VIII/2023</td>
-                      <td class="text-right">-</td>
-                      <td class="text-right">-</td>
-                      <td class="text-right">292/MO-LCS/PRMN/VIII/2023</td>
-                      <td class="text-right">November 2023 - Desember 2023</td>
-                      <td class="text-right">002/A01/291/OTI-LCS/VIII/2023 </td>
-                      <td class="text-right text-red">
-                        Close
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-left">7</td>
-                      <td class="text-right">Locus</td>
-                      <td class="text-right">-</td>
-                      <td class="text-right">16 November 2023</td>
-                      <td class="text-right">292/Q-LCS/PRMN/VIII/2023</td>
-                      <td class="text-right">-</td>
-                      <td class="text-right">-</td>
-                      <td class="text-right">292/MO-LCS/PRMN/VIII/2023</td>
-                      <td class="text-right">November 2023 - Desember 2023</td>
-                      <td class="text-right">003/A01/291/OTI-LCS/VIII/2023 </td>
-                      <td class="text-right text-red">
-                        Close
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="text-left">8</td>
-                      <td class="text-right">Locus</td>
-                      <td class="text-right">-</td>
-                      <td class="text-right">16 November 2023</td>
-                      <td class="text-right">292/Q-LCS/PRMN/VIII/2023</td>
-                      <td class="text-right">-</td>
-                      <td class="text-right">-</td>
-                      <td class="text-right">292/MO-LCS/PRMN/VIII/2023</td>
-                      <td class="text-right">November 2023 - Desember 2023</td>
-                      <td class="text-right">004/A01/291/OTI-LCS/VIII/2023 </td>
-                      <td class="text-right text-red">
-                        Close
-                      </td>
-                    </tr>
+
                   </tbody>
                 </q-markup-table>
               </div>
@@ -247,9 +143,36 @@ export default {
       filter: ref(null),
       optionsfilter: [
         'Client', 'Mitra', 'Quotation', 'OTI', 'Media Tayang', 'Status'
-      ]
-
+      ],
+      dataList: ref([]),
+      current: 1,
+      totalPage: 1,
+      token: sessionStorage.getItem("token")
     }
-  }
+  },
+  mounted() {
+    this.getMoData()
+  },
+  methods: {
+    async getMoData() {
+      try {
+
+        const response = await this.$api.get(`/oti/report?pageNumber=${this.current}`, {
+          headers: {
+            'Authorization': `Bearer ${this.token}`
+          }
+        });
+        console.log(response.data);
+        this.dataList = response.data
+
+
+      } catch (error) {
+        console.log(error);
+      }
+
+    },
+  },
+
+
 }
 </script>

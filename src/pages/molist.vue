@@ -12,24 +12,24 @@
                 <q-markup-table>
                   <thead>
                     <tr>
-                      <th class="text-left">No</th>
-                      <th class="text-right">Client</th>
-                      <th class="text-right">Tanggal Order</th>
-                      <th class="text-right">No Quotation</th>
-                      <th class="text-right">Periode</th>
-                      <th class="text-right">Media Order</th>
-                      <th class="text-right">action</th>
+                      <th class="text-center">No</th>
+                      <th class="text-center">Client</th>
+                      <th class="text-center">Tanggal Order</th>
+                      <th class="text-center">No Quotation</th>
+                      <th class="text-center">Periode</th>
+                      <th class="text-center">Media Order</th>
+                      <th class="text-center">action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(item, index) in orderList" :key="item.idOrder">
                       <td class="text-left">{{ index + 1 }}</td>
-                      <td class="text-right">{{ item.client_name }}</td>
-                      <td class="text-right">{{ item.tgl_order }}</td>
-                      <td class="text-right">{{ item.no_quo }}</td>
-                      <td class="text-right">{{ item.period_start }} - {{ item.period_end }}</td>
-                      <td class="text-right">{{ item.media_order }}</td>
-                      <td class="text-right">
+                      <td class="text-left">{{ item.client_name }}</td>
+                      <td class="text-center">{{ item.tgl_order }}</td>
+                      <td class="text-center">{{ item.no_quo }}</td>
+                      <td class="text-center">{{ item.period_start }} - {{ item.period_end }}</td>
+                      <td class="text-center">{{ item.media_order }}</td>
+                      <td class="text-center">
                         <q-btn color="secondary" label="MO" to="/mo" @click="clickBtn(item.idOrder)" />
                       </td>
                     </tr>
@@ -40,8 +40,6 @@
                   <q-pagination  v-model="current" :max="totalPage" input />
                 </div>
               </div>
-
-
 
             </q-card-section>
           </q-card>

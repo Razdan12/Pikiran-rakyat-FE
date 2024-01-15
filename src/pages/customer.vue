@@ -31,7 +31,7 @@
                             unchecked-icon="panorama_fish_eye" val="FREELANCER" label="FREELANCER"
                             style="font-size: larger;" />
                         </q-card-section>
-                        <div>{{ type }}</div>
+                        
                       </q-card>
                     </div>
                     <div class="q-mt-md">

@@ -17,9 +17,7 @@
                           <div>
                             CAMPAIGN
                           </div>
-                          <div class="q-mt-md">
-                            CAMPAIGN TYPE
-                          </div>
+                         
                           <div class="q-mt-md">
                             CAMPAIGN PERIOD
                           </div>
@@ -32,9 +30,7 @@
                           <div>
                            : {{ camp_name }}
                           </div>
-                          <div class="q-mt-md">
-                           : {{ camp_type }}
-                          </div>
+                         
                           <div class="q-mt-md">
                            : {{ camp_period }}
                           </div>
@@ -252,7 +248,6 @@ export default {
       columns,
       rows,
       camp_name: ref('name'),
-      camp_type: ref('type'),
       camp_period: ref('period'),
       cust_type: ref('cust_name'),
       cust_name: ref('name'),
@@ -272,9 +267,8 @@ export default {
             'Authorization': `Bearer ${this.token}`
           }
         });
-        console.log(response);
+       
         this.camp_name = response.data.camp_name
-        this.camp_type = response.data.camp_type
         this.camp_period = `${response.data.period_start} - ${response.data.period_end}`
         this.cust_type = response.data.cust_type
         this.cust_name = response.data.cust_name

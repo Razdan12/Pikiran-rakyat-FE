@@ -115,20 +115,17 @@
                             <q-checkbox class="text-light-blue-10" style="font-size: large;" v-model="prmn"
                               val="pikiran-rakyat.com" label="PikiranRakyat.com" keep-color color="light-blue-10" />
                           </div>
-
-
                         </div>
                         <div class="col-md-4">
                           <div>
-                            <q-select outlined use-chips v-model="networklist" multiple :options="networkOption"
-                              label="Network" style="width: 300px;" />
-
+                            <q-select outlined use-chips v-model="networkData" multiple :options="network" label="Network"
+                              style="width: 300px;" @filter="filterNetwork" use-input />
                           </div>
 
                         </div>
                         <div class="col-md-4">
-                          <q-select outlined use-chips v-model="mitralist" multiple :options="mitraOption" label="Mitra"
-                            style="width: 300px;" />
+                          <q-select outlined use-chips v-model="mitraData" multiple :options="mitras" label="Mitra"
+                            style="width: 300px;" @filter="filterMitra" use-input />
                         </div>
                       </div>
                     </div>
@@ -176,7 +173,7 @@
                         <q-card>
                           <q-card-section>
                             <span class="item-label">Number: </span>
-                            <q-numeric>123213123</q-numeric>
+                            <p>123123</p>
                           </q-card-section>
                         </q-card>
                       </q-expansion-item>
@@ -260,8 +257,10 @@
                       <div v-if="pay == 'cash'">
                         <div class="row">
                           <div class="col-md-4">
-                            <p class="text-left text-bold" style="font-size: large;"> Total :</p>
-                            <q-input prefix="Rp" v-model="cashPay" type="number" outlined dense style="width: 90%;" />
+                            <p class="text-left text-bold" style="font-size: large;"> Total : {{ cashPayFormatted }}</p>
+                            <q-input prefix="Rp" v-model="cashPay" type="number" outlined dense style="width: 90%;"
+                              @keyup="onKeyup" />
+
                           </div>
                           <div class="col-md-4">
                             <p class="text-left text-bold" style="font-size: large;"> Jatuh Tempo :</p>
@@ -455,16 +454,23 @@
 
                   </div>
                   <div>
-                    <p class="text-left text-bold q-mt-md" style="font-size: larger;"> Diskon : {{ value }} %</p>
-                    <q-slider class="q-mt-md" v-model="value" :min="0" :max="100" :step="1" label label-always
+                    <div class="cursor-pointer">
+
+                      <p class="text-left text-bold q-mt-md" style="font-size: larger;"> Diskon : {{ value }} %</p>
+
+                      <q-popup-edit v-model="value" auto-save v-slot="scope">
+                        <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
+                      </q-popup-edit>
+                    </div>
+                    <q-slider class="q-mt-md" v-model="value" :min="0" :max="100" :step="0.01" label label-always
                       color="light-green" />
 
                   </div>
-                  <p>{{ date }} ini date</p>
+
                   <div>
                   </div>
                   <div class="q-mt-md text-right">
-                    <q-btn class="q-mx-md" color="secondary" label="Create" @click="createOrder" />
+                    <q-btn class="q-mx-md" color="secondary" :disable="submit" label="Create" @click="createOrder" />
                     <q-btn color="secondary" label="Cancel" />
                   </div>
                 </q-card-section>
@@ -481,48 +487,50 @@
 
 <script>
 import Swal from 'sweetalert2'
-import { ref } from 'vue'
+
+import { ref, watch } from 'vue'
 
 let optionsList = []
+let mitraListt = []
+let networklistt = []
 
 export default {
   setup() {
+
     const options = ref(optionsList)
+    const mitras = ref(mitraListt)
+    const network = ref(networklistt)
+    const cashPay = ref(null)
+    const cashPayFormatted = ref('')
+
+    watch(cashPay, (newValue) => {
+      cashPayFormatted.value = formatRupiah(newValue)
+    })
+
+    // Function to format a number as Rupiah
+    function formatRupiah(value) {
+      if (!value) return ''
+      const formatter = new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+      })
+      return formatter.format(value)
+    }
+
+    // Callback function for `keyup` event
+    function onKeyup(event) {
+      cashPay.value = formatRupiah(event.target.value)
+    }
 
     return {
 
-      sales: ref(),
-
-      type1: ref(true),
-      type2: ref(false),
-      type3: ref(false),
-      type4: ref(false),
-      type5: ref(false),
-      type6: ref(false),
-      type7: ref(false),
-      type8: ref(false),
-      type9: ref(false),
-      type10: ref(false),
-      type11: ref(false),
-
-
-      network: ref(false),
-      mitra: ref(false),
-      model: ref(null),
-
       value: ref(0),
-
-      pay: ref(),
-      options1: [
-        'Cash', 'Barter'
-      ],
-      options2: [
-        '30%', '40%', '50%', '100%'
-      ],
-      dmitra: ref([]),
-      dnetwork: ref([]),
-
       options,
+      mitras,
+      network,
+
+      cashPay,
+      cashPayFormatted,
 
       filterFn(val, update, abort) {
         update(() => {
@@ -530,18 +538,27 @@ export default {
           options.value = optionsList.filter(v => v.label.toLowerCase().indexOf(needle) > -1)
         })
       },
-
-
+      filterMitra(val, update, abort) {
+        update(() => {
+          const needle = val.toLowerCase()
+          mitras.value = mitraListt.filter(v => v.label.toLowerCase().indexOf(needle) > -1)
+        })
+      },
+      filterNetwork(val, update, abort) {
+        update(() => {
+          const needle = val.toLowerCase()
+          network.value = networklistt.filter(v => v.label.toLowerCase().indexOf(needle) > -1)
+        })
+      },
+      networkData: ref(null),
+      mitraData: ref(null),
       custname: ref(null),
       picName: ref(''),
       picNumber: ref(''),
       custAddress: ref(''),
       custLogo: 'https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=',
       token: sessionStorage.getItem('token'),
-      networklist: ref(null),
-      networkOption: ref([]),
-      mitraOption: ref([]),
-      mitralist: ref(null),
+      sales: ref(null),
       sosmed: ref([]),
       sosmedList: ref([]),
       A1: ref(false),
@@ -558,12 +575,12 @@ export default {
       diskon: ref(null),
       deposit: ref(null),
       minDeposit: ref(null),
-      cashPay: ref(null)
-
+      submit: ref(false)
 
     }
   },
   watch: {
+
     A1(newVal) {
       if (!newVal) {
         this.artikel_1 = null;
@@ -584,6 +601,8 @@ export default {
   },
 
   methods: {
+
+
     getDate() {
       const dateNow = new Date();
       const year = dateNow.getFullYear();
@@ -597,7 +616,7 @@ export default {
       this.tempo = formattedDate;
 
     },
-    
+
     updateSelection(value, id) {
       console.log(value, id);
       if (value && id !== null) {
@@ -653,10 +672,12 @@ export default {
         });
 
         if (response.data.network) {
-          this.networkOption = response.data.network.map(item => ({ label: item.name, value: item.id }));
+          networklistt = response.data.network.map(item => ({ label: item.name, value: item.id }));
+          this.network = networklistt
         }
         if (response.data.mitra) {
-          this.mitraOption = response.data.mitra.map(item => ({ label: item.name, value: item.id }));
+          mitraListt = response.data.mitra.map(item => ({ label: item.name, value: item.id }));
+          this.mitras = mitraListt
         }
         if (response.data.sosmed) {
           this.sosmed = response.data.sosmed.map(item => ({ label: item.name, value: item.id, selected: false }));
@@ -669,6 +690,7 @@ export default {
     async createOrder() {
       const token = sessionStorage.getItem('token')
 
+
       const data = {
         idCust: this.custname.value,
         SalesType: this.sales,
@@ -679,8 +701,8 @@ export default {
         period_start: new Date(this.date2).toISOString(),
         period_end: new Date(this.date3).toISOString(),
         pay_type: this.pay,
-        OrderNetwork: this.networkOption.map(option => option.value),
-        OrderMitra: this.mitraOption.map(option => option.value),
+        OrderNetwork: this.networkData.map(option => option.value),
+        OrderMitra: this.mitraData.map(option => option.value),
         OrderSosmed: this.sosmedList,
         OrderArtikel: {
           artikel_1: this.artikel_1,
@@ -690,7 +712,7 @@ export default {
 
       if (this.pay === 'cash') {
         data.payment = {
-          total: 12341411,
+          total: parseInt(this.cashPay),
           tempo: new Date(this.tempo).toISOString(),
           diskon: this.value
         }
@@ -701,7 +723,9 @@ export default {
           minDeposit: this.minDeposit
         }
       }
+
       try {
+        this.submit = true
         const response = await this.$api.post(`/order/new`, data, {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -722,7 +746,15 @@ export default {
         }
 
       } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.message,
+         
+        });
         console.log(error);
+      } finally {
+        this.submit = false
       }
 
     }

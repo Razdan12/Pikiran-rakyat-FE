@@ -13,7 +13,7 @@ const routes = [
     component: () => import('layouts/UserLayout.vue'),
     children: [
       { path: '/user', component: () => import('pages/dashboard.vue'),  meta: { requiresAuth: true } },
-      { path: '/customer', component: () => import('pages/customer.vue') ,  meta: { requiresAuth: true } },
+      { path: '/customer', component: () => import('pages/listCustomer.vue') ,  meta: { requiresAuth: true } },
       { path: '/order', component: () => import('pages/order.vue') ,  meta: { requiresAuth: true } },
       { path: '/quotation', component: () => import('pages/quo.vue'),  meta: { requiresAuth: true } },
       { path: '/oti', component: () => import('pages/oti.vue'),  meta: { requiresAuth: true } },

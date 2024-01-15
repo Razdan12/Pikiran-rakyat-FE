@@ -37,7 +37,7 @@
                               <q-icon name="key" />
                             </template>
                           </q-input>
-                          <q-btn type="submit" color="blue-grey-6" glossy label="Login" style="width: 40%" />
+                          <q-btn type="submit" color="blue-grey-6" glossy label="Login" :disable="submit" style="width: 40%" />
                         </q-form>
                     </div>
                     <div class="col-1"></div>
@@ -62,6 +62,7 @@
 </template>
 <script>
 import Swal from 'sweetalert2';
+import { ref } from 'vue';
 
 export default {
 
@@ -72,6 +73,7 @@ export default {
         password: this.password,
       };
       try {
+        this.submit = true
         const response = await this.$api.post("/user/login", loginData);
         const token = response.data.accessToken
         const name = response.data.name
@@ -83,22 +85,24 @@ export default {
         sessionStorage.setItem("role", role )
         token ? this.$router.push("/customer") : ""
 
-    
       } catch (error) {
-       
         Swal.fire({
           icon: "error",
           title: "Oops...",
           text: "Email atau Password salah!",
 
         });
+      } finally {
+        this.submit = false
       }
     },
   },
+  
   data() {
     return {
       email: "",
       password: "",
+      submit: ref(false)
     };
   },
 }

@@ -18,8 +18,9 @@
                       <th class="text-center">Periode</th>
                       <th class="text-center">No Mo</th>
                       <th class="text-center">Product</th>
-                      <th class="text-center">sub</th>
+                      <th class="text-center">Sub</th>
                       <th class="text-center">OTI</th>
+                      <th class="text-center">Status</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -47,6 +48,7 @@
                       <td>{{ item.product }}</td>
                       <td>{{ item.sub }}</td>
                       <td>{{ item.oti }}</td>
+                      <td>Tayang</td>
                     </tr>
                   </tbody>
                 </q-markup-table>

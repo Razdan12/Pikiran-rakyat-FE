@@ -1,12 +1,8 @@
 <template>
   <q-layout view="hHh Lpr lff">
     <q-header elevated>
-      <q-toolbar>
+      <q-toolbar class="bg-white">
         <q-img class="q-my-md" src="../assets/prmn.png" style="width: 15%;" />
-
-        <q-toolbar-title>
-
-        </q-toolbar-title>
 
         <div class="absolute-top-right">
           <p class="text-black text-bold text-right q-mx-md q-my-sm">
@@ -35,7 +31,7 @@
             </q-item-section>
 
             <q-item-section>
-              Customer Form
+              Customer
             </q-item-section>
           </q-item>
 
@@ -46,16 +42,6 @@
 
             <q-item-section>
               Order
-            </q-item-section>
-          </q-item>
-
-          <q-item clickable v-ripple to="/quotation">
-            <q-item-section avatar>
-              <q-icon name="request_quote" />
-            </q-item-section>
-
-            <q-item-section>
-              Quotation
             </q-item-section>
           </q-item>
 
@@ -89,22 +75,16 @@
             </q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="download" />
-            </q-item-section>
-
-            <q-item-section>
-              Download
-            </q-item-section>
-          </q-item>
         </q-list>
+        <div class="text-center">
+          <q-btn style="background: rgb(248, 87, 87); color: white; width: 90%" label="Logout" @click="logOut" />
+        </div>
 
       </q-scroll-area>
 
 
 
-      <q-img class="absolute-top" src="../assets/bg2.png">
+      <q-img class="absolute-top" src="../assets/bg2.jpg">
         <div class="absolute-bottom bg-transparent">
           <div class="row">
             <div class="col-md-4">
@@ -132,6 +112,7 @@
   </q-layout>
 </template>
 <script>
+import Swal from 'sweetalert2';
 import { ref } from 'vue'
 
 export default {
@@ -158,6 +139,24 @@ export default {
       const formattedTime = now.toLocaleTimeString('id-ID', { hour: 'numeric', minute: 'numeric' });
       this.currentDate = formattedDate;
       this.currentTime = formattedTime;
+    },
+
+    logOut() {
+      Swal.fire({
+        title: "Log out?",
+        text: "anda akan diarahkan ke halaman utama",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, logout"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          sessionStorage.removeItem("token");
+          this.$router.push("/");
+        }
+      });
+
     },
   },
 }
