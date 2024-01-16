@@ -16,22 +16,33 @@ export default route(function (/* { store, ssrContext } */) {
   })
 
   Router.beforeEach((to, from, next) => {
+    const role = sessionStorage.getItem('role'); // Ambil role dari sessionStorage
     if (to.matched.some(record => record.meta.requiresAuth)) {
       if (isAuthenticated()) {
-        next()
+        if ((role === 'admin' && to.path.startsWith('/admin')) || 
+            (role === 'sales' && to.path.startsWith('/sales'))) {
+          next(); // Jika role dan path sesuai, lanjutkan
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Anda tidak memiliki akses ke halaman ini!",
+          });
+          next('/'); // Jika role dan path tidak sesuai, kembali ke halaman awal
+        }
       } else {
         Swal.fire({
           icon: "error",
           title: "Oops...",
           text: "Sesi anda telah habis!",
-         
         });
-        next('/')
+        next('/');
       }
     } else {
-      next()
+      next();
     }
   })
+  
 
   function isAuthenticated() {
     const token = sessionStorage.getItem('token')

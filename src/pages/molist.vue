@@ -79,9 +79,10 @@ export default {
   methods: {
     async getMoData() {
       try {
+        const token = sessionStorage.getItem('token')
         const response = await this.$api.get(`quotation/mo/all?pageNumber=${this.current}`, {
           headers: {
-            'Authorization': `Bearer ${this.token}`
+            'Authorization': `Bearer ${token}`
           }
         });
 

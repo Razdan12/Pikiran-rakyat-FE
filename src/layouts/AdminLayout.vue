@@ -15,7 +15,7 @@
     <q-drawer v-model="drawer" show-if-above>
       <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
         <q-list padding>
-          <q-item clickable v-ripple class="q-mt-md" to="/user" disable>
+          <q-item clickable v-ripple class="q-mt-md" to="/admin/dashboard" disable>
             <q-item-section avatar>
               <q-icon name="dashboard" />
             </q-item-section>
@@ -25,7 +25,7 @@
             </q-item-section>
           </q-item>
 
-          <q-item active clickable v-ripple to="/sales/customer">
+          <q-item active clickable v-ripple to="/admin/customer">
             <q-item-section avatar>
               <q-icon name="supervised_user_circle" />
             </q-item-section>
@@ -35,37 +35,50 @@
             </q-item-section>
           </q-item>
 
-         
 
-          <q-item clickable v-ripple to="/sales/molist">
+          <q-expansion-item :content-inset-level="0.5" expand-separator icon="perm_media" label="Media Tayang">
+            <q-item clickable v-ripple to="/admin/network">
+              <q-item-section avatar>
+                <q-icon name="language" />
+              </q-item-section>
+
+              <q-item-section>
+                Network
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple to="/admin/mitra">
+              <q-item-section avatar>
+                <q-icon name="handshake" />
+              </q-item-section>
+
+              <q-item-section>
+                Mitra
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple to="/admin/sosmed">
+              <q-item-section avatar>
+                <q-icon name="subscriptions" />
+              </q-item-section>
+
+              <q-item-section>
+                Sosmed
+              </q-item-section>
+            </q-item>
+           
+
+          </q-expansion-item>
+
+          <!-- <q-item active clickable v-ripple to="/admin/user">
             <q-item-section avatar>
-              <q-icon name="perm_media" />
+              <q-icon name="account_circle" />
             </q-item-section>
 
             <q-item-section>
-              Media Order
+              Kelola User
             </q-item-section>
-          </q-item>
+          </q-item> -->
 
-          <q-item clickable v-ripple to="/sales/oti">
-            <q-item-section avatar>
-              <q-icon name="content_copy" />
-            </q-item-section>
 
-            <q-item-section>
-              Order Tayang Iklan
-            </q-item-section>
-          </q-item>
-
-          <q-item clickable v-ripple to="/sales/report">
-            <q-item-section avatar>
-              <q-icon name="summarize" />
-            </q-item-section>
-
-            <q-item-section>
-              Report
-            </q-item-section>
-          </q-item>
 
         </q-list>
         <div class="text-center">
@@ -153,5 +166,6 @@ export default {
   },
 }
 </script>
-
-
+  
+  
+  

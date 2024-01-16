@@ -83,7 +83,12 @@ export default {
         sessionStorage.setItem("name", name )
         sessionStorage.setItem("email", email )
         sessionStorage.setItem("role", role )
-        token ? this.$router.push("/customer") : ""
+        
+        if (role === 'admin'){
+          this.$router.push("/admin/customer")
+        } else if (role === 'sales'){
+          this.$router.push("/sales/customer")
+        }
 
       } catch (error) {
         Swal.fire({

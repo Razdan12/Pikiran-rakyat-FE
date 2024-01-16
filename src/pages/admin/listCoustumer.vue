@@ -1,0 +1,330 @@
+<template>
+    <q-page>
+        <div class="q-my-md">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <q-card class="full-width">
+                        <q-card-section>
+                            <p class="text-center text-bold" style="font-size: large">
+                                CUSTOMER LIST
+                            </p>
+                            <q-separator class="q-my-md" color="light-blue-7" inset />
+                            <div class="text-right q-pa-md">
+                                <q-btn color="cyan" icon="add" @click="medium = true" />
+
+                            </div>
+                            <div>
+                                <q-markup-table>
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">No</th>
+                                            <th class="text-center">Name</th>
+                                            <th class="text-center">Contact Name</th>
+                                            <th class="text-center">Phone</th>
+                                            <th class="text-center">Email</th>
+                                            <th class="text-center">Address</th>
+                                            <th class="text-center">Finance Name</th>
+                                            <th class="text-center">Finance Contact</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr v-for="(item, index) in custList" :key="item.id">
+                                            <td class="text-left">{{ index + 1 }}</td>
+                                            <td class="text-left">{{ item.custname }}</td>
+                                            <td class="text-center">{{ item.contactName }}</td>
+                                            <td class="text-center">{{ item.phone }}</td>
+                                            <td class="text-center">{{ item.email }}</td>
+                                            <td class="text-center">{{ item.address }}</td>
+                                            <td class="text-center">{{ item.finName }}</td>
+                                            <td class="text-center">{{ item.finContact }}</td>
+                                            <td class="text-center">
+                                                <q-btn-group>
+                                                    <q-btn color="orange" icon="border_color" />
+                                                    <q-btn color="blue" icon="article" />
+                                                    <q-btn color="red" icon="delete" @click="deleteItem(item.id)"/>
+                                                </q-btn-group>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </q-markup-table>
+                                <div class="q-pa-lg flex flex-center">
+                                    <q-pagination v-model="current" :max="totalPage" input />
+                                </div>
+                            </div>
+                        </q-card-section>
+                    </q-card>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+        </div>
+
+        <q-dialog v-model="medium">
+            <q-card style="width: 700px; max-width: 80vw" class="justify-center q-pa-md">
+                <q-scroll-area style="height: 70vh" class="q-pa-sm">
+                    <p class="text-center text-bold" style="font-size: x-large">
+                        CUSTOMER FORM
+                    </p>
+                    <q-separator class="q-my-lg" color="orange" inset />
+                    <q-form @submit.prevent="addCustomer">
+                        <div class="col">
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <q-icon name="business" />
+                                    <span> Customer Type</span>
+                                </p>
+
+                                <q-card class="bg-light-blue-1 text-center text-bold" flat>
+                                    <q-card-section>
+                                        <q-radio class="text-blue" v-model="type" checked-icon="task_alt"
+                                            unchecked-icon="panorama_fish_eye" val="AGENCY" label="AGENCY"
+                                            style="font-size: larger" />
+                                        <q-radio class="text-blue" v-model="type" checked-icon="task_alt"
+                                            unchecked-icon="panorama_fish_eye" val="BRAND" label="BRAND"
+                                            style="font-size: larger" />
+                                        <q-radio class="text-blue" v-model="type" checked-icon="task_alt"
+                                            unchecked-icon="panorama_fish_eye" val="COMPANY" label="COMPANY"
+                                            style="font-size: larger" />
+                                        <q-radio class="text-blue" v-model="type" checked-icon="task_alt"
+                                            unchecked-icon="panorama_fish_eye" val="FREELANCER" label="FREELANCER"
+                                            style="font-size: larger" />
+                                    </q-card-section>
+                                </q-card>
+                            </div>
+                            <div class="q-mt-md">
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <q-icon name="portrait" />
+                                    <span class="text-bold" style="font-size: medium">
+                                        Customer Name</span>
+                                </p>
+                                <q-input v-model="customerName" class="q-my-md" dense outlined label="Customer Name" />
+                            </div>
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <q-icon name="portrait" />
+                                    <span class="text-bold" style="font-size: medium">
+                                        Contact Name</span>
+                                </p>
+                                <q-input v-model="contactName" class="q-my-md" dense outlined label="Contact Name" />
+                            </div>
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <q-icon name="local_phone" />
+                                    <span class="text-bold" style="font-size: medium">
+                                        Contact Phone Number</span>
+                                </p>
+                                <q-input v-model="phoneNumber" class="q-my-md" dense outlined
+                                    label="Contact Phone Number" />
+                            </div>
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <q-icon name="email" />
+                                    <span class="text-bold" style="font-size: medium">
+                                        Company Email</span>
+                                </p>
+                                <q-input v-model="companyEmail" class="q-my-md" dense outlined label="Company Email" />
+                            </div>
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <q-icon name="numbers" />
+                                    <span class="text-bold" style="font-size: medium">
+                                        Company NPWP</span>
+                                </p>
+                                <q-input v-model="companyNPWP" class="q-my-md" dense outlined label="Company NPWP" />
+                            </div>
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <q-icon name="home_filled" />
+                                    <span class="text-bold" style="font-size: medium">
+                                        Company Address</span>
+                                </p>
+                                <q-input v-model="companyAdress" class="q-my-md" dense outlined label="Company Address" />
+                            </div>
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <q-icon name="portrait" />
+                                    <span class="text-bold" style="font-size: medium">
+                                        Finance Contact Name (Optional)</span>
+                                </p>
+                                <q-input v-model="finNameContact" class="q-my-md" dense outlined
+                                    label="Finance Contact Name" />
+                            </div>
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <q-icon name="local_phone" />
+                                    <span class="text-bold" style="font-size: medium">
+                                        Finance Phone Number</span>
+                                </p>
+                                <q-input v-model="finPhone" class="q-my-md" dense outlined label="Finance Phone Number" />
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <q-card-actions align="right">
+                                <q-btn class="q-mx-sm" type="submit" color="secondary" label="Create" :disable="btn" />
+                                <q-btn color="black" label="Cancel" v-close-popup />
+                            </q-card-actions>
+                        </div>
+                    </q-form>
+                </q-scroll-area>
+            </q-card>
+        </q-dialog>
+    </q-page>
+</template>
+
+<script>
+import Swal from "sweetalert2";
+import { ref } from "vue";
+
+export default {
+    setup() {
+        return {
+            custList: ref([]),
+            current: ref(1),
+            totalPage: ref(1),
+            medium: ref(false),
+            customerName: ref(null),
+            contactName: ref(null),
+            phoneNumber: ref(null),
+            companyEmail: ref(null),
+            companyNPWP: ref(null),
+            companyAdress: ref(null),
+            finNameContact: ref(null),
+            finPhone: ref(null),
+            type: ref(null),
+            btn: ref(false)
+        };
+    },
+
+    mounted() {
+        this.getCustData()
+    },
+    watch: {
+        current(newVal) {
+            this.getCustData()
+        },
+
+    },
+    methods: {
+
+        async addCustomer() {
+            let formData = new FormData()
+            formData.append('name', this.customerName)
+            formData.append('type', this.type)
+            formData.append('contact', this.contactName)
+            formData.append('phone', this.phoneNumber)
+            formData.append('email', this.companyEmail)
+            formData.append('npwp', this.companyNPWP)
+            formData.append('address', this.companyAdress)
+            formData.append('fincontact', this.finNameContact)
+            formData.append('fincontact_phone', this.finPhone)
+
+
+            const token = sessionStorage.getItem('token')
+            try {
+                this.btn = true
+                const response = await this.$api.post("/customer/add", formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const status = response.status
+                if (status == 200) {
+                    this.medium = false
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Your work has been saved",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    this.resetForm()
+                }
+
+                // status ? this.$router.push("/order") : ""
+
+            } catch (error) {
+
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "invalid",
+
+                });
+            } finally {
+                this.btn = false
+            }
+        },
+
+        resetForm() {
+            this.type = null
+            this.customerName = null
+            this.contactName = null
+            this.phoneNumber = null
+            this.companyEmail = null
+            this.companyNPWP = null
+            this.companyAdress = null
+            this.finNameContact = null
+            this.finPhone = null
+
+        },
+        async getCustData() {
+            const token = sessionStorage.getItem("token")
+            try {
+                const response = await this.$api.get(`/customer/cust?pageNumber=${this.current}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                this.custList = response.data.data
+                this.current = response.data.pageNumber
+                this.totalPage = response.data.totalPage
+
+            } catch (error) {
+                console.log(error);
+            }
+
+        },
+
+        async deleteCust(id) {
+            const token = sessionStorage.getItem("token")
+            try {
+                const response = await this.$api.delete(`/customer/${id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                console.log(response);
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        deleteItem(id) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Jika anda menghapus Customer, Semua data akan terhapus Termasuk riwayat Order",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.deleteCust(id)
+                }
+            });
+        }
+
+    },
+};
+</script>
