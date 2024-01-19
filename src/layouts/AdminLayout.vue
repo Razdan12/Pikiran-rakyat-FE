@@ -36,8 +36,61 @@
           </q-item>
 
 
-          <q-expansion-item :content-inset-level="0.5" expand-separator icon="perm_media" label="Media Tayang">
-            <q-item clickable v-ripple to="/admin/network">
+          <q-expansion-item :content-inset-level="0.5" expand-separator icon="perm_media" label="Rate Card">
+            <q-item clickable v-ripple to="/admin/rate-card/artikel">
+              <q-item-section avatar>
+                <q-icon name="language" />
+              </q-item-section>
+
+              <q-item-section>
+                Artikel Konten
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple to="/admin/rate-card/sosmed">
+              <q-item-section avatar>
+                <q-icon name="language" />
+              </q-item-section>
+
+              <q-item-section>
+                Sosial Media
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple to="/admin/rate-card/other-content">
+              <q-item-section avatar>
+                <q-icon name="language" />
+              </q-item-section>
+
+              <q-item-section>
+                Other Content
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple to="/admin/rate-card/ads-cpd">
+              <q-item-section avatar>
+                <q-icon name="language" />
+              </q-item-section>
+
+              <q-item-section>
+                Ads / Banner CPD
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple to="/admin/rate-card/ads-cpm">
+              <q-item-section avatar>
+                <q-icon name="language" />
+              </q-item-section>
+
+              <q-item-section>
+                Ads / Banner CPM
+              </q-item-section>
+            </q-item>
+            
+
+            
+
+            <!-- <q-item clickable v-ripple to="/admin/network">
               <q-item-section avatar>
                 <q-icon name="language" />
               </q-item-section>
@@ -63,10 +116,19 @@
               <q-item-section>
                 Sosmed
               </q-item-section>
-            </q-item>
+            </q-item> -->
            
 
           </q-expansion-item>
+          <q-item clickable v-ripple to="/admin/mitra">
+              <q-item-section avatar>
+                <q-icon name="handshake" />
+              </q-item-section>
+
+              <q-item-section>
+                Mitra
+              </q-item-section>
+            </q-item>
 
           <!-- <q-item active clickable v-ripple to="/admin/user">
             <q-item-section avatar>

@@ -34,9 +34,15 @@
               Customer
             </q-item-section>
           </q-item>
+          <q-item active clickable v-ripple to="/sales/order">
+            <q-item-section avatar>
+              <q-icon name="supervised_user_circle" />
+            </q-item-section>
 
-         
-
+            <q-item-section>
+              Order
+            </q-item-section>
+          </q-item>
           <q-item clickable v-ripple to="/sales/molist">
             <q-item-section avatar>
               <q-icon name="perm_media" />

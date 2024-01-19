@@ -1,0 +1,38 @@
+log update 15/01/24
+1. tampilan customer menjadi list 
+2. nominal pembayaran menjadi decimal ( pake kome otomatis)
+3. input diskon lebih detail 2 digit di belakang koma.
+4. input diskon bisa manual di ketik.
+5. penyesuaian tampilan di Quotation & MO
+6. daftar mitra sudah di upload ke database
+
+
+log update 16/01/24
+1. private route ( role admin & sales)
+2. halaman customer ( role admin )
+	- tambah customer
+3. halaman MT - Network ( role admin )
+	- tambah network
+	- edit Network
+4. halaman MT - Mitra ( role admin )
+	- tambah mitra
+5. halaman MT - sosmed ( role admin )
+	- tambah sosmed 
+
+Akun Terkait 
+akun admin 
+email : admin@gmail.com
+pass : 1234567
+
+akun sales 
+email  sales@gmail.com
+pass : 1234567
+
+
+update log 18/01/24
+Role Admin
+1. Penambahan Fitur Rate Card Artikel ( view & create )
+2. Penambahan Fitur Rate Card Sosmed ( view & create )
+3. Penambahan Fitur Rate Card Other Content ( view & create )
+4. Penambahan Fitur Rate Card Ads CPD ( view & create )
+5. Penambahan Fitur Rate Card Ads CPM ( view & create )

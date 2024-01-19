@@ -36,6 +36,11 @@ const routes = [
       { path: '/admin/mitra', component: () => import('pages/admin/listMitra.vue') },
       { path: '/admin/network', component: () => import('pages/admin/listNetwork.vue') },
       { path: '/admin/user', component: () => import('pages/admin/listUser.vue') },
+      { path: '/admin/rate-card/artikel', component: () => import('pages/admin/rateArtikel.vue') },
+      { path: '/admin/rate-card/sosmed', component: () => import('pages/admin/rateSosmed.vue') },
+      { path: '/admin/rate-card/other-content', component: () => import('pages/admin/rateOtherContent.vue') },
+      { path: '/admin/rate-card/ads-cpd', component: () => import('pages/admin/rateCPD.vue') },
+      { path: '/admin/rate-card/ads-cpm', component: () => import('pages/admin/rateCPM.vue') },
     ]
   },
  
