@@ -12,20 +12,21 @@ const routes = [
     path: '/sales',
     component: () => import('layouts/UserLayout.vue'),
     children: [
-      { path: '/sales/user', component: () => import('pages/dashboard.vue'),  meta: { requiresAuth: true } },
-      { path: '/sales/customer', component: () => import('pages/listCustomer.vue') ,  meta: { requiresAuth: true } },
-      { path: '/sales/order', component: () => import('pages/order.vue') ,  meta: { requiresAuth: true } },
-      { path: '/sales/quotation', component: () => import('pages/quo.vue'),  meta: { requiresAuth: true } },
-      { path: '/sales/oti', component: () => import('pages/oti.vue'),  meta: { requiresAuth: true } },
-      { path: '/sales/mo', component: () => import('pages/mo.vue'),  meta: { requiresAuth: true } },
-      { path: '/sales/molist', component: () => import('pages/molist.vue') ,  meta: { requiresAuth: true }},
+      { path: '/sales/user', component: () => import('pages/sales/dashboard.vue'),  meta: { requiresAuth: true } },
+      { path: '/sales/customer', component: () => import('pages/sales/listCustomer.vue') ,  meta: { requiresAuth: true } },
+      { path: '/sales/order', component: () => import('pages/sales/order.vue') ,  meta: { requiresAuth: true } },
+      { path: '/sales/quotation', component: () => import('pages/sales/quo.vue'),  meta: { requiresAuth: true } },
+      { path: '/sales/oti', component: () => import('pages/sales/oti.vue'),  meta: { requiresAuth: true } },
+      { path: '/sales/mo', component: () => import('pages/sales/mo.vue'),  meta: { requiresAuth: true } },
+      { path: '/sales/molist', component: () => import('pages/sales/molist.vue') ,  meta: { requiresAuth: true }},
       // { path: '/quolist', component: () => import('pages/quolist.vue') },
-      { path: '/sales/report', component: () => import('pages/report.vue') ,  meta: { requiresAuth: true }},
-      { path: '/sales/otipic', component: () => import('pages/otipic.vue') ,  meta: { requiresAuth: true }},
+      { path: '/sales/report', component: () => import('pages/sales/report.vue') ,  meta: { requiresAuth: true }},
+      { path: '/sales/otipic', component: () => import('pages/sales/otipic.vue') ,  meta: { requiresAuth: true }},
       { path: '/sales/test', component: () => import('pages/test.vue') ,  meta: { requiresAuth: true }},
     ]
 
   },
+  
   {
     path: '/admin',
     component: () => import('layouts/AdminLayout.vue'),
