@@ -10,12 +10,21 @@
                                 List Mitra
                             </p>
                             <q-separator class="q-my-md" color="light-blue-7" inset />
-                            <div class="text-right q-pa-md">
-                                <q-btn-group>
-                                    <q-btn color="cyan" icon="add" @click="medium = true" />
-                                    <q-btn color="green" icon="cloud_upload" @click="upload = true" />
-                                </q-btn-group>
-                            
+                            <div class="text-right q-pa-md flex items-center justify-between">
+                                <q-input v-model="search" debounce="500" filled placeholder="Search"
+                                    style="margin-right: 10px;">
+                                    <template v-slot:append>
+                                        <q-icon name="search" />
+                                    </template>
+                                </q-input>
+                                <div>
+
+                                    <q-btn-group>
+                                        <q-btn color="cyan" icon="add" @click="medium = true" />
+                                        <q-btn color="green" icon="cloud_upload" @click="upload = true" />
+                                    </q-btn-group>
+                                </div>
+
                             </div>
                             <div>
                                 <q-markup-table>
@@ -199,7 +208,8 @@ export default {
             btn: ref(false),
             fourth: ref(true),
             nama: ref(null),
-            status: ref(false)
+            status: ref(false),
+            search: ref(null)
         };
     },
 
@@ -210,6 +220,14 @@ export default {
         current(newVal) {
             this.getMitraData()
         },
+        search(newVal) {
+            if (!newVal) {
+                this.getMitraData()
+            } else {
+
+                this.findMitra(this.search)
+            }
+        }
 
     },
     methods: {
@@ -263,13 +281,31 @@ export default {
                 this.mitraList = response.data.data
                 this.current = response.data.pageNumber
                 this.totalPage = response.data.totalPage
-                console.log(response);
+
 
             } catch (error) {
                 console.log(error);
             }
 
         },
+        async findMitra(value) {
+            const token = sessionStorage.getItem("token")
+            try {
+
+                const response = await this.$api.get(`media/mitra/find-by-name`, {
+                    params: {
+                        name: value
+                    },
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                this.mitraList = response.data
+                console.log(response);
+            } catch (error) {
+                console.log(error);
+            }
+        }
     },
 };
 </script>

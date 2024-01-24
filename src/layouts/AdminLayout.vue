@@ -130,7 +130,7 @@
               </q-item-section>
             </q-item>
 
-          <!-- <q-item active clickable v-ripple to="/admin/user">
+          <q-item active clickable v-ripple to="/admin/user">
             <q-item-section avatar>
               <q-icon name="account_circle" />
             </q-item-section>
@@ -138,7 +138,7 @@
             <q-item-section>
               Kelola User
             </q-item-section>
-          </q-item> -->
+          </q-item>
 
 
 

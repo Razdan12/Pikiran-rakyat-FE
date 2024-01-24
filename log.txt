@@ -36,3 +36,14 @@ Role Admin
 3. Penambahan Fitur Rate Card Other Content ( view & create )
 4. Penambahan Fitur Rate Card Ads CPD ( view & create )
 5. Penambahan Fitur Rate Card Ads CPM ( view & create )
+
+
+Update log 24/01/24
+Role Admin
+1. penambahan menu kelola user ( view & create )
+2. fitur search by name di menu mitra
+
+role Sales
+1. update fitur order tampilan disesuaikan dengan rate card.
+2. update jumlah tagihan langsung muncul ketika pilih produk.
+3. update diskon otomatis 

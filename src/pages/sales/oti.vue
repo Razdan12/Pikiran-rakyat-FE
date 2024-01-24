@@ -113,7 +113,6 @@ export default {
           }
         });
 
-        console.log(response.data.data);
         this.otiList = response.data.data
         this.current = response.data.pageNumber
         this.totalPage = response.data.totalPage

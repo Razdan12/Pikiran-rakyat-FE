@@ -11,8 +11,8 @@
                             </p>
                             <q-separator class="q-my-md" color="light-blue-7" inset />
                             <div class="text-right q-pa-md">
-                                <q-btn color="cyan" icon="add" @click="medium = true"/>
-                                
+                                <q-btn color="cyan" icon="add" @click="medium = true" />
+
                             </div>
                             <div>
                                 <q-markup-table>
@@ -22,27 +22,36 @@
                                             <th class="text-center">Name</th>
                                             <th class="text-center">Email</th>
                                             <th class="text-center">Role</th>
-                                            <th class="text-center">Status</th>
                                             <th class="text-center">Action</th>
 
                                         </tr>
                                     </thead>
                                     <tbody>
 
-                                        <tr v-for="(item, index) in custList" :key="item.id">
+                                        <tr v-for="(item, index) in userList" :key="item.id">
                                             <td class="text-center">{{ index + 1 }}</td>
-                                            <td class="text-center">{{ item.custname }}</td>
+                                            <td class="text-center">{{ item.name }}</td>
                                             <td class="text-center">
-                                                <q-toggle v-model="fourth" checked-icon="check" color="green"
-                                                    unchecked-icon="clear" />
+                                                {{ item.email }}
                                             </td>
-                                            <td class="text-center">-</td>
-                                            <td class="text-center">-</td>
+                                            <td class="text-center">{{ item.role }}</td>
                                             <td class="text-center">
                                                 <q-btn-group>
-                                                    <q-btn color="orange" icon="border_color" />
-                                                    <q-btn color="blue" icon="vpn_key" />
-                                                    <q-btn color="red" icon="delete" />
+                                                    <q-btn color="orange" icon="border_color">
+                                                        <q-tooltip class="bg-orange text-body2" :offset="[10, 10]">
+                                                            Edit
+                                                        </q-tooltip>
+                                                    </q-btn>
+                                                    <q-btn color="blue" icon="vpn_key">
+                                                        <q-tooltip class="bg-blue text-body2" :offset="[10, 10]">
+                                                            Reset Password
+                                                        </q-tooltip>
+                                                    </q-btn>
+                                                    <q-btn color="red" icon="delete">
+                                                        <q-tooltip class="bg-red text-body2" :offset="[10, 10]">
+                                                            Hapus
+                                                        </q-tooltip>
+                                                    </q-btn>
                                                 </q-btn-group>
                                             </td>
                                         </tr>
@@ -61,39 +70,43 @@
 
         <q-dialog v-model="medium">
             <q-card style="width: 700px; max-width: 80vw" class="justify-center q-pa-md">
-                <q-scroll-area style="height: 49vh" class="q-pa-sm">
+                <q-scroll-area style="height: 70vh" class="q-pa-sm">
                     <p class="text-center text-bold" style="font-size: x-large">
                         TAMBAH PENGGUNA
                     </p>
                     <q-separator class="q-my-lg" color="orange" inset />
-                    <q-form @submit.prevent="addCustomer">
+                    <q-form @submit.prevent="addRole">
                         <div class="col">
                             <div>
                                 <p class="text-bold text-blue" style="font-size: medium">
                                     <span class="text-bold" style="font-size: medium">
                                         Nama</span>
                                 </p>
-                                <q-input v-model="phoneNumber" class="q-my-md" dense outlined label="Nama network" />
+                                <q-input v-model="nama" class="q-my-md" dense outlined label="Nama" />
                             </div>
                             <div>
                                 <p class="text-bold text-blue" style="font-size: medium">
                                     <span class="text-bold" style="font-size: medium">
-                                        Keterangan</span>
+                                        Email</span>
                                 </p>
-                                <q-input v-model="companyNPWP" class="q-my-md" dense outlined label="Keterangan" />
+                                <q-input v-model="email" class="q-my-md" dense outlined label="Email" />
                             </div>
                             <div>
                                 <p class="text-bold text-blue" style="font-size: medium">
                                     <span class="text-bold" style="font-size: medium">
-                                        Status</span>
+                                        Password</span>
                                 </p>
-                                <div>
-                                    <label for="">Non Aktif</label>
-                                    <q-toggle v-model="fourth" checked-icon="check" color="green" unchecked-icon="clear" />
-                                    <label for="">Aktif</label>
-                                </div>
+                                <q-input v-model="password" class="q-my-md" dense outlined label="Password" />
                             </div>
 
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <span class="text-bold" style="font-size: medium">
+                                        Role</span>
+                                </p>
+                                <q-select outlined v-model="role" :options="roleList" label="Role" emit-value  map-options />
+                            </div>
+                          
                         </div>
                         <div class="text-right">
                             <q-card-actions align="right">
@@ -115,26 +128,23 @@ import { ref } from "vue";
 export default {
     setup() {
         return {
-            custList: ref([]),
+            userList: ref([]),
             current: ref(1),
             totalPage: ref(1),
             medium: ref(false),
-            customerName: ref(null),
-            contactName: ref(null),
-            phoneNumber: ref(null),
-            companyEmail: ref(null),
-            companyNPWP: ref(null),
-            companyAdress: ref(null),
-            finNameContact: ref(null),
-            finPhone: ref(null),
-            type: ref(null),
+            nama: ref(null),
+            email: ref(null),
+            password: ref(null),
+            role: ref(null),
+            roleList: ref([]),
             btn: ref(false),
-            fourth: ref(true)
+
         };
     },
 
     mounted() {
-        this.getCustData()
+        this.getUserData()
+        this.getRole()
     },
     watch: {
         current(newVal) {
@@ -144,25 +154,20 @@ export default {
     },
     methods: {
 
-        async addCustomer() {
-            let formData = new FormData()
-            formData.append('name', this.customerName)
-            formData.append('type', this.type)
-            formData.append('contact', this.contactName)
-            formData.append('phone', this.phoneNumber)
-            formData.append('email', this.companyEmail)
-            formData.append('npwp', this.companyNPWP)
-            formData.append('address', this.companyAdress)
-            formData.append('fincontact', this.finNameContact)
-            formData.append('fincontact_phone', this.finPhone)
-
-
+        async addRole() {
+           
             const token = sessionStorage.getItem('token')
+            const data = {
+                name: this.nama,
+                email : this.email,
+                password : this.password,
+                repassword: this.password,
+                role_id: this.role
+            }
             try {
                 this.btn = true
-                const response = await this.$api.post("/customer/add", formData, {
+                const response = await this.$api.post("/user/register", data, {
                     headers: {
-                        'Content-Type': 'multipart/form-data',
                         'Authorization': `Bearer ${token}`
                     }
                 });
@@ -177,9 +182,9 @@ export default {
                         timer: 1500
                     });
                     this.resetForm()
+                    window.location.reload()
                 }
 
-                // status ? this.$router.push("/order") : ""
 
             } catch (error) {
 
@@ -195,35 +200,43 @@ export default {
         },
 
         resetForm() {
-            this.type = null
-            this.customerName = null
-            this.contactName = null
-            this.phoneNumber = null
-            this.companyEmail = null
-            this.companyNPWP = null
-            this.companyAdress = null
-            this.finNameContact = null
-            this.finPhone = null
+           this.nama = null,
+           this.email = null,
+           this.password = null,
+           this.role = null
 
         },
-        async getCustData() {
+        async getUserData() {
             const token = sessionStorage.getItem("token")
             try {
-                const response = await this.$api.get(`/customer/cust?pageNumber=${this.current}`, {
+                const response = await this.$api.get(`/user/all`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
                 });
 
-                this.custList = response.data.data
-                this.current = response.data.pageNumber
-                this.totalPage = response.data.totalPage
+                this.userList = response.data
 
             } catch (error) {
                 console.log(error);
             }
 
         },
+        async getRole() {
+            const token = sessionStorage.getItem("token")
+            try {
+                const response = await this.$api.get(`/role`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                this.roleList = response.data
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
     },
 };
 </script>

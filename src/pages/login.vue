@@ -79,10 +79,13 @@ export default {
         const name = response.data.name
         const email = response.data.email
         const role = response.data.role
+        const id = response.data.uuid
         sessionStorage.setItem("token", token)
         sessionStorage.setItem("name", name )
         sessionStorage.setItem("email", email )
         sessionStorage.setItem("role", role )
+        sessionStorage.setItem("id", id  )
+
         
         if (role === 'admin'){
           this.$router.push("/admin/customer")

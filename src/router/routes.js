@@ -17,7 +17,7 @@ const routes = [
       { path: '/sales/order', component: () => import('pages/sales/order.vue') ,  meta: { requiresAuth: true } },
       { path: '/sales/quotation', component: () => import('pages/sales/quo.vue'),  meta: { requiresAuth: true } },
       { path: '/sales/oti', component: () => import('pages/sales/oti.vue'),  meta: { requiresAuth: true } },
-      { path: '/sales/mo', component: () => import('pages/sales/mo.vue'),  meta: { requiresAuth: true } },
+      // { path: '/sales/mo', component: () => import('pages/sales/mo.vue'),  meta: { requiresAuth: true } },
       { path: '/sales/molist', component: () => import('pages/sales/molist.vue') ,  meta: { requiresAuth: true }},
       // { path: '/quolist', component: () => import('pages/quolist.vue') },
       { path: '/sales/report', component: () => import('pages/sales/report.vue') ,  meta: { requiresAuth: true }},
@@ -31,7 +31,7 @@ const routes = [
     path: '/admin',
     component: () => import('layouts/AdminLayout.vue'),
     children: [
-      { path: '/admin/dashboard', component: () => import('pages/dashboard.vue') },
+      // { path: '/admin/dashboard', component: () => import('pages/admin/dashboard.vue') },
       { path: '/admin/customer', component: () => import('pages/admin/listCoustumer.vue') },
       { path: '/admin/sosmed', component: () => import('pages/admin/listSosmed.vue') },
       { path: '/admin/mitra', component: () => import('pages/admin/listMitra.vue') },
