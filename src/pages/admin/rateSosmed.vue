@@ -31,19 +31,22 @@
                                         <tr v-for="(item, index) in metaList" :key="item.id">
                                             <td class="text-center">{{ index + 1 }}</td>
                                             <td class="text-center">{{ item.name }}</td>
-                                            <td class="text-center">{{ item.instagram ? formatRupiah(item.instagram) : '-' }}</td>
-                                            <td class="text-center">{{ item.facebook ? formatRupiah(item.facebook) : '-' }}</td>
+                                            <td class="text-center">{{ item.instagram ? formatRupiah(item.instagram) : '-'
+                                            }}</td>
+                                            <td class="text-center">{{ item.facebook ? formatRupiah(item.facebook) : '-' }}
+                                            </td>
                                             <td class="text-center">
                                                 {{ item.note }}
                                             </td>
                                             <td class="text-center">
                                                 <q-btn-group>
-                                                    <q-btn color="orange" icon="border_color">
+                                                    <q-btn color="orange" icon="border_color"
+                                                        @click="editMetaTriger(item.id)">
                                                         <q-tooltip class="bg-orange text-body2" :offset="[10, 10]">
                                                             Edit
                                                         </q-tooltip>
                                                     </q-btn>
-                                                    <q-btn color="red" icon="delete">
+                                                    <q-btn color="red" icon="delete" @click="DeleteSos(item.id)">
                                                         <q-tooltip class="bg-red text-body2" :offset="[10, 10]">
                                                             Hapus
                                                         </q-tooltip>
@@ -93,19 +96,20 @@
                                             <td class="text-center">{{ index + 1 }}</td>
                                             <td class="text-center">{{ item.name }}</td>
                                             <td class="text-center">{{ item.type }}</td>
-                                            <td class="text-center">{{ item.is_custom_price ? 'Custom Price' : formatRupiah(item.rate) }}</td>
+                                            <td class="text-center">{{ item.is_custom_price ? 'Custom Price' :
+                                                formatRupiah(item.rate) }}</td>
 
                                             <td class="text-center">
                                                 {{ item.note }}
                                             </td>
                                             <td class="text-center">
                                                 <q-btn-group>
-                                                    <q-btn color="orange" icon="border_color">
+                                                    <q-btn color="orange" icon="border_color" @click="editOtherTriger(item.id)">
                                                         <q-tooltip class="bg-orange text-body2" :offset="[10, 10]">
                                                             Edit
                                                         </q-tooltip>
                                                     </q-btn>
-                                                    <q-btn color="red" icon="delete">
+                                                    <q-btn color="red" icon="delete" @click="DeleteSos(item.id)">
                                                         <q-tooltip class="bg-red text-body2" :offset="[10, 10]">
                                                             Hapus
                                                         </q-tooltip>
@@ -226,6 +230,173 @@
                 </q-scroll-area>
             </q-card>
         </q-dialog>
+        <q-dialog v-model="editOther">
+            <q-card style="width: 700px; max-width: 80vw" class="justify-center q-pa-md">
+                <q-scroll-area style="height: 50vh" class="q-pa-sm">
+                    <p class="text-center text-bold" style="font-size: x-large">
+                        Edit Sosmed
+                    </p>
+                    <q-separator class="q-my-lg" color="orange" inset />
+                    <q-form @submit.prevent="editMetaRest">
+                        <div class="col">
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <span class="text-bold" style="font-size: medium"> Nama</span>
+                                </p>
+                                <div class="" style="margin-bottom: 20px;">
+                                    <q-card class="my-card q-pa-sm" flat bordered>
+
+                                        <div class="cursor-pointer">
+                                            {{ nama }}
+                                            <q-popup-edit v-model="nama" auto-save v-slot="scope">
+                                                <q-input v-model="scope.value" dense autofocus counter
+                                                    @keyup.enter="scope.set" />
+                                            </q-popup-edit>
+                                        </div>
+                                    </q-card>
+                                </div>
+                                <!-- <q-input v-model="nama" class="q-my-md" dense outlined label="Nama" /> -->
+                            </div>
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <span class="text-bold" style="font-size: medium">Rate</span>
+
+                                </p>
+
+                                <div class="" style="margin-bottom: 20px;">
+                                    <q-card class="my-card q-pa-sm" flat bordered>
+
+                                        <div class="cursor-pointer">
+                                            {{ formatRupiah(rate) }}
+                                            <q-popup-edit v-model="rate" auto-save v-slot="scope">
+                                                <q-input v-model="scope.value" dense autofocus counter
+                                                    @keyup.enter="scope.set" />
+                                            </q-popup-edit>
+                                        </div>
+                                    </q-card>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <span class="text-bold" style="font-size: medium">Note</span>
+                                </p>
+                                <div class="" style="margin-bottom: 20px;">
+                                    <q-card class="my-card q-pa-sm" flat bordered>
+
+                                        <div class="cursor-pointer">
+                                            {{ note ? note : '-' }}
+                                            <q-popup-edit buttons v-model="note" v-slot="scope">
+                                                <q-editor v-model="scope.value" min-height="5rem" autofocus
+                                                    @keyup.enter.stop />
+                                            </q-popup-edit>
+                                        </div>
+                                    </q-card>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <q-card-actions align="right">
+                                <q-btn class="q-mx-sm" type="submit" color="secondary" label="Save" :disable="btn" />
+                                <q-btn color="black" label="Cancel" v-close-popup />
+                            </q-card-actions>
+                        </div>
+                    </q-form>
+                </q-scroll-area>
+            </q-card>
+        </q-dialog>
+        <q-dialog v-model="editMeta">
+            <q-card style="width: 700px; max-width: 80vw" class="justify-center q-pa-md">
+                <q-scroll-area style="height: 60vh" class="q-pa-sm">
+                    <p class="text-center text-bold" style="font-size: x-large">
+                        Edit Sosmed
+                    </p>
+                    <q-separator class="q-my-lg" color="orange" inset />
+                    <q-form @submit.prevent="editMetaRest">
+                        <div class="col">
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <span class="text-bold" style="font-size: medium"> Nama</span>
+                                </p>
+                                <div class="" style="margin-bottom: 20px;">
+                                    <q-card class="my-card q-pa-sm" flat bordered>
+
+                                        <div class="cursor-pointer">
+                                            {{ nama }}
+                                            <q-popup-edit v-model="nama" auto-save v-slot="scope">
+                                                <q-input v-model="scope.value" dense autofocus counter
+                                                    @keyup.enter="scope.set" />
+                                            </q-popup-edit>
+                                        </div>
+                                    </q-card>
+                                </div>
+                                <!-- <q-input v-model="nama" class="q-my-md" dense outlined label="Nama" /> -->
+                            </div>
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <span class="text-bold" style="font-size: medium">Rate Facebook</span>
+
+                                </p>
+
+                                <div class="" style="margin-bottom: 20px;">
+                                    <q-card class="my-card q-pa-sm" flat bordered>
+
+                                        <div class="cursor-pointer">
+                                            {{ formatRupiah(facebook) }}
+                                            <q-popup-edit v-model="facebook" auto-save v-slot="scope">
+                                                <q-input v-model="scope.value" dense autofocus counter
+                                                    @keyup.enter="scope.set" />
+                                            </q-popup-edit>
+                                        </div>
+                                    </q-card>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <span class="text-bold" style="font-size: medium">Rate Instagram</span>
+                                </p>
+
+                                <div class="" style="margin-bottom: 20px;">
+                                    <q-card class="my-card q-pa-sm" flat bordered>
+
+                                        <div class="cursor-pointer">
+                                            {{ formatRupiah(instagram) }}
+                                            <q-popup-edit v-model="instagram" auto-save v-slot="scope">
+                                                <q-input v-model="scope.value" dense autofocus counter
+                                                    @keyup.enter="scope.set" />
+                                            </q-popup-edit>
+                                        </div>
+                                    </q-card>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <span class="text-bold" style="font-size: medium">Note</span>
+                                </p>
+                                <div class="" style="margin-bottom: 20px;">
+                                    <q-card class="my-card q-pa-sm" flat bordered>
+
+                                        <div class="cursor-pointer">
+                                            {{ note ? note : '-' }}
+                                            <q-popup-edit buttons v-model="note" v-slot="scope">
+                                                <q-editor v-model="scope.value" min-height="5rem" autofocus
+                                                    @keyup.enter.stop />
+                                            </q-popup-edit>
+                                        </div>
+                                    </q-card>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <q-card-actions align="right">
+                                <q-btn class="q-mx-sm" type="submit" color="secondary" label="Save" :disable="btn" />
+                                <q-btn color="black" label="Cancel" v-close-popup />
+                            </q-card-actions>
+                        </div>
+                    </q-form>
+                </q-scroll-area>
+            </q-card>
+        </q-dialog>
 
 
     </q-page>
@@ -243,6 +414,8 @@ export default {
             current: ref(1),
             totalPage: ref(1),
             medium: ref(false),
+            editMeta: ref(false),
+            editOther: ref(false),
             other: ref(false),
             btn: ref(false),
             nama: ref(null),
@@ -252,7 +425,8 @@ export default {
             type: ref(null),
             typeOption: ["Youtube", "Placement On Program", "Tiktok", "X | Thread"],
             rate: ref(null),
-            customPrice: ref(false)
+            customPrice: ref(false),
+            idSosmed: ref('')
         };
     },
 
@@ -312,16 +486,58 @@ export default {
                 this.btn = false;
             }
         },
+        async editMetaRest() {
+            const token = sessionStorage.getItem("token");
+            try {
+                this.btn = true;
+                const data = {
+                    name: this.nama,
+                    instagram: parseInt(this.instagram),
+                    facebook: parseInt(this.facebook),
+                    rate: parseInt(this.rate),
+                    note: this.note,
+                };
+                const response = await this.$api.patch(`/rate-card/sosmed/edit-by-id/${this.idSosmed}`, data, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (response) {
+                    this.medium = false
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Your work has been saved",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                    this.editMeta = false
+                    this.editOther = false
+                    this.getRateSosmedData()
+                }
+            } catch (error) {
+                this.medium = false
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "gagal menyimpan data",
+                });
+            } finally {
+                this.resetForm()
+                this.btn = false;
+            }
+        },
         async addOther() {
             const token = sessionStorage.getItem("token");
             try {
                 this.btn = true;
                 const data = {
-                    name : this.nama,
-                    type : this.type,
-                    rate : this.customPrice ? null : parseInt(this.rate),
-                    note : this.note,
-                    customPrice : this.customPrice,
+                    name: this.nama,
+                    type: this.type,
+                    rate: this.customPrice ? null : parseInt(this.rate),
+                    note: this.note,
+                    customPrice: this.customPrice,
                 };
                 const response = await this.$api.post(`/rate-card/sosmed/create/other`, data, {
                     headers: {
@@ -367,6 +583,81 @@ export default {
                 console.log(error);
             }
         },
+        async getSosmedById(id) {
+            const token = sessionStorage.getItem("token");
+            try {
+                const response = await this.$api.get(`rate-card/sosmed/get-by-id/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                this.nama = response.data.name
+                this.facebook = response.data.facebook
+                this.instagram = response.data.instagram
+                this.rate = response.data.rate
+                this.note = response.data.note
+                
+
+
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        editMetaTriger(id) {
+            this.editMeta = true
+            this.getSosmedById(id)
+            this.idSosmed = id
+        },
+        editOtherTriger(id) {
+            this.editOther = true
+            this.getSosmedById(id)
+            this.idSosmed = id
+        },
+        resetForm(){
+            this.nama = null
+            this.facebook = null
+            this.instagram = null
+            this.rate = null
+            this.note = null
+        },
+
+        async deleteSosmed(id) {
+            try {
+                const token = sessionStorage.getItem("token");
+                const response = await this.$api.delete(`rate-card/sosmed/delete-by-id/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                console.log(response);
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                });
+                this.getRateSosmedData()
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        DeleteSos(id) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.deleteSosmed(id)
+                }
+            });
+        },
     },
+
 };
 </script>
