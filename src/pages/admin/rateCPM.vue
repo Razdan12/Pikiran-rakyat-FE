@@ -35,7 +35,7 @@
                                             <td class="text-center">{{ item.type }}</td>
 
                                             <td class="text-center">{{ item.size }}</td>
-                                            <td class="text-center">{{ item.rate }}</td>
+                                            <td class="text-center">{{ formatRupiah(item.rate) }}</td>
                                             <td class="text-center">
                                                 <q-btn-group>
                                                     <q-btn color="orange" icon="border_color">
@@ -149,6 +149,15 @@ export default {
         },
     },
     methods: {
+
+        formatRupiah(value) {
+            const formatter = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+            })
+            return formatter.format(value)
+        },
+
         async addCpmData() {
             const token = sessionStorage.getItem("token");
             try {

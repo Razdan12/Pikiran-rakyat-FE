@@ -139,9 +139,15 @@
               Kelola User
             </q-item-section>
           </q-item>
+          <q-item active clickable v-ripple to="/admin/report">
+            <q-item-section avatar>
+              <q-icon name="summarize" />
+            </q-item-section>
 
-
-
+            <q-item-section>
+              Report
+            </q-item-section>
+          </q-item>
         </q-list>
         <div class="text-center">
           <q-btn style="background: rgb(248, 87, 87); color: white; width: 90%" label="Logout" @click="logOut" />

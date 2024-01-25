@@ -30,18 +30,30 @@
 
                                         <tr v-for="(item, index) in userList" :key="item.id">
                                             <td class="text-center">{{ index + 1 }}</td>
-                                            <td class="text-center">{{ item.name }}</td>
+                                            <td class="text-center cursor-pointer" @click="idUser = item.id">
+                                                {{ item.name }}
+                                                <q-popup-edit v-model="namaEdit" v-slot="scope">
+                                                    <q-input autofocus dense v-model="scope.value"
+                                                        :model-value="scope.value" hint="Your Name" :rules="[
+                                                            val => scope.validate(val) || 'More than 5 chars required'
+                                                        ]">
+                                                        <template v-slot:after>
+                                                            <q-btn flat dense color="negative" icon="cancel"
+                                                                @click.stop.prevent="scope.cancel" />
+
+                                                            <q-btn flat dense color="positive" icon="check_circle"
+                                                                @click.stop.prevent="scope.set"/>
+                                                        </template>
+                                                    </q-input>
+                                                </q-popup-edit>
+                                            </td>
                                             <td class="text-center">
                                                 {{ item.email }}
                                             </td>
                                             <td class="text-center">{{ item.role }}</td>
                                             <td class="text-center">
                                                 <q-btn-group>
-                                                    <q-btn color="orange" icon="border_color">
-                                                        <q-tooltip class="bg-orange text-body2" :offset="[10, 10]">
-                                                            Edit
-                                                        </q-tooltip>
-                                                    </q-btn>
+                                                   
                                                     <q-btn color="blue" icon="vpn_key">
                                                         <q-tooltip class="bg-blue text-body2" :offset="[10, 10]">
                                                             Reset Password
@@ -104,9 +116,9 @@
                                     <span class="text-bold" style="font-size: medium">
                                         Role</span>
                                 </p>
-                                <q-select outlined v-model="role" :options="roleList" label="Role" emit-value  map-options />
+                                <q-select outlined v-model="role" :options="roleList" label="Role" emit-value map-options />
                             </div>
-                          
+
                         </div>
                         <div class="text-right">
                             <q-card-actions align="right">
@@ -118,6 +130,8 @@
                 </q-scroll-area>
             </q-card>
         </q-dialog>
+
+     
     </q-page>
 </template>
 
@@ -132,12 +146,15 @@ export default {
             current: ref(1),
             totalPage: ref(1),
             medium: ref(false),
+            edit: ref(false),
             nama: ref(null),
             email: ref(null),
             password: ref(null),
             role: ref(null),
             roleList: ref([]),
             btn: ref(false),
+            namaEdit: ref(null),
+            idUser: ref(null)
 
         };
     },
@@ -150,17 +167,20 @@ export default {
         current(newVal) {
             this.getCustData()
         },
+        namaEdit(newVal){
+            this.editUser(this.idUser, newVal)
+        }
 
     },
     methods: {
 
         async addRole() {
-           
+
             const token = sessionStorage.getItem('token')
             const data = {
                 name: this.nama,
-                email : this.email,
-                password : this.password,
+                email: this.email,
+                password: this.password,
                 repassword: this.password,
                 role_id: this.role
             }
@@ -200,10 +220,10 @@ export default {
         },
 
         resetForm() {
-           this.nama = null,
-           this.email = null,
-           this.password = null,
-           this.role = null
+            this.nama = null,
+                this.email = null,
+                this.password = null,
+                this.role = null
 
         },
         async getUserData() {
@@ -230,12 +250,39 @@ export default {
                         'Authorization': `Bearer ${token}`
                     }
                 });
-                
+
                 this.roleList = response.data
 
             } catch (error) {
                 console.log(error);
             }
+        },
+
+        async editUser(id, data){
+            const token = sessionStorage.getItem("token")
+            const dataRest = {
+                name: data
+            }
+            try {
+                const response = await this.$api.patch(`/user/edit-by-id/${id}`, dataRest, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Your work has been saved",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+            this.getUserData()
+
+
+            } catch (error) {
+                console.log(error);
+            }
+
         }
     },
 };

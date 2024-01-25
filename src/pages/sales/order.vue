@@ -125,8 +125,9 @@
                           </div>
                         </div>
                       </div>
-                      
+
                       <q-list v-if="modelTayang !== null" bordered>
+
                         <q-expansion-item group="somegroup" class="text-left text-light-blue-10" icon="newspaper"
                           label="Articles Content" style="font-size: larger;">
                           <q-separator />
@@ -151,10 +152,10 @@
 
                                       <td class="text-center">{{ item.name }}</td>
                                       <td class="text-center" v-if="modelTayang != 'Mitra'">{{ item.is_custom_price_prmn ?
-                                        'Custom Price' : item.prmn === 0 || null ? "-" : 'Rp.' + item.prmn }}</td>
+                                        'Custom Price' : item.prmn === 0 || null ? "-" : formatRupiah(item.prmn) }}</td>
                                       <td class="text-center" v-if="modelTayang == 'Mitra'">{{ item.is_custom_price_mitra
                                         ?
-                                        'Custom Price' : item.mitra === 0 || null ? "-" : 'Rp.' + item.mitra }}</td>
+                                        'Custom Price' : item.mitra === 0 || null ? "-" : formatRupiah(item.mitra) }}</td>
                                       <td class="text-center">{{ item.note }}</td>
 
                                     </tr>
@@ -167,19 +168,21 @@
                           </q-card>
                         </q-expansion-item>
                         <q-separator />
+
                         <q-expansion-item group="somegroup" class="text-left text-light-blue-10" icon="subscriptions"
-                          label="Social Media Content" style="font-size: larger;">
+                          label="Social Media Content" style="font-size: larger;" @click="typeRate = 'sosmed'">
                           <q-separator />
                           <q-card>
                             <q-card-section>
                               <q-select outlined v-model="sosmedOption" :options="optionsSosmed" label="Sosmed"
-                                style="width: 10%; margin-bottom: 20px;" />
+                                style="width: 30%; margin-bottom: 20px;" />
                               <div v-if="sosmedOption !== null">
+                               
                                 <q-markup-table v-if="sosmedOption !== 'Lainnya'">
                                   <thead>
                                     <tr>
                                       <th class="text-center"></th>
-                                     
+
                                       <th class="text-center">Name</th>
                                       <th class="text-center" v-if="sosmedOption == 'Instagram'">Instagram</th>
                                       <th class="text-center" v-if="sosmedOption == 'Facebook'">Facebook</th>
@@ -188,116 +191,121 @@
                                   </thead>
                                   <tbody>
                                     <tr v-for="(item, index) in rateMeta" :key="item.id">
-                                      <td class="text-center"><q-checkbox v-model="articleList" :val='item.id' /></td>
-                                     
+                                      <td class="text-center"><q-checkbox v-model="sosmedList" :val='item' /></td>
+
                                       <td class="text-center">{{ item.name }}</td>
-                                      <td class="text-center" v-if="sosmedOption == 'Instagram'">{{ item.instagram ? 'Rp. ' + item.instagram : '-' }}</td>
-                                      <td class="text-center" v-if="sosmedOption == 'Facebook'">{{ item.facebook ? 'Rp. ' + item.facebook : '-' }}</td>
+                                      <td class="text-center" v-if="sosmedOption == 'Instagram'">{{ item.instagram ? formatRupiah(item.instagram)  : ' - ' }}</td>
+                                      <td class="text-center" v-if="sosmedOption == 'Facebook'">{{ item.facebook ? formatRupiah(item.facebook) : '-' }}</td>
                                       <td class="text-center">
                                         {{ item.note }}
                                       </td>
-  
+
                                     </tr>
                                   </tbody>
                                 </q-markup-table>
                                 <q-markup-table v-if="sosmedOption === 'Lainnya'">
-                                      <thead>
-                                          <tr>
-                                              <th class="text-center"></th>
-                                              <th class="text-center">Name</th>
-                                              <th class="text-center">Type</th>
-                                              <th class="text-center">Rate</th>
-                                              <th class="text-center">Note</th>
-                                           
-                                          </tr>
-                                      </thead>
-                                      <tbody>
-                                          <tr v-for="(item, index) in rateSosmedOther" :key="item.id">
-                                            <td class="text-center"><q-checkbox v-model="articleList" :val='item.id' /></td>
-                                              <td class="text-center">{{ item.name }}</td>
-                                              <td class="text-center">{{ item.type }}</td>
-                                              <td class="text-center">{{ item.is_custom_price ? 'Custom Price' : 'Rp. ' + item.rate }}</td>
-  
-                                              <td class="text-center">
-                                                  {{ item.note }}
-                                              </td>
-                                             
-                                          </tr>
-                                      </tbody>
-                                  </q-markup-table>
+                                  <thead>
+                                    <tr>
+                                      <th class="text-center"></th>
+                                      <th class="text-center">Name</th>
+                                      <th class="text-center">Type</th>
+                                      <th class="text-center">Rate</th>
+                                      <th class="text-center">Note</th>
+
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+
+                                    <tr v-for="(item, index) in rateSosmedOther" :key="item.id">
+                                      <td class="text-center"><q-checkbox v-model="sosmedList" :val='item' /></td>
+                                      <td class="text-center">{{ item.name }}</td>
+                                      <td class="text-center">{{ item.type }}</td>
+                                      <td class="text-center">{{ item.is_custom_price ? 'Custom Price' : formatRupiah(item.rate) }}</td>
+
+                                      <td class="text-center">
+                                        {{ item.note }}
+                                      </td>
+
+                                    </tr>
+                                  </tbody>
+                                </q-markup-table>
                               </div>
                             </q-card-section>
                           </q-card>
                         </q-expansion-item>
                         <q-separator />
-                        <q-expansion-item group="somegroup" class="text-left text-bold text-light-blue-10" icon="ads_click"
-                          label="Display Ads CPD" style="font-size: larger;">
+
+
+                        <!-- <q-expansion-item group="somegroup" class="text-left text-bold text-light-blue-10"
+                          icon="ads_click" label="Display Ads CPD" style="font-size: larger;" @click="typeRate = 'cpd'">
                           <q-separator />
                           <q-card>
+                           
                             <q-card-section>
                               <div>
                                 <q-markup-table>
-                                      <thead>
-                                          <tr>
-                                             
-                                              <th class="text-center"></th>
-                                              <th class="text-center">Name</th>
-                                              <th class="text-center">Type</th>
-                                              <th class="text-center">Size</th>
-                                              <th class="text-center">Rate</th>
-                                             
-                                          </tr>
-                                      </thead>
-                                      <tbody>
-                                          <tr v-for="(item, index) in cpdOtherList" :key="item.id">
-                                            <td class="text-center"><q-checkbox v-model="articleList" :val='item.id' /></td>
-                                              <td class="text-center">{{ item.name }}</td>
-                                              <td class="text-center">{{ item.type }}</td>
-  
-                                              <td class="text-center">{{ item.size }}</td>
-                                              <td class="text-center">Rp. {{ item.rate }}</td>
-                                              
-                                          </tr>
-                                      </tbody>
-                                  </q-markup-table>
+                                  <thead>
+                                    <tr>
+
+                                      <th class="text-center"></th>
+                                      <th class="text-center">Name</th>
+                                      <th class="text-center">Type</th>
+                                      <th class="text-center">Size</th>
+                                      <th class="text-center">Rate</th>
+
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr v-for="(item, index) in cpdOtherList" :key="item.id">
+                                      <td class="text-center"><q-checkbox v-model="articleList" :val='item.id' /></td>
+                                      <td class="text-center">{{ item.name }}</td>
+                                      <td class="text-center">{{ item.type }}</td>
+
+                                      <td class="text-center">{{ item.size }}</td>
+                                      <td class="text-center">Rp. {{ item.rate }}</td>
+
+                                    </tr>
+                                  </tbody>
+                                </q-markup-table>
                               </div>
                             </q-card-section>
                           </q-card>
                         </q-expansion-item>
-                        <q-separator />
-                        <q-expansion-item group="somegroup" class="text-left text-bold text-light-blue-10" icon="ads_click"
-                          label="Display Ads CPM" style="font-size: larger;">
+                        <q-separator /> -->
+
+                        <!-- <q-expansion-item group="somegroup" class="text-left text-bold text-light-blue-10"
+                          icon="ads_click" label="Display Ads CPM" style="font-size: larger;">
                           <q-separator />
                           <q-card>
                             <q-card-section>
                               <q-markup-table>
-                                      <thead>
-                                          <tr>
-                                             
-                                              <th class="text-center"></th>
-                                              <th class="text-center">Name</th>
-                                              <th class="text-center">Type</th>
-                                              <th class="text-center">Size</th>
-                                              <th class="text-center">Rate</th>
-                                             
-                                          </tr>
-                                      </thead>
-                                      <tbody>
-                                          <tr v-for="(item, index) in cpdOtherList" :key="item.id">
-                                            <td class="text-center"><q-checkbox v-model="articleList" :val='item.id' /></td>
-                                              <td class="text-center">{{ item.name }}</td>
-                                              <td class="text-center">{{ item.type }}</td>
-  
-                                              <td class="text-center">{{ item.size }}</td>
-                                              <td class="text-center">Rp. {{ item.rate }}</td>
-                                              
-                                          </tr>
-                                      </tbody>
-                                  </q-markup-table>
+                                <thead>
+                                  <tr>
+
+                                    <th class="text-center"></th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Type</th>
+                                    <th class="text-center">Size</th>
+                                    <th class="text-center">Rate</th>
+
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr v-for="(item, index) in cpdOtherList" :key="item.id">
+                                    <td class="text-center"><q-checkbox v-model="articleList" :val='item.id' /></td>
+                                    <td class="text-center">{{ item.name }}</td>
+                                    <td class="text-center">{{ item.type }}</td>
+
+                                    <td class="text-center">{{ item.size }}</td>
+                                    <td class="text-center">Rp. {{ item.rate }}</td>
+
+                                  </tr>
+                                </tbody>
+                              </q-markup-table>
                             </q-card-section>
                           </q-card>
                         </q-expansion-item>
-                        <q-separator />
+                        <q-separator /> -->
                       </q-list>
                     </div>
 
@@ -361,7 +369,7 @@
                       <div class="q-gutter-sm">
                         <q-radio size="lg" dense v-model="pay" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
                           val="cash" label="Cash" />
-                        <q-radio size="lg" dense v-model="pay" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
+                        <!-- <q-radio size="lg" dense v-model="pay" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
                           val="barter" label="Barter" />
                         <q-radio size="lg" dense v-model="pay" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
                           val="semi" label="Semi Barter" />
@@ -370,7 +378,7 @@
                         <q-radio size="lg" dense v-model="pay" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
                           val="termin" label="Termin" />
                         <q-radio size="lg" dense v-model="pay" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
-                          val="deposit" label="Deposit" />
+                          val="deposit" label="Deposit" /> -->
                       </div>
 
                       <div class="q-mt-md">
@@ -378,7 +386,7 @@
                         <div v-if="pay == 'cash'">
                           <div class="row">
                             <div class="col-md-4">
-                              <p class="text-left text-bold" style="font-size: large;"> Total : {{ finalRate }}</p>
+                              <p class="text-left text-bold" style="font-size: large;"> Total : {{ formattedFinalRate  }}</p>
                               <q-input prefix="Rp" v-model="finalRate" type="number" :disable="customPrice" outlined dense
                                 style="width: 90%;" />
 
@@ -634,7 +642,6 @@ export default {
       options,
       mitras,
       network,
-
       cashPay,
       cashPayFormatted,
 
@@ -686,16 +693,20 @@ export default {
       ],
       article: ref([]),
       articleList: ref([]),
+      sosmedList: ref([]),
       sosmedOption: ref(null),
       optionsSosmed: [
         'Facebook', 'Instagram', 'Lainnya'
       ],
       rateMeta: ref([]),
       rateSosmedOther: ref([]),
-      totalRate: ref(null),
+      totalRate: ref(0),
       finalRate: ref(0),
       customPrice: ref(true),
-      idArticle: ref([])
+      idArticle: ref([]),
+      idSosmed: ref([]),
+      typeRate: ref('article'),
+      formattedFinalRate : ref()
     }
   },
   watch: {
@@ -720,11 +731,33 @@ export default {
       },
       deep: true,
     },
+    sosmedList: {
+      handler(newVal) {
+        const mediaTayangRest = this.typeRate === 'sosmed' ? this.sosmedOption : this.modelTayang
+        const total = newVal.map((item) => mediaTayangRest === 'Facebook' ? item.facebook : mediaTayangRest === 'Instagram' ? item.instagram : item.rate);
+        this.totalRate = total.reduce((a, b) => a + b, 0)
+
+        const id = newVal.map((item) => item.id)
+        this.idSosmed = id
+
+
+      },
+      deep: true,
+    },
+    sosmedOption: {
+
+      handler() {
+        this.calculateFinalRate();
+        this.sosmedList = []
+      },
+      deep: true,
+    },
     modelTayang(newVal) {
       this.articleList = [];
       newVal === 'Mitra' ? this.getMitra() : ''
     },
     totalRate: {
+
       handler() {
         this.calculateFinalRate();
       },
@@ -737,6 +770,7 @@ export default {
       this.calculateFinalRate();
 
     },
+
   },
 
   mounted() {
@@ -748,14 +782,25 @@ export default {
 
   methods: {
     calculateFinalRate() {
-      const discountAmount = (this.value / 100) * this.totalRate;
-      const finalPrice = this.totalRate - discountAmount;
+  const discountAmount = (this.value / 100) * this.totalRate;
+  const finalPrice = this.totalRate - discountAmount;
+  this.finalRate = finalPrice; // simpan nilai mata uang sebagai angka
+  const formatter = new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+  })
+  this.formattedFinalRate = formatter.format(finalPrice); // simpan representasi string dari nilai mata uang
+  this.totalRate === 0 ? this.customPrice = false : this.customPrice = true
+},
+
+
+
+    formatRupiah(value) {
       const formatter = new Intl.NumberFormat('id-ID', {
         style: 'currency',
         currency: 'IDR',
       })
-      this.finalRate = formatter.format(finalPrice);
-      this.totalRate === 0 ? this.customPrice = false : this.customPrice = true
+      return formatter.format(value)
     },
 
 
@@ -828,6 +873,7 @@ export default {
       this.article = response.data
 
     },
+
     async getSosmed() {
       const response = await this.$api.get(`/rate-card/sosmed/all`, {
         headers: {
@@ -842,6 +888,7 @@ export default {
     async createOrder() {
       const token = sessionStorage.getItem('token')
       const id = sessionStorage.getItem('id')
+      const mediaTayangRest = this.typeRate === 'sosmed' ? this.sosmedOption : this.modelTayang
 
       const data = {
         idCust: this.custname.value,
@@ -853,11 +900,12 @@ export default {
         period_start: new Date(this.date2).toISOString(),
         period_end: new Date(this.date3).toISOString(),
         pay_type: this.pay,
-        mediaTayang: this.modelTayang,
-        OrderMitra: this.mitraData.map(option => option.value),
-        typeRate: 'article',
+        mediaTayang: mediaTayangRest,
+        OrderMitra: Array.isArray(this.mitraData) ? this.mitraData.map(option => option.value) : this.mitraData,
+        typeRate: this.typeRate,
         rateCard: {
-          article: this.idArticle
+          article: this.idArticle,
+          sosmed: this.idSosmed
         }
 
       }
@@ -884,6 +932,7 @@ export default {
           }
         });
 
+        console.log(response);
         if (response.status == 200) {
           const id = response.data.data.id
           localStorage.setItem('idOrder', id)
@@ -910,6 +959,7 @@ export default {
       }
 
     },
+
     async getMitra() {
       console.log('mitra jalan');
       try {
@@ -918,7 +968,7 @@ export default {
             'Authorization': `Bearer ${this.token}`
           }
         });
-      
+
         mitraListt = response.data.map(item => ({ label: item.name, value: item.id }));
       } catch (error) {
         console.log(error);

@@ -32,18 +32,18 @@
                                             <td class="text-center">{{ index + 1 }}</td>
                                             <td class="text-center">{{ item.name }}</td>
                                             <td class="text-center">{{ item.is_custom_price_prmn ? 'Custom Price' :
-                                                'Rp.' + item.prmn }}</td>
+                                                formatRupiah(item.prmn) }}</td>
                                             <td class="text-center">{{ item.is_custom_price_mitra ? 'Custom Price' :
-                                                'Rp.' + item.mitra }}</td>
+                                                formatRupiah(item.mitra) }}</td>
                                             <td class="text-center">{{ item.note }}</td>
                                             <td class="text-center">
                                                 <q-btn-group>
-                                                    <q-btn color="orange" icon="border_color">
+                                                    <q-btn color="orange" icon="border_color" @click="openEdit(item.id)">
                                                         <q-tooltip class="bg-orange text-body2" :offset="[10, 10]">
                                                             Edit
                                                         </q-tooltip>
                                                     </q-btn>
-                                                    <q-btn color="red" icon="delete">
+                                                    <q-btn color="red" icon="delete" @click="DeleteArt(item.id)">
                                                         <q-tooltip class="bg-red text-body2" :offset="[10, 10]">
                                                             Hapus
                                                         </q-tooltip>
@@ -122,40 +122,90 @@
         </q-dialog>
         <q-dialog v-model="edit">
             <q-card style="width: 700px; max-width: 80vw" class="justify-center q-pa-md">
-                <q-scroll-area style="height: 39vh" class="q-pa-sm">
+                <q-scroll-area style="height: 70vh" class="q-pa-sm">
                     <p class="text-center text-bold" style="font-size: x-large">
-                        EDIT NETWORK
+                        Edit Article
                     </p>
                     <q-separator class="q-my-lg" color="orange" inset />
-                    <q-form @submit.prevent="addNetwork">
+                    <q-form @submit.prevent="editArticle">
                         <div class="col">
                             <div>
                                 <p class="text-bold text-blue" style="font-size: medium">
                                     <span class="text-bold" style="font-size: medium"> Nama</span>
                                 </p>
-                                <div class="cursor-pointer text-bold" style="margin-bottom: 20px">
-                                    {{ nama == null ? dataNetwork.name : nama }}
-                                    <q-popup-edit v-model="nama" v-slot="scope">
-                                        <q-input color="blue" v-model="scope.value" dense autofocus counter
-                                            @keyup.enter="scope.set">
-                                            <template v-slot:append>
-                                                <q-icon name="edit" />
-                                            </template>
-                                        </q-input>
-                                    </q-popup-edit>
-                                </div>
-                            </div>
+                                <div class="" style="margin-bottom: 20px;">
+                                    <q-card class="my-card q-pa-sm" flat bordered>
 
+                                        <div class="cursor-pointer">
+                                            {{ nama }}
+                                            <q-popup-edit v-model="nama" auto-save v-slot="scope">
+                                                <q-input v-model="scope.value" dense autofocus counter
+                                                    @keyup.enter="scope.set" />
+                                            </q-popup-edit>
+                                        </div>
+                                    </q-card>
+                                </div>
+                                <!-- <q-input v-model="nama" class="q-my-md" dense outlined label="Nama" /> -->
+                            </div>
                             <div>
                                 <p class="text-bold text-blue" style="font-size: medium">
-                                    <span class="text-bold" style="font-size: medium">
-                                        Status</span>
+                                    <span class="text-bold" style="font-size: medium">Rate PRMN</span>
+
                                 </p>
-                                <div>
-                                    <label for="">Non Aktif</label>
-                                    <q-toggle v-model="dataNetwork.status" checked-icon="check" color="green"
-                                        unchecked-icon="clear" />
-                                    <label for="">Aktif</label>
+                                <p>
+                                    <span>Custom Price ?</span>
+                                    <q-toggle v-model="prmn" color="green" keep-color />
+                                </p>
+
+                                <div class="" style="margin-bottom: 20px;">
+                                    <q-card class="my-card q-pa-sm" flat bordered>
+
+                                        <div class="cursor-pointer">
+                                            {{ pricePrmn }}
+                                            <q-popup-edit v-model="pricePrmn" auto-save v-slot="scope">
+                                                <q-input v-model="scope.value" dense autofocus counter
+                                                    @keyup.enter="scope.set" />
+                                            </q-popup-edit>
+                                        </div>
+                                    </q-card>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <span class="text-bold" style="font-size: medium">Rate Mitra</span>
+                                </p>
+                                <p>
+                                    <span>Custom Price ?</span>
+                                    <q-toggle v-model="mitra" color="green" keep-color />
+                                </p>
+                                <div class="" style="margin-bottom: 20px;">
+                                    <q-card class="my-card q-pa-sm" flat bordered>
+
+                                        <div class="cursor-pointer">
+                                            {{ priceMitra }}
+                                            <q-popup-edit v-model="priceMitra" auto-save v-slot="scope">
+                                                <q-input v-model="scope.value" dense autofocus counter
+                                                    @keyup.enter="scope.set" />
+                                            </q-popup-edit>
+                                        </div>
+                                    </q-card>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <span class="text-bold" style="font-size: medium">Note</span>
+                                </p>
+                                <div class="" style="margin-bottom: 20px;">
+                                    <q-card class="my-card q-pa-sm" flat bordered>
+
+                                        <div class="cursor-pointer">
+                                            {{ note }}
+                                            <q-popup-edit buttons v-model="note" v-slot="scope">
+                                                <q-editor v-model="scope.value" min-height="5rem" autofocus
+                                                    @keyup.enter.stop />
+                                            </q-popup-edit>
+                                        </div>
+                                    </q-card>
                                 </div>
                             </div>
                         </div>
@@ -169,29 +219,7 @@
                 </q-scroll-area>
             </q-card>
         </q-dialog>
-        <q-dialog v-model="upload">
-            <q-card style="width: 700px; max-width: 80vw" class="justify-center q-pa-md">
-                <q-scroll-area style="height: 55vh" class="q-pa-sm">
-                    <p class="text-center text-bold" style="font-size: x-large">
-                        UPLOAD MITRA
-                    </p>
-                    <q-separator class="q-my-lg" color="orange" inset />
-                    <div class="text-left" style="margin-bottom: 10px">
-                        <q-btn class="q-mx-sm" type="submit" color="secondary" icon="cloud_download" />
-                    </div>
-                    <div class="">
-                        <q-uploader url="http://localhost:4444/upload" label="No thumbnails" color="amber"
-                            text-color="black" no-thumbnails style="width: 650px; height: 300px" />
-                    </div>
 
-                    <div class="text-right">
-                        <q-card-actions align="right">
-                            <q-btn color="black" label="Cancel" v-close-popup />
-                        </q-card-actions>
-                    </div>
-                </q-scroll-area>
-            </q-card>
-        </q-dialog>
     </q-page>
 </template>
 
@@ -214,7 +242,9 @@ export default {
             priceMitra: ref(null),
             note: ref(null),
             prmn: ref(false),
-            mitra: ref(false)
+            mitra: ref(false),
+            idArticel: ref('')
+
         };
     },
 
@@ -225,8 +255,18 @@ export default {
         current(newVal) {
             this.getArticleData();
         },
+
     },
     methods: {
+
+        formatRupiah(value) {
+            const formatter = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+            })
+            return formatter.format(value)
+        },
+
         async addArticle() {
             const token = sessionStorage.getItem("token");
             try {
@@ -254,7 +294,7 @@ export default {
                         showConfirmButton: false,
                         timer: 1500,
                     });
-                    window.location.reload()
+                    this.getArticleData()
                 }
             } catch (error) {
                 Swal.fire({
@@ -275,10 +315,103 @@ export default {
                     },
                 });
                 this.articleList = response.data;
-               
+
             } catch (error) {
                 console.log(error);
             }
+        },
+        async getArticleById(id) {
+            const token = sessionStorage.getItem("token");
+            try {
+                this.btn = true
+                const response = await this.$api.get(`rate-card/article/by-id/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                this.nama = response.data.name
+                this.priceMitra = response.data.mitra
+                this.pricePrmn = response.data.prmn
+                this.note = response.data.note
+
+            } catch (error) {
+                console.log(error);
+            } finally {
+                this.btn = false
+            }
+        },
+
+        async editArticle() {
+            const token = sessionStorage.getItem("token");
+            const data = {
+                name: this.nama,
+                prmn: parseInt(this.pricePrmn),
+                mitra: parseInt(this.priceMitra),
+                note: this.note,
+                customPricePrmn: this.prmn,
+                customPriceMitra: this.mitra
+            }
+            try {
+                const response = await this.$api.patch(`rate-card/article/edit-by-id/${this.idArticel}`, data, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Your work has been saved",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+                this.resetForm()
+                this.edit = false
+                this.getArticleData()
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        async deleteArticle(id) {
+            try {
+                const token = sessionStorage.getItem("token");
+                const response = await this.$api.delete(`rate-card/article/delete/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                });
+                this.getArticleData()
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        DeleteArt(id) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.deleteArticle(id)
+                }
+            });
+        },
+
+        openEdit(id) {
+            this.edit = true
+            this.getArticleById(id)
+            this.idArticel = id
         },
 
         resetForm() {

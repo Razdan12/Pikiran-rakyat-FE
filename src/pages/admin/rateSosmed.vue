@@ -31,8 +31,8 @@
                                         <tr v-for="(item, index) in metaList" :key="item.id">
                                             <td class="text-center">{{ index + 1 }}</td>
                                             <td class="text-center">{{ item.name }}</td>
-                                            <td class="text-center">{{ item.instagram ? 'Rp. ' + item.instagram : '-' }}</td>
-                                            <td class="text-center">{{ item.facebook ? 'Rp. ' + item.facebook : '-' }}</td>
+                                            <td class="text-center">{{ item.instagram ? formatRupiah(item.instagram) : '-' }}</td>
+                                            <td class="text-center">{{ item.facebook ? formatRupiah(item.facebook) : '-' }}</td>
                                             <td class="text-center">
                                                 {{ item.note }}
                                             </td>
@@ -93,7 +93,7 @@
                                             <td class="text-center">{{ index + 1 }}</td>
                                             <td class="text-center">{{ item.name }}</td>
                                             <td class="text-center">{{ item.type }}</td>
-                                            <td class="text-center">{{ item.is_custom_price ? 'Custom Price' : 'Rp. ' + item.rate }}</td>
+                                            <td class="text-center">{{ item.is_custom_price ? 'Custom Price' : formatRupiah(item.rate) }}</td>
 
                                             <td class="text-center">
                                                 {{ item.note }}
@@ -265,6 +265,15 @@ export default {
         },
     },
     methods: {
+
+        formatRupiah(value) {
+            const formatter = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+            })
+            return formatter.format(value)
+        },
+
         async addMeta() {
             const token = sessionStorage.getItem("token");
             try {

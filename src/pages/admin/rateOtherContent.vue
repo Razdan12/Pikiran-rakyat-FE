@@ -34,7 +34,7 @@
                                             <td class="text-center">{{ index + 1 }}</td>
                                             <td class="text-center">{{ item.name }}</td>
                                             <td class="text-center">
-                                                {{ item.is_custom_price ? 'Custom Price' : item.rate }}
+                                                {{ item.is_custom_price ? 'Custom Price' : formatRupiah(item.rate) }}
                                             </td>
 
                                             <td class="text-center">
@@ -152,6 +152,14 @@ export default {
 
     },
     methods: {
+
+        formatRupiah(value) {
+            const formatter = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+            })
+            return formatter.format(value)
+        },
 
         async addOtherSosmed() {
             const token = sessionStorage.getItem('token')
