@@ -35,16 +35,16 @@
                                             <td class="text-left">{{ index + 1 }}</td>
                                             <td class="text-left">{{ item.custname }}</td>
                                             <td class="text-center">{{ item.contactName }}</td>
-                                            <td class="text-center">{{ item.phone }}</td>
-                                            <td class="text-center">{{ item.email }}</td>
-                                            <td class="text-center">{{ item.address }}</td>
-                                            <td class="text-center">{{ item.finName }}</td>
-                                            <td class="text-center">{{ item.finContact }}</td>
+                                            <td class="text-center">{{ item.phone !== null ? item.phone : '-'}}</td>
+                                            <td class="text-center">{{ item.email !== null ? item.email : '-'}}</td>
+                                            <td class="text-center">{{ item.address !== null ? item.address : '-'}}</td>
+                                            <td class="text-center">{{ item.finName != null ? item.finName : '-'}}</td>
+                                            <td class="text-center">{{ item.finContact != null ? item.finContact : '-' }}</td>
                                             <td class="text-center">
                                                 <q-btn-group>
                                                     <q-btn color="orange" icon="border_color" />
                                                     <q-btn color="blue" icon="article" />
-                                                    <q-btn color="red" icon="delete" @click="deleteItem(item.id)"/>
+                                                    <q-btn color="red" icon="delete" @click="deleteItem(item.id)" />
                                                 </q-btn-group>
                                             </td>
                                         </tr>
@@ -220,8 +220,18 @@ export default {
             formData.append('fincontact', this.finNameContact)
             formData.append('fincontact_phone', this.finPhone)
 
-
+            // Check if all form data is filled
             const token = sessionStorage.getItem('token')
+
+            if (this.customerName === null || this.type === null || this.contactName === null || this.companyEmail === null) {
+                this.medium = false
+                Swal.fire({
+                    icon: "warning",
+                    title: "Oops...",
+                    text: "Please fill all the form data",
+                });
+                return;
+            }
             try {
                 this.btn = true
                 const response = await this.$api.post("/customer/add", formData, {
@@ -241,9 +251,8 @@ export default {
                         timer: 1500
                     });
                     this.resetForm()
+                    this.getCustData()
                 }
-
-                // status ? this.$router.push("/order") : ""
 
             } catch (error) {
 
@@ -251,12 +260,14 @@ export default {
                     icon: "error",
                     title: "Oops...",
                     text: "invalid",
-
                 });
             } finally {
                 this.btn = false
             }
+
+
         },
+
 
         resetForm() {
             this.type = null

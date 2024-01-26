@@ -30,7 +30,7 @@
                       <td class="text-center">{{ item.period_start }} - {{ item.period_end }}</td>
                       <td class="text-center">{{ item.media_order }}</td>
                       <td class="text-center">
-                        <q-btn color="secondary" label="MO" to="/mo" @click="clickBtn(item.idOrder)" />
+                        <q-btn color="secondary" label="MO" to="/sales/mo" @click="clickBtn(item.idOrder)" />
                       </td>
                     </tr>
 

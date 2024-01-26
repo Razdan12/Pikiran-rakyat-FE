@@ -32,6 +32,9 @@
                                             <td class="text-center">{{ index + 1 }}</td>
                                             <td class="text-center cursor-pointer" @click="idUser = item.id">
                                                 {{ item.name }}
+                                                <q-tooltip class="bg-orange text-body2" :offset="[10, 10]">
+                                                            Edit Nama
+                                                        </q-tooltip>
                                                 <q-popup-edit v-model="namaEdit" v-slot="scope">
                                                     <q-input autofocus dense v-model="scope.value"
                                                         :model-value="scope.value" hint="Your Name" :rules="[

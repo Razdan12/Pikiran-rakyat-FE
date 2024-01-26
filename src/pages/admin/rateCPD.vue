@@ -41,12 +41,12 @@
                                             <td class="text-center">{{ formatRupiah(item.rate_section) }}</td>
                                             <td class="text-center">
                                                 <q-btn-group>
-                                                    <q-btn color="orange" icon="border_color">
+                                                    <q-btn color="orange" icon="border_color" @click="trigerEdit(item.id, 'display')">
                                                         <q-tooltip class="bg-orange text-body2" :offset="[10, 10]">
                                                             Edit
                                                         </q-tooltip>
                                                     </q-btn>
-                                                    <q-btn color="red" icon="delete">
+                                                    <q-btn color="red" icon="delete" @click="DeleteCpd(item.id)">
                                                         <q-tooltip class="bg-red text-body2" :offset="[10, 10]">
                                                             Hapus
                                                         </q-tooltip>
@@ -101,12 +101,12 @@
                                             <td class="text-center">{{ formatRupiah(item.rate) }}</td>
                                             <td class="text-center">
                                                 <q-btn-group>
-                                                    <q-btn color="orange" icon="border_color">
+                                                    <q-btn color="orange" icon="border_color" @click="trigerEdit(item.id, 'other')">
                                                         <q-tooltip class="bg-orange text-body2" :offset="[10, 10]">
                                                             Edit
                                                         </q-tooltip>
                                                     </q-btn>
-                                                    <q-btn color="red" icon="delete">
+                                                    <q-btn color="red" icon="delete" @click="DeleteCpd(item.id)">
                                                         <q-tooltip class="bg-red text-body2" :offset="[10, 10]">
                                                             Hapus
                                                         </q-tooltip>
@@ -236,6 +236,194 @@
                 </q-scroll-area>
             </q-card>
         </q-dialog>
+        <q-dialog v-model="edit">
+            <q-card style="width: 700px; max-width: 80vw" class="justify-center q-pa-md">
+                <q-scroll-area style="height: 70vh" class="q-pa-sm">
+                    <p class="text-center text-bold" style="font-size: x-large">
+                        Edit Ads
+                    </p>
+                    <q-separator class="q-my-lg" color="orange" inset />
+                    <q-form @submit.prevent="editCpd">
+                        <div class="col">
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <span class="text-bold" style="font-size: medium"> Nama</span>
+                                </p>
+                                <div class="" style="margin-bottom: 20px;">
+                                    <q-card class="my-card q-pa-sm" flat bordered>
+
+                                        <div class="cursor-pointer">
+                                            {{ nama }}
+                                            <q-popup-edit v-model="nama" auto-save v-slot="scope">
+                                                <q-input v-model="scope.value" dense autofocus counter
+                                                    @keyup.enter="scope.set" />
+                                            </q-popup-edit>
+                                        </div>
+                                    </q-card>
+                                </div>
+
+                            </div>
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <span class="text-bold" style="font-size: medium"> Size</span>
+                                </p>
+                                <div class="" style="margin-bottom: 20px;">
+                                    <q-card class="my-card q-pa-sm" flat bordered>
+
+                                        <div class="cursor-pointer">
+                                            {{ size }}
+                                            <q-popup-edit v-model="size" auto-save v-slot="scope">
+                                                <q-input v-model="scope.value" dense autofocus counter
+                                                    @keyup.enter="scope.set" />
+                                            </q-popup-edit>
+                                        </div>
+                                    </q-card>
+                                </div>
+
+                            </div>
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <span class="text-bold" style="font-size: medium">Home</span>
+
+                                </p>
+                                <div class="" style="margin-bottom: 20px;">
+                                    <q-card class="my-card q-pa-sm" flat bordered>
+
+                                        <div class="cursor-pointer">
+                                            {{ formatRupiah(home) }}
+                                            <q-popup-edit v-model="home" auto-save v-slot="scope">
+                                                <q-input v-model="scope.value" dense autofocus counter
+                                                    @keyup.enter="scope.set" />
+                                            </q-popup-edit>
+                                        </div>
+                                    </q-card>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <span class="text-bold" style="font-size: medium">Detail</span>
+                                </p>
+
+                                <div class="" style="margin-bottom: 20px;">
+                                    <q-card class="my-card q-pa-sm" flat bordered>
+
+                                        <div class="cursor-pointer">
+                                            {{ formatRupiah(detail) }}
+                                            <q-popup-edit v-model="detail" auto-save v-slot="scope">
+                                                <q-input v-model="scope.value" dense autofocus counter
+                                                    @keyup.enter="scope.set" />
+                                            </q-popup-edit>
+                                        </div>
+                                    </q-card>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <span class="text-bold" style="font-size: medium">Section</span>
+                                </p>
+
+                                <div class="" style="margin-bottom: 20px;">
+                                    <q-card class="my-card q-pa-sm" flat bordered>
+
+                                        <div class="cursor-pointer">
+                                            {{ formatRupiah(section) }}
+                                            <q-popup-edit v-model="section" auto-save v-slot="scope">
+                                                <q-input v-model="scope.value" dense autofocus counter
+                                                    @keyup.enter="scope.set" />
+                                            </q-popup-edit>
+                                        </div>
+                                    </q-card>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="text-right">
+                            <q-card-actions align="right">
+                                <q-btn class="q-mx-sm" type="submit" color="secondary" label="Submit" :disable="btn" />
+                                <q-btn color="black" label="Cancel" v-close-popup />
+                            </q-card-actions>
+                        </div>
+                    </q-form>
+                </q-scroll-area>
+            </q-card>
+        </q-dialog>
+        <q-dialog v-model="editOther">
+            <q-card style="width: 700px; max-width: 80vw" class="justify-center q-pa-md">
+                <q-scroll-area style="height: 50vh" class="q-pa-sm">
+                    <p class="text-center text-bold" style="font-size: x-large">
+                        Edit Ads
+                    </p>
+                    <q-separator class="q-my-lg" color="orange" inset />
+                    <q-form @submit.prevent="editCpd">
+                        <div class="col">
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <span class="text-bold" style="font-size: medium"> Nama</span>
+                                </p>
+                                <div class="" style="margin-bottom: 20px;">
+                                    <q-card class="my-card q-pa-sm" flat bordered>
+
+                                        <div class="cursor-pointer">
+                                            {{ nama }}
+                                            <q-popup-edit v-model="nama" auto-save v-slot="scope">
+                                                <q-input v-model="scope.value" dense autofocus counter
+                                                    @keyup.enter="scope.set" />
+                                            </q-popup-edit>
+                                        </div>
+                                    </q-card>
+                                </div>
+
+                            </div>
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <span class="text-bold" style="font-size: medium"> Size</span>
+                                </p>
+                                <div class="" style="margin-bottom: 20px;">
+                                    <q-card class="my-card q-pa-sm" flat bordered>
+
+                                        <div class="cursor-pointer">
+                                            {{ size ? size : '-' }}
+                                            <q-popup-edit v-model="size" auto-save v-slot="scope">
+                                                <q-input v-model="scope.value" dense autofocus counter
+                                                    @keyup.enter="scope.set" />
+                                            </q-popup-edit>
+                                        </div>
+                                    </q-card>
+                                </div>
+
+                            </div>
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <span class="text-bold" style="font-size: medium">Rate</span>
+
+                                </p>
+                                <div class="" style="margin-bottom: 20px;">
+                                    <q-card class="my-card q-pa-sm" flat bordered>
+
+                                        <div class="cursor-pointer">
+                                            {{ formatRupiah(rate) }}
+                                            <q-popup-edit v-model="rate" auto-save v-slot="scope">
+                                                <q-input v-model="scope.value" dense autofocus counter
+                                                    @keyup.enter="scope.set" />
+                                            </q-popup-edit>
+                                        </div>
+                                    </q-card>
+                                </div>
+                            </div>
+                            
+                            
+
+                        </div>
+                        <div class="text-right">
+                            <q-card-actions align="right">
+                                <q-btn class="q-mx-sm" type="submit" color="secondary" label="Submit" :disable="btn" />
+                                <q-btn color="black" label="Cancel" v-close-popup />
+                            </q-card-actions>
+                        </div>
+                    </q-form>
+                </q-scroll-area>
+            </q-card>
+        </q-dialog>
 
     </q-page>
 </template>
@@ -254,6 +442,7 @@ export default {
             medium: ref(false),
             upload: ref(false),
             edit: ref(false),
+            editOther: ref(false),
             btn: ref(false),
             nama: ref(null),
             type: ref(null),
@@ -264,7 +453,8 @@ export default {
             detail: ref(null),
             section: ref(null),
             other: ref(false),
-            rate: ref(false)
+            rate: ref(false),
+            id: ref('')
         };
     },
 
@@ -277,7 +467,7 @@ export default {
         },
     },
     methods: {
-        
+
         formatRupiah(value) {
             const formatter = new Intl.NumberFormat('id-ID', {
                 style: 'currency',
@@ -332,11 +522,11 @@ export default {
             try {
                 this.btn = true;
                 const data = {
-                    name : this.nama,
+                    name: this.nama,
                     type: this.type,
                     size: this.size,
                     rate: parseInt(this.rate),
-                    customPrice : false,
+                    customPrice: false,
                 };
                 const response = await this.$api.post(`rate-card/cpd/create/other`, data, {
                     headers: {
@@ -354,7 +544,7 @@ export default {
                         showConfirmButton: false,
                         timer: 1500,
                     });
-                    window.location.reload()
+                    this.getMitraData()
                 }
             } catch (error) {
                 this.medium = false
@@ -384,6 +574,116 @@ export default {
             } catch (error) {
                 console.log(error);
             }
+        },
+
+        async getCpdById(id) {
+            const token = sessionStorage.getItem("token");
+            try {
+                const response = await this.$api.get(
+                    `/rate-card/cpd/get-by-id/${id}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+               
+                this.nama = response.data.name
+                this.size = response.data.size
+                this.home = response.data.rate_home
+                this.detail = response.data.rate_detail
+                this.section = response.data.rate_section
+                this.rate = response.data.rate
+
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        async editCpd() {
+            const data = {
+                name: this.nama,
+                size: this.size,
+                home: parseInt(this.home),
+                detail: parseInt(this.detail),
+                section: parseInt(this.section),
+                rate: parseInt(this.rate),
+            }
+            const token = sessionStorage.getItem("token");
+            try {
+                this.btn = true;
+               
+                const response = await this.$api.patch(`rate-card/cpd/edit-by-id/${this.id}`, data, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (response) {
+                    this.edit = false
+                    this.editOther = false
+                    this.resetForm()
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Your work has been saved",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                    this.getMitraData()
+                }
+            } catch (error) {
+                this.edit = false
+                this.editOther = false
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "invalid",
+                });
+            } finally {
+                this.btn = false;
+            }
+
+        },
+        async deleteCpd(id) {
+            try {
+                const token = sessionStorage.getItem("token");
+                const response = await this.$api.delete(`rate-card/cpd/delete-by-id/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                });
+                this.getMitraData()
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        DeleteCpd(id) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.deleteCpd(id)
+                }
+            });
+        },
+
+        trigerEdit(id, type) {
+            type === 'other' ? this.editOther = true : this.edit = true
+            this.getCpdById(id)
+            this.id = id
         },
         resetForm() {
             this.nama = null,

@@ -177,7 +177,7 @@
                               <q-select outlined v-model="sosmedOption" :options="optionsSosmed" label="Sosmed"
                                 style="width: 30%; margin-bottom: 20px;" />
                               <div v-if="sosmedOption !== null">
-                               
+
                                 <q-markup-table v-if="sosmedOption !== 'Lainnya'">
                                   <thead>
                                     <tr>
@@ -194,8 +194,10 @@
                                       <td class="text-center"><q-checkbox v-model="sosmedList" :val='item' /></td>
 
                                       <td class="text-center">{{ item.name }}</td>
-                                      <td class="text-center" v-if="sosmedOption == 'Instagram'">{{ item.instagram ? formatRupiah(item.instagram)  : ' - ' }}</td>
-                                      <td class="text-center" v-if="sosmedOption == 'Facebook'">{{ item.facebook ? formatRupiah(item.facebook) : '-' }}</td>
+                                      <td class="text-center" v-if="sosmedOption == 'Instagram'">{{ item.instagram ?
+                                        formatRupiah(item.instagram) : ' - ' }}</td>
+                                      <td class="text-center" v-if="sosmedOption == 'Facebook'">{{ item.facebook ?
+                                        formatRupiah(item.facebook) : '-' }}</td>
                                       <td class="text-center">
                                         {{ item.note }}
                                       </td>
@@ -220,7 +222,8 @@
                                       <td class="text-center"><q-checkbox v-model="sosmedList" :val='item' /></td>
                                       <td class="text-center">{{ item.name }}</td>
                                       <td class="text-center">{{ item.type }}</td>
-                                      <td class="text-center">{{ item.is_custom_price ? 'Custom Price' : formatRupiah(item.rate) }}</td>
+                                      <td class="text-center">{{ item.is_custom_price ? 'Custom Price' :
+                                        formatRupiah(item.rate) }}</td>
 
                                       <td class="text-center">
                                         {{ item.note }}
@@ -369,7 +372,7 @@
                       <div class="q-gutter-sm">
                         <q-radio size="lg" dense v-model="pay" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
                           val="cash" label="Cash" />
-                        <!-- <q-radio size="lg" dense v-model="pay" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
+                        <q-radio size="lg" dense v-model="pay" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
                           val="barter" label="Barter" />
                         <q-radio size="lg" dense v-model="pay" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
                           val="semi" label="Semi Barter" />
@@ -378,7 +381,7 @@
                         <q-radio size="lg" dense v-model="pay" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
                           val="termin" label="Termin" />
                         <q-radio size="lg" dense v-model="pay" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
-                          val="deposit" label="Deposit" /> -->
+                          val="deposit" label="Deposit" />
                       </div>
 
                       <div class="q-mt-md">
@@ -386,7 +389,8 @@
                         <div v-if="pay == 'cash'">
                           <div class="row">
                             <div class="col-md-4">
-                              <p class="text-left text-bold" style="font-size: large;"> Total : {{ formattedFinalRate  }}</p>
+                              <p class="text-left text-bold" style="font-size: large;"> Total : {{ formattedFinalRate }}
+                              </p>
                               <q-input prefix="Rp" v-model="finalRate" type="number" :disable="customPrice" outlined dense
                                 style="width: 90%;" />
 
@@ -706,7 +710,7 @@ export default {
       idArticle: ref([]),
       idSosmed: ref([]),
       typeRate: ref('article'),
-      formattedFinalRate : ref()
+      formattedFinalRate: ref()
     }
   },
   watch: {
@@ -782,18 +786,16 @@ export default {
 
   methods: {
     calculateFinalRate() {
-  const discountAmount = (this.value / 100) * this.totalRate;
-  const finalPrice = this.totalRate - discountAmount;
-  this.finalRate = finalPrice; // simpan nilai mata uang sebagai angka
-  const formatter = new Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR',
-  })
-  this.formattedFinalRate = formatter.format(finalPrice); // simpan representasi string dari nilai mata uang
-  this.totalRate === 0 ? this.customPrice = false : this.customPrice = true
-},
-
-
+      const discountAmount = (this.value / 100) * this.totalRate;
+      const finalPrice = this.totalRate - discountAmount;
+      this.finalRate = finalPrice; // simpan nilai mata uang sebagai angka
+      const formatter = new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+      })
+      this.formattedFinalRate = formatter.format(finalPrice); // simpan representasi string dari nilai mata uang
+      this.totalRate === 0 ? this.customPrice = false : this.customPrice = true
+    },
 
     formatRupiah(value) {
       const formatter = new Intl.NumberFormat('id-ID', {
@@ -802,7 +804,6 @@ export default {
       })
       return formatter.format(value)
     },
-
 
     getDate() {
       const dateNow = new Date();

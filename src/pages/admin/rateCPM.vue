@@ -38,12 +38,12 @@
                                             <td class="text-center">{{ formatRupiah(item.rate) }}</td>
                                             <td class="text-center">
                                                 <q-btn-group>
-                                                    <q-btn color="orange" icon="border_color">
+                                                    <q-btn color="orange" icon="border_color" @click="trigerEdit(item.id)">
                                                         <q-tooltip class="bg-orange text-body2" :offset="[10, 10]">
                                                             Edit
                                                         </q-tooltip>
                                                     </q-btn>
-                                                    <q-btn color="red" icon="delete">
+                                                    <q-btn color="red" icon="delete" @click="DeleteCpm(item.id)">
                                                         <q-tooltip class="bg-red text-body2" :offset="[10, 10]">
                                                             Hapus
                                                         </q-tooltip>
@@ -112,6 +112,83 @@
                 </q-scroll-area>
             </q-card>
         </q-dialog>
+        <q-dialog v-model="edit">
+            <q-card style="width: 700px; max-width: 80vw" class="justify-center q-pa-md">
+                <q-scroll-area style="height: 50vh" class="q-pa-sm">
+                    <p class="text-center text-bold" style="font-size: x-large">
+                        Edit Ads
+                    </p>
+                    <q-separator class="q-my-lg" color="orange" inset />
+                    <q-form @submit.prevent="editCpm">
+                        <div class="col">
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <span class="text-bold" style="font-size: medium"> Nama</span>
+                                </p>
+                                <div class="" style="margin-bottom: 20px;">
+                                    <q-card class="my-card q-pa-sm" flat bordered>
+
+                                        <div class="cursor-pointer">
+                                            {{ nama }}
+                                            <q-popup-edit v-model="nama" auto-save v-slot="scope">
+                                                <q-input v-model="scope.value" dense autofocus counter
+                                                    @keyup.enter="scope.set" />
+                                            </q-popup-edit>
+                                        </div>
+                                    </q-card>
+                                </div>
+
+                            </div>
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <span class="text-bold" style="font-size: medium"> Size</span>
+                                </p>
+                                <div class="" style="margin-bottom: 20px;">
+                                    <q-card class="my-card q-pa-sm" flat bordered>
+
+                                        <div class="cursor-pointer">
+                                            {{ size ? size : '-' }}
+                                            <q-popup-edit v-model="size" auto-save v-slot="scope">
+                                                <q-input v-model="scope.value" dense autofocus counter
+                                                    @keyup.enter="scope.set" />
+                                            </q-popup-edit>
+                                        </div>
+                                    </q-card>
+                                </div>
+
+                            </div>
+                            <div>
+                                <p class="text-bold text-blue" style="font-size: medium">
+                                    <span class="text-bold" style="font-size: medium">Rate</span>
+
+                                </p>
+                                <div class="" style="margin-bottom: 20px;">
+                                    <q-card class="my-card q-pa-sm" flat bordered>
+
+                                        <div class="cursor-pointer">
+                                            {{ formatRupiah(rate) }}
+                                            <q-popup-edit v-model="rate" auto-save v-slot="scope">
+                                                <q-input v-model="scope.value" dense autofocus counter
+                                                    @keyup.enter="scope.set" />
+                                            </q-popup-edit>
+                                        </div>
+                                    </q-card>
+                                </div>
+                            </div>
+                            
+                            
+
+                        </div>
+                        <div class="text-right">
+                            <q-card-actions align="right">
+                                <q-btn class="q-mx-sm" type="submit" color="secondary" label="Submit" :disable="btn" />
+                                <q-btn color="black" label="Cancel" v-close-popup />
+                            </q-card-actions>
+                        </div>
+                    </q-form>
+                </q-scroll-area>
+            </q-card>
+        </q-dialog>
 
     </q-page>
 </template>
@@ -135,6 +212,7 @@ export default {
             rate: ref(null),
             type: ref(null),
             typeOption2: ["Mobile AMP", "Desktop", "Mobile"],
+            id: ref('')
 
 
         };
@@ -185,7 +263,7 @@ export default {
                         showConfirmButton: false,
                         timer: 1500,
                     });
-                    window.location.reload()
+                    this.getCpmData()
                 }
             } catch (error) {
                 this.medium = false
@@ -211,11 +289,113 @@ export default {
                     }
                 );
                 this.cpmList = response.data
-                console.log(response);
+                
             } catch (error) {
                 console.log(error);
             }
         },
+        async getCpmById(id) {
+            const token = sessionStorage.getItem("token");
+            try {
+                const response = await this.$api.get(
+                    `/rate-card/cpm/get-by-id/${id}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+                this.nama = response.data.name
+                this.size = response.data.size
+                this.rate = response.data.rate
+
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async editCpm() {
+            const data = {
+                name: this.nama,
+                size: this.size,
+                rate: parseInt(this.rate),
+            }
+            const token = sessionStorage.getItem("token");
+            try {
+                this.btn = true;
+               
+                const response = await this.$api.patch(`rate-card/cpm/edit-by-id/${this.id}`, data, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (response) {
+                    this.edit = false
+                    this.resetForm()
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Your work has been saved",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                    this.getCpmData()
+                }
+            } catch (error) {
+                this.edit = false
+                
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "invalid",
+                });
+            } finally {
+                this.btn = false;
+            }
+
+        },
+        async deleteCpm(id) {
+            try {
+                const token = sessionStorage.getItem("token");
+                const response = await this.$api.delete(`rate-card/cpm/delete-by-id/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                });
+                this.getCpmData()
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        DeleteCpm(id) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.deleteCpm(id)
+                }
+            });
+        },
+
+        trigerEdit(id){
+            this.edit = true
+            this.getCpmById(id)
+            this.id = id
+        },
+
+
 
         resetForm() {
             this.nama = null,
