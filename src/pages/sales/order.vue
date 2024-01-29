@@ -417,8 +417,11 @@
                         <div v-else-if="pay == 'barter'">
                           <div class="row">
                             <div class="col-md-4">
-                              <p class="text-left text-bold" style="font-size: large;"> Nilai Barter :</p>
-                              <q-input prefix="Rp" type="number" outlined dense style="width: 90%;" />
+
+                              <p class="text-left text-bold" style="font-size: large;"> Nilai Barter : {{
+                                formattedFinalRate }}</p>
+                              <q-input prefix="Rp" v-model="finalRate" type="number" :disable="customPrice" outlined dense
+                                style="width: 90%;" />
                               <p class="text-left text-bold" style="font-size: large;"> Jatuh Tempo :</p>
                               <q-input filled v-model="date" mask="date" :rules="['date']" dense style="width: 90%;">
                                 <template v-slot:append>
@@ -436,16 +439,20 @@
                             </div>
                             <div class="col-md-4">
                               <p class="text-left text-bold" style="font-size: large;"> Item Barang :</p>
-                              <q-input outlined dense style="width: 90%;" type="textarea"></q-input>
+                              <q-input outlined v-model="barangBarter" dense style="width: 90%;"
+                                type="textarea"></q-input>
                             </div>
                           </div>
 
                         </div>
                         <div v-else-if="pay == 'semi'">
+                          <p class="text-left text-bold" style="font-size: large;"> Total : {{ formattedFinalRate }}</p>
                           <div class="row">
                             <div class="col-md-4">
-                              <p class="text-left text-bold" style="font-size: large;"> Nilai Barter :</p>
-                              <q-input prefix="Rp" type="number" outlined dense style="width: 90%;" />
+                              <p class="text-left text-bold" style="font-size: large;"> Nilai Barter : {{
+                                formatRupiah(semiBarter) }}</p>
+                              <q-input prefix="Rp" v-model="semiBarter" type="number" :disable="customPrice" outlined
+                                dense style="width: 90%;" />
                               <p class="text-left text-bold" style="font-size: large;"> Jatuh Tempo :</p>
                               <q-input filled v-model="date" mask="date" :rules="['date']" dense style="width: 90%;">
                                 <template v-slot:append>
@@ -462,14 +469,15 @@
                               </q-input>
                             </div>
                             <div class="col-md-4">
-                              <p class="text-left text-bold" style="font-size: large;"> Nilai Cash :</p>
-                              <q-input prefix="Rp" type="number" outlined dense style="width: 90%;" />
+                              <p class="text-left text-bold" style="font-size: large;"> Nilai Cash : {{
+                                formatRupiah(semiCash) }}</p>
+                              <q-input prefix="Rp" type="number" v-model="semiCash" outlined dense style="width: 90%;" />
                               <p class="text-left text-bold" style="font-size: large;"> Jatuh Tempo :</p>
-                              <q-input filled v-model="date" mask="date" :rules="['date']" dense style="width: 90%;">
+                              <q-input filled v-model="date2" mask="date" :rules="['date']" dense style="width: 90%;">
                                 <template v-slot:append>
                                   <q-icon name="event" class="cursor-pointer">
                                     <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                                      <q-date v-model="date" color="cyan">
+                                      <q-date v-model="date2" color="cyan">
                                         <div class="row items-center justify-end">
                                           <q-btn v-close-popup label="Close" color="primary" flat />
                                         </div>
@@ -481,7 +489,8 @@
                             </div>
                             <div class="col-md-4">
                               <p class="text-left text-bold" style="font-size: large;"> Item Barang :</p>
-                              <q-input outlined dense style="width: 90%;" type="textarea"></q-input>
+                              <q-input outlined v-model="barangBarter" dense style="width: 90%;"
+                                type="textarea"></q-input>
                             </div>
                           </div>
 
@@ -489,8 +498,10 @@
                         <div v-else-if="pay == 'kredit'">
                           <div class="row">
                             <div class="col-md-4">
-                              <p class="text-left text-bold" style="font-size: large;"> NIlai Kredit :</p>
-                              <q-input prefix="Rp" type="number" outlined dense style="width: 90%;" />
+                              <p class="text-left text-bold" style="font-size: large;"> Nilai Kredit : {{
+                                formattedFinalRate }}</p>
+                              <q-input prefix="Rp" v-model="finalRate" type="number" :disable="customPrice" outlined dense
+                                style="width: 90%;" />
                             </div>
                             <div class="col-md-4">
                               <p class="text-left text-bold" style="font-size: large;"> Jatuh Tempo :</p>
@@ -512,10 +523,11 @@
 
                         </div>
                         <div v-else-if="pay == 'termin'">
+                          <p class="text-left text-bold" style="font-size: large;"> Total : {{ formattedFinalRate }}</p>
                           <div class="row">
                             <div class="col-md-4">
-                              <p class="text-left text-bold" style="font-size: large;"> Termin 1 :</p>
-                              <q-input prefix="Rp" type="number" outlined dense style="width: 90%;" />
+                              <p class="text-left text-bold" style="font-size: large;"> Termin 1 40% : {{ formatRupiah(termin1) }}</p>
+                              <q-input prefix="Rp" v-model="termin1" type="number" outlined dense style="width: 90%;" />
                               <p class="text-left text-bold" style="font-size: large;"> Jatuh Tempo :</p>
                               <q-input filled v-model="date" mask="date" :rules="['date']" dense style="width: 90%;">
                                 <template v-slot:append>
@@ -532,14 +544,14 @@
                               </q-input>
                             </div>
                             <div class="col-md-4">
-                              <p class="text-left text-bold" style="font-size: large;"> Termin 2 :</p>
-                              <q-input prefix="Rp" type="number" outlined dense style="width: 90%;" />
+                              <p class="text-left text-bold" style="font-size: large;"> Termin 2 30% : {{ formatRupiah(termin2) }}</p>
+                              <q-input prefix="Rp" v-model="termin2" type="number" outlined dense style="width: 90%;" />
                               <p class="text-left text-bold" style="font-size: large;"> Jatuh Tempo :</p>
-                              <q-input filled v-model="date" mask="date" :rules="['date']" dense style="width: 90%;">
+                              <q-input filled v-model="date2" mask="date" :rules="['date']" dense style="width: 90%;">
                                 <template v-slot:append>
                                   <q-icon name="event" class="cursor-pointer">
                                     <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                                      <q-date v-model="date" color="cyan">
+                                      <q-date v-model="date2" color="cyan">
                                         <div class="row items-center justify-end">
                                           <q-btn v-close-popup label="Close" color="primary" flat />
                                         </div>
@@ -550,14 +562,14 @@
                               </q-input>
                             </div>
                             <div class="col-md-4">
-                              <p class="text-left text-bold" style="font-size: large;"> Termin 3 :</p>
-                              <q-input prefix="Rp" type="number" outlined dense style="width: 90%;" />
+                              <p class="text-left text-bold" style="font-size: large;"> Termin 3 30% : {{ formatRupiah(termin3) }}</p>
+                              <q-input prefix="Rp" v-model="termin3"  type="number" outlined dense style="width: 90%;" />
                               <p class="text-left text-bold" style="font-size: large;"> Jatuh Tempo :</p>
-                              <q-input filled v-model="date" mask="date" :rules="['date']" dense style="width: 90%;">
+                              <q-input filled v-model="date3" mask="date" :rules="['date']" dense style="width: 90%;">
                                 <template v-slot:append>
                                   <q-icon name="event" class="cursor-pointer">
                                     <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                                      <q-date v-model="date" color="cyan">
+                                      <q-date v-model="date3" color="cyan">
                                         <div class="row items-center justify-end">
                                           <q-btn v-close-popup label="Close" color="primary" flat />
                                         </div>
@@ -596,7 +608,7 @@
                           <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
                         </q-popup-edit>
                       </div>
-                      <q-slider class="q-mt-md" v-model="value" :min="0" :max="100" :step="0.01" label label-always
+                      <q-slider class="q-mt-md" v-model="value" :min="0" :max="30" :step="0.01" label label-always
                         color="light-green" />
 
                     </div>
@@ -628,27 +640,18 @@ import { ref, watch } from 'vue'
 
 let optionsList = []
 let mitraListt = []
-let networklistt = []
 
 export default {
   setup() {
 
     const options = ref(optionsList)
     const mitras = ref(mitraListt)
-    const network = ref(networklistt)
-    const cashPay = ref(null)
-    const cashPayFormatted = ref('')
-
 
     return {
 
       value: ref(0),
       options,
       mitras,
-      network,
-      cashPay,
-      cashPayFormatted,
-
       filterFn(val, update, abort) {
         update(() => {
           const needle = val.toLowerCase()
@@ -661,8 +664,6 @@ export default {
           mitras.value = mitraListt.filter(v => v.label.toLowerCase().indexOf(needle) > -1)
         })
       },
-
-      networkData: ref(null),
       mitraData: ref(null),
       custname: ref(null),
       picName: ref(''),
@@ -671,14 +672,9 @@ export default {
       custLogo: 'https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=',
       token: sessionStorage.getItem('token'),
       sales: ref(null),
-      sosmed: ref([]),
-      sosmedList: ref([]),
       A1: ref(false),
       A2: ref(false),
-      artikel_1: ref(null),
-      artikel_2: ref(null),
       camp_name: ref(null),
-      prmn: ref(false),
       pay: ref(null),
       date: ref(null),
       date2: ref(null),
@@ -688,7 +684,6 @@ export default {
       deposit: ref(null),
       minDeposit: ref(null),
       submit: ref(false),
-
 
       //new setting
       modelTayang: ref(null),
@@ -710,7 +705,13 @@ export default {
       idArticle: ref([]),
       idSosmed: ref([]),
       typeRate: ref('article'),
-      formattedFinalRate: ref()
+      formattedFinalRate: ref(),
+      barangBarter: ref(''),
+      semiCash: ref(''),
+      semiBarter: ref(''),
+      termin1: ref(0),
+      termin2: ref(0),
+      termin3: ref(0),
     }
   },
   watch: {
@@ -726,30 +727,17 @@ export default {
     },
     articleList: {
       handler(newVal) {
-        const total = newVal.map((item) => this.modelTayang === 'PRMN' ? item.prmn : item.mitra);
-        this.totalRate = total.reduce((a, b) => a + b, 0)
-
-        const id = newVal.map((item) => item.id)
-        this.idArticle = id
-
+        this.getTotalArticle(newVal)
       },
       deep: true,
     },
     sosmedList: {
       handler(newVal) {
-        const mediaTayangRest = this.typeRate === 'sosmed' ? this.sosmedOption : this.modelTayang
-        const total = newVal.map((item) => mediaTayangRest === 'Facebook' ? item.facebook : mediaTayangRest === 'Instagram' ? item.instagram : item.rate);
-        this.totalRate = total.reduce((a, b) => a + b, 0)
-
-        const id = newVal.map((item) => item.id)
-        this.idSosmed = id
-
-
+        this.getTotalSosmed(newVal)
       },
       deep: true,
     },
     sosmedOption: {
-
       handler() {
         this.calculateFinalRate();
         this.sosmedList = []
@@ -769,11 +757,22 @@ export default {
     },
     value() {
       this.calculateFinalRate();
+     
     },
-    pay() {
+    pay(newVal) {
+      if (newVal === 'semi') {
+        this.semiBarter = this.finalRate
+      }
+      if(newVal === 'termin'){
+        this.termin1 = ( 40 / 100) * this.finalRate
+        this.termin2 = ( 30 / 100) * this.finalRate
+        this.termin3 = ( 30 / 100) * this.finalRate
+      }
       this.calculateFinalRate();
-
-    },
+    }, 
+    semiCash(newVal) {
+      this.semiBarter = this.finalRate - newVal
+    }
 
   },
 
@@ -785,15 +784,31 @@ export default {
   },
 
   methods: {
+
+    getTotalArticle(newVal) {
+      const total = newVal?.map((item) => this.modelTayang === 'PRMN' ? item.prmn : item.mitra);
+      this.totalRate = total.reduce((a, b) => a + b, 0)
+      const id = newVal?.map((item) => item.id)
+      this.idArticle = id
+    },
+
+    getTotalSosmed(newVal) {
+      const mediaTayangRest = this.typeRate === 'sosmed' ? this.sosmedOption : this.modelTayang
+      const total = newVal?.map((item) => mediaTayangRest === 'Facebook' ? item.facebook : mediaTayangRest === 'Instagram' ? item.instagram : item.rate);
+      this.totalRate = total.reduce((a, b) => a + b, 0)
+      const id = newVal?.map((item) => item.id)
+      this.idSosmed = id
+    },
+
     calculateFinalRate() {
       const discountAmount = (this.value / 100) * this.totalRate;
       const finalPrice = this.totalRate - discountAmount;
-      this.finalRate = finalPrice; // simpan nilai mata uang sebagai angka
+      this.finalRate = finalPrice;
       const formatter = new Intl.NumberFormat('id-ID', {
         style: 'currency',
         currency: 'IDR',
       })
-      this.formattedFinalRate = formatter.format(finalPrice); // simpan representasi string dari nilai mata uang
+      this.formattedFinalRate = formatter.format(finalPrice);
       this.totalRate === 0 ? this.customPrice = false : this.customPrice = true
     },
 
@@ -913,9 +928,8 @@ export default {
 
       if (this.pay === 'cash') {
         data.payment = {
-
           tempo: new Date(this.tempo).toISOString(),
-          diskon: this.value
+          diskon: parseInt(this.value)
         }
       }
       if (this.pay === 'deposit') {
@@ -924,7 +938,37 @@ export default {
           minDeposit: this.minDeposit
         }
       }
-      console.log(data);
+      if (this.pay === 'barter') {
+        data.payment = {
+          tempo: new Date(this.date).toISOString(),
+          barang: this.barangBarter,
+          diskon: parseInt(this.value)
+        }
+      }
+      if (this.pay === 'semi') {
+        data.payment = {
+          cash: parseInt(this.semiCash),
+          tempoBarter: new Date(this.date).toISOString(),
+          tempoCash: new Date(this.date).toISOString(),
+          diskon: parseInt(this.value),
+          barang: this.barangBarter
+        }
+      }
+      if (this.pay === 'kredit') {
+        data.payment = {
+          tempo: new Date(this.date2).toISOString(),
+          diskon: parseInt(this.value),
+        }
+      }
+      if (this.pay === 'termin') {
+        data.payment = {
+          tempo1: new Date(this.date).toISOString(),
+          tempo2: new Date(this.date2).toISOString(),
+          tempo3: new Date(this.date3).toISOString(),
+          diskon: parseInt(this.value),
+        }
+      }
+
       try {
         this.submit = true
         const response = await this.$api.post(`/order/new`, data, {
@@ -933,7 +977,6 @@ export default {
           }
         });
 
-        console.log(response);
         if (response.status == 200) {
           const id = response.data.data.id
           localStorage.setItem('idOrder', id)

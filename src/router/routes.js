@@ -19,6 +19,7 @@ const routes = [
       { path: '/sales/oti', component: () => import('pages/sales/oti.vue'),  meta: { requiresAuth: true } },
       { path: '/sales/mo', component: () => import('pages/sales/mo.vue'),  meta: { requiresAuth: true } },
       { path: '/sales/molist', component: () => import('pages/sales/molist.vue') ,  meta: { requiresAuth: true }},
+      { path: '/sales/order-list', component: () => import('pages/sales/orderList.vue') ,  meta: { requiresAuth: true }},
       // { path: '/quolist', component: () => import('pages/quolist.vue') },
       { path: '/sales/report', component: () => import('pages/sales/report.vue') ,  meta: { requiresAuth: true }},
       { path: '/sales/otipic', component: () => import('pages/sales/otipic.vue') ,  meta: { requiresAuth: true }},

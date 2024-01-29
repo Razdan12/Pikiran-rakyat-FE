@@ -161,7 +161,7 @@
                                     <q-card class="my-card q-pa-sm" flat bordered>
 
                                         <div class="cursor-pointer">
-                                            {{ pricePrmn }}
+                                            {{ formatRupiah(pricePrmn) }}
                                             <q-popup-edit v-model="pricePrmn" auto-save v-slot="scope">
                                                 <q-input v-model="scope.value" dense autofocus counter
                                                     @keyup.enter="scope.set" />
@@ -182,7 +182,7 @@
                                     <q-card class="my-card q-pa-sm" flat bordered>
 
                                         <div class="cursor-pointer">
-                                            {{ priceMitra }}
+                                            {{ formatRupiah(pricePrmn) }}
                                             <q-popup-edit v-model="priceMitra" auto-save v-slot="scope">
                                                 <q-input v-model="scope.value" dense autofocus counter
                                                     @keyup.enter="scope.set" />
