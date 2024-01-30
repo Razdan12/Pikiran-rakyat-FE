@@ -1,10 +1,10 @@
 <template>
     <q-page>
-        <div class="q-my-md">
+        <div class="">
 
-            <div class="row">
-                <div class="col-md-1"></div>
-                <div class="col-md-10">
+            <div class="q-pa-md">
+               
+                <div class="">
                     <q-card class="full-width">
                         <q-card-section>
                             <p class="text-center text-bold" style="font-size: large">
@@ -60,7 +60,7 @@
                         </q-card-section>
                     </q-card>
                 </div>
-                <div class="col-md-1"></div>
+               
             </div>
         </div>
 

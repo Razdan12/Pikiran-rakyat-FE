@@ -1,9 +1,8 @@
 <template>
   <q-page>
 
-    <div class="row">
-      <div class="col-md-1">
-      </div>
+    <div class="q-pa-md">
+
       <div class="col-md-10">
         <q-card class="full-width q-my-xl">
           <q-card-section>
@@ -44,9 +43,9 @@
                     </div>
                     <div class="col-md-4">
                       <p class="text-left text-bold q-ml-xl" style="font-size: larger;"> LOGO :</p>
-                      <q-card class="q-my-sm q-mx-xl" style="width: 90%; height: 30vh;">
+                      <q-card class="q-my-sm q-mx-xl" style="width: 250px;">
                         <q-card-section>
-                          <q-img :src="custLogo" spinner-color="red" style="height: 250px; max-width: 500px" />
+                          <q-img :src="custLogo" spinner-color="red" style="height: 150px;" />
 
                         </q-card-section>
                       </q-card>
@@ -129,7 +128,7 @@
                       <q-list v-if="modelTayang !== null" bordered>
 
                         <q-expansion-item group="somegroup" class="text-left text-light-blue-10" icon="newspaper"
-                          label="Articles Content" style="font-size: larger;">
+                          label="Articles Content" style="font-size: larger;" @click="typeRate = 'artikel'">
                           <q-separator />
                           <q-card>
                             <q-card-section>
@@ -147,7 +146,7 @@
                                     </tr>
                                   </thead>
                                   <tbody>
-                                    <tr v-for="(item, index) in article" :key="item.id">
+                                    <tr v-for="(item, index) in dataRate" :key="item.id">
                                       <td class="text-center"><q-checkbox v-model="articleList" :val='item' /></td>
 
                                       <td class="text-center">{{ item.name }}</td>
@@ -238,18 +237,92 @@
                         </q-expansion-item>
                         <q-separator />
 
-
-                        <!-- <q-expansion-item group="somegroup" class="text-left text-bold text-light-blue-10"
-                          icon="ads_click" label="Display Ads CPD" style="font-size: larger;" @click="typeRate = 'cpd'">
+                        <q-expansion-item group="somegroup" class="text-left text-light-blue-10" icon="space_dashboard"
+                          label="Other Content" style="font-size: larger;" @click="typeRate = 'other_content'">
                           <q-separator />
                           <q-card>
-                           
+                            <q-card-section>
+
+                              <q-markup-table>
+                                <thead>
+                                  <tr>
+                                    <th class="text-center"></th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Rate</th>
+                                    <th class="text-center">Note</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr v-for="(item, index) in dataRate" :key="item.id">
+                                    <td class="text-center"><q-checkbox v-model="rateList" :val='item' /></td>
+                                    <td class="text-center">{{ item.name }}</td>
+                                    <td class="text-center">{{ item.is_custom_price ? 'custom price' :
+                                      formatRupiah(item.rate) }}</td>
+                                    <td class="text-center">{{ item.note }}</td>
+                                  </tr>
+                                </tbody>
+                              </q-markup-table>
+
+                            </q-card-section>
+                          </q-card>
+                        </q-expansion-item>
+                        <q-separator />
+
+                        <q-expansion-item group="somegroup" class="text-left text-light-blue-10" icon="ads_click"
+                          label="Display Ads CPD" style="font-size: larger;" @click="typeRate = 'cpd'">
+                          <q-separator />
+                          <q-card>
+                            <q-card-section>
+                              <q-select outlined v-model="typeCpd" :options="typeOptionCpd" label="Media Penempatan"
+                                style="width: 30%; margin-bottom: 20px;" />
+                              <div>
+                                <q-markup-table>
+                                  <thead>
+                                    <tr>
+                                      <th class="text-center"></th>
+                                      <th class="text-center">Name</th>
+                                      <th class="text-center">Type</th>
+                                      <th class="text-center">Size</th>
+                                      <th class="text-center" :hidden="typeCpd != 'home'">Home</th>
+                                      <th class="text-center" :hidden="typeCpd != 'detail'">Detail</th>
+                                      <th class="text-center" :hidden="typeCpd != 'section'">Section</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr v-for="(item, index) in dataRate" :key="item.id" :hidden="typeCpd == null">
+                                      <td class="text-center"><q-checkbox v-model="rateList" :val='item'
+                                          :disable="typeCpd === 'home' && item.rate_home === null || typeCpd === 'detail' && item.rate_detail === null || typeCpd === 'section' && item.rate_section === null" />
+                                      </td>
+                                      <td class="text-center">{{ item.name }}</td>
+                                      <td class="text-center">{{ item.type }}</td>
+                                      <td class="text-center">{{ item.size }}</td>
+                                      <td class="text-center" :hidden="typeCpd != 'home'">
+                                        {{ item.rate_home ? formatRupiah(item.rate_home) : 'tidak tersedia' }}
+                                      </td>
+                                      <td class="text-center" :hidden="typeCpd != 'detail'">
+                                        {{ item.rate_detail ? formatRupiah(item.rate_detail) : 'tidak tersedia' }}
+                                      </td>
+                                      <td class="text-center" :hidden="typeCpd != 'section'">
+                                        {{ item.rate_section ? formatRupiah(item.rate_section) : 'tidak tersedia' }}
+                                      </td>
+
+                                    </tr>
+                                  </tbody>
+                                </q-markup-table>
+                              </div>
+                            </q-card-section>
+                          </q-card>
+                        </q-expansion-item>
+                        <q-separator />
+                        <q-expansion-item group="somegroup" class="text-left text-light-blue-10" icon="ads_click"
+                          label="Display Ads CPM" style="font-size: larger;" @click="typeRate = 'cpm'">
+                          <q-separator />
+                          <q-card>
                             <q-card-section>
                               <div>
                                 <q-markup-table>
                                   <thead>
                                     <tr>
-
                                       <th class="text-center"></th>
                                       <th class="text-center">Name</th>
                                       <th class="text-center">Type</th>
@@ -259,13 +332,12 @@
                                     </tr>
                                   </thead>
                                   <tbody>
-                                    <tr v-for="(item, index) in cpdOtherList" :key="item.id">
-                                      <td class="text-center"><q-checkbox v-model="articleList" :val='item.id' /></td>
+                                    <tr v-for="(item, index) in dataRate" :key="item.id">
+                                      <td class="text-center"><q-checkbox v-model="rateList" :val='item' /></td>
                                       <td class="text-center">{{ item.name }}</td>
                                       <td class="text-center">{{ item.type }}</td>
-
                                       <td class="text-center">{{ item.size }}</td>
-                                      <td class="text-center">Rp. {{ item.rate }}</td>
+                                      <td class="text-center">{{ formatRupiah(item.rate) }}</td>
 
                                     </tr>
                                   </tbody>
@@ -274,42 +346,10 @@
                             </q-card-section>
                           </q-card>
                         </q-expansion-item>
-                        <q-separator /> -->
+                        <q-separator />
 
-                        <!-- <q-expansion-item group="somegroup" class="text-left text-bold text-light-blue-10"
-                          icon="ads_click" label="Display Ads CPM" style="font-size: larger;">
-                          <q-separator />
-                          <q-card>
-                            <q-card-section>
-                              <q-markup-table>
-                                <thead>
-                                  <tr>
-
-                                    <th class="text-center"></th>
-                                    <th class="text-center">Name</th>
-                                    <th class="text-center">Type</th>
-                                    <th class="text-center">Size</th>
-                                    <th class="text-center">Rate</th>
-
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr v-for="(item, index) in cpdOtherList" :key="item.id">
-                                    <td class="text-center"><q-checkbox v-model="articleList" :val='item.id' /></td>
-                                    <td class="text-center">{{ item.name }}</td>
-                                    <td class="text-center">{{ item.type }}</td>
-
-                                    <td class="text-center">{{ item.size }}</td>
-                                    <td class="text-center">Rp. {{ item.rate }}</td>
-
-                                  </tr>
-                                </tbody>
-                              </q-markup-table>
-                            </q-card-section>
-                          </q-card>
-                        </q-expansion-item>
-                        <q-separator /> -->
                       </q-list>
+
                     </div>
 
                   </q-card-section>
@@ -389,10 +429,10 @@
                         <div v-if="pay == 'cash'">
                           <div class="row">
                             <div class="col-md-4">
-                              <p class="text-left text-bold" style="font-size: large;"> Total : {{ formattedFinalRate }}
+                              <p class="text-left text-bold" style="font-size: large;"> Total : {{ formattedFinalRate ?
+                                formatRupiah(finalRate) : formattedFinalRate }}
                               </p>
-                              <q-input prefix="Rp" v-model="finalRate" type="number" :disable="customPrice" outlined dense
-                                style="width: 90%;" />
+                              <q-input prefix="Rp" v-model="finalRate" type="number" outlined dense style="width: 90%;" />
 
                             </div>
                             <div class="col-md-4">
@@ -419,9 +459,8 @@
                             <div class="col-md-4">
 
                               <p class="text-left text-bold" style="font-size: large;"> Nilai Barter : {{
-                                formattedFinalRate }}</p>
-                              <q-input prefix="Rp" v-model="finalRate" type="number" :disable="customPrice" outlined dense
-                                style="width: 90%;" />
+                                formattedFinalRate ? formatRupiah(finalRate) : formattedFinalRate }}</p>
+                              <q-input prefix="Rp" v-model="finalRate" type="number" outlined dense style="width: 90%;" />
                               <p class="text-left text-bold" style="font-size: large;"> Jatuh Tempo :</p>
                               <q-input filled v-model="date" mask="date" :rules="['date']" dense style="width: 90%;">
                                 <template v-slot:append>
@@ -446,13 +485,14 @@
 
                         </div>
                         <div v-else-if="pay == 'semi'">
-                          <p class="text-left text-bold" style="font-size: large;"> Total : {{ formattedFinalRate }}</p>
+                          <p class="text-left text-bold" style="font-size: large;"> Total : {{ finalRate == 0 ?
+                            getTotalSemi() : formatRupiah(finalRate) }}</p>
                           <div class="row">
                             <div class="col-md-4">
                               <p class="text-left text-bold" style="font-size: large;"> Nilai Barter : {{
                                 formatRupiah(semiBarter) }}</p>
-                              <q-input prefix="Rp" v-model="semiBarter" type="number" :disable="customPrice" outlined
-                                dense style="width: 90%;" />
+                              <q-input prefix="Rp" v-model="semiBarter" type="number" outlined dense
+                                style="width: 90%;" />
                               <p class="text-left text-bold" style="font-size: large;"> Jatuh Tempo :</p>
                               <q-input filled v-model="date" mask="date" :rules="['date']" dense style="width: 90%;">
                                 <template v-slot:append>
@@ -499,9 +539,8 @@
                           <div class="row">
                             <div class="col-md-4">
                               <p class="text-left text-bold" style="font-size: large;"> Nilai Kredit : {{
-                                formattedFinalRate }}</p>
-                              <q-input prefix="Rp" v-model="finalRate" type="number" :disable="customPrice" outlined dense
-                                style="width: 90%;" />
+                                formattedFinalRate ? formatRupiah(finalRate) : formattedFinalRate }}</p>
+                              <q-input prefix="Rp" v-model="finalRate" type="number" outlined dense style="width: 90%;" />
                             </div>
                             <div class="col-md-4">
                               <p class="text-left text-bold" style="font-size: large;"> Jatuh Tempo :</p>
@@ -523,10 +562,12 @@
 
                         </div>
                         <div v-else-if="pay == 'termin'">
-                          <p class="text-left text-bold" style="font-size: large;"> Total : {{ formattedFinalRate }}</p>
+                          <p class="text-left text-bold" style="font-size: large;"> Total : {{ finalRate ?
+                            getTotalTermin() : formattedFinalRate }}</p>
                           <div class="row">
                             <div class="col-md-4">
-                              <p class="text-left text-bold" style="font-size: large;"> Termin 1 40% : {{ formatRupiah(termin1) }}</p>
+                              <p class="text-left text-bold" style="font-size: large;"> Termin 1 40% : {{
+                                formatRupiah(termin1) }}</p>
                               <q-input prefix="Rp" v-model="termin1" type="number" outlined dense style="width: 90%;" />
                               <p class="text-left text-bold" style="font-size: large;"> Jatuh Tempo :</p>
                               <q-input filled v-model="date" mask="date" :rules="['date']" dense style="width: 90%;">
@@ -544,7 +585,8 @@
                               </q-input>
                             </div>
                             <div class="col-md-4">
-                              <p class="text-left text-bold" style="font-size: large;"> Termin 2 30% : {{ formatRupiah(termin2) }}</p>
+                              <p class="text-left text-bold" style="font-size: large;"> Termin 2 30% : {{
+                                formatRupiah(termin2) }}</p>
                               <q-input prefix="Rp" v-model="termin2" type="number" outlined dense style="width: 90%;" />
                               <p class="text-left text-bold" style="font-size: large;"> Jatuh Tempo :</p>
                               <q-input filled v-model="date2" mask="date" :rules="['date']" dense style="width: 90%;">
@@ -562,8 +604,9 @@
                               </q-input>
                             </div>
                             <div class="col-md-4">
-                              <p class="text-left text-bold" style="font-size: large;"> Termin 3 30% : {{ formatRupiah(termin3) }}</p>
-                              <q-input prefix="Rp" v-model="termin3"  type="number" outlined dense style="width: 90%;" />
+                              <p class="text-left text-bold" style="font-size: large;"> Termin 3 30% : {{
+                                formatRupiah(termin3) }}</p>
+                              <q-input prefix="Rp" v-model="termin3" type="number" outlined dense style="width: 90%;" />
                               <p class="text-left text-bold" style="font-size: large;"> Jatuh Tempo :</p>
                               <q-input filled v-model="date3" mask="date" :rules="['date']" dense style="width: 90%;">
                                 <template v-slot:append>
@@ -628,7 +671,7 @@
           </q-card-section>
         </q-card>
       </div>
-      <div class="col-md-1"></div>
+
     </div>
   </q-page>
 </template>
@@ -690,7 +733,6 @@ export default {
       optionsTayang: [
         'PRMN', 'Mitra'
       ],
-      article: ref([]),
       articleList: ref([]),
       sosmedList: ref([]),
       sosmedOption: ref(null),
@@ -702,9 +744,7 @@ export default {
       totalRate: ref(0),
       finalRate: ref(0),
       customPrice: ref(true),
-      idArticle: ref([]),
-      idSosmed: ref([]),
-      typeRate: ref('article'),
+      typeRate: ref(''),
       formattedFinalRate: ref(),
       barangBarter: ref(''),
       semiCash: ref(''),
@@ -712,28 +752,31 @@ export default {
       termin1: ref(0),
       termin2: ref(0),
       termin3: ref(0),
+      typeCpd: ref(null),
+      typeOptionCpd: ['home', 'detail', 'section'],
+      id: ref([]),
+      dataRate: ref([]),
+      rateList: ref([])
+
     }
   },
   watch: {
-    A1(newVal) {
-      if (!newVal) {
-        this.artikel_1 = null;
-      }
-    },
-    A2(newVal) {
-      if (!newVal) {
-        this.artikel_2 = null;
-      }
-    },
     articleList: {
       handler(newVal) {
-        this.getTotalArticle(newVal)
+        this.getTotalRate(newVal)
       },
       deep: true,
     },
     sosmedList: {
       handler(newVal) {
-        this.getTotalSosmed(newVal)
+        this.getTotalRate(newVal)
+      },
+      deep: true,
+    },
+    rateList: {
+      handler(newVal) {
+        this.getTotalRate(newVal)
+
       },
       deep: true,
     },
@@ -757,48 +800,107 @@ export default {
     },
     value() {
       this.calculateFinalRate();
-     
+
     },
     pay(newVal) {
       if (newVal === 'semi') {
         this.semiBarter = this.finalRate
       }
-      if(newVal === 'termin'){
-        this.termin1 = ( 40 / 100) * this.finalRate
-        this.termin2 = ( 30 / 100) * this.finalRate
-        this.termin3 = ( 30 / 100) * this.finalRate
+      if (newVal === 'termin') {
+        this.termin1 = (40 / 100) * this.finalRate
+        this.termin2 = (30 / 100) * this.finalRate
+        this.termin3 = (30 / 100) * this.finalRate
       }
       this.calculateFinalRate();
-    }, 
+    },
     semiCash(newVal) {
-      this.semiBarter = this.finalRate - newVal
-    }
-
+      this.getTotalSemi()
+    },
+    semiBarter(newVal) {
+      this.getTotalSemi()
+    },
+    termin1() {
+      this.getTotalTermin()
+    },
+    termin2() {
+      this.getTotalTermin()
+    },
+    termin3() {
+      this.getTotalTermin()
+    },
+    typeRate(newVal) {
+      this.rateList = []
+      switch (newVal) {
+        case 'artikel':
+          this.getArticleContent()
+          break
+        case 'sosmed':
+          this.getSosmed()
+          break
+        case 'cpd':
+          this.getCpdData()
+          break
+        case 'cpm':
+          this.getCpmData()
+          break
+        case 'other_content':
+          this.getOtherData()
+          break
+      }
+    },
   },
 
   mounted() {
     this.getCustomer()
-    this.getSosmed()
     this.getDate()
-    this.getArticleContent()
   },
 
   methods: {
 
-    getTotalArticle(newVal) {
-      const total = newVal?.map((item) => this.modelTayang === 'PRMN' ? item.prmn : item.mitra);
-      this.totalRate = total.reduce((a, b) => a + b, 0)
-      const id = newVal?.map((item) => item.id)
-      this.idArticle = id
+    getTotalSemi() {
+      const val1 = this.semiBarter ? parseInt(this.semiBarter) : 0
+      const val2 = this.semiCash ? parseInt(this.semiCash) : 0
+      const hasil = val1 + val2
+      this.finalRate = hasil
+      return this.formatRupiah(hasil)
     },
 
-    getTotalSosmed(newVal) {
-      const mediaTayangRest = this.typeRate === 'sosmed' ? this.sosmedOption : this.modelTayang
-      const total = newVal?.map((item) => mediaTayangRest === 'Facebook' ? item.facebook : mediaTayangRest === 'Instagram' ? item.instagram : item.rate);
-      this.totalRate = total.reduce((a, b) => a + b, 0)
-      const id = newVal?.map((item) => item.id)
-      this.idSosmed = id
+    getTotalTermin() {
+      const termin1 = this.termin1 ? parseInt(this.termin1) : 0
+      const termin2 = this.termin2 ? parseInt(this.termin2) : 0
+      const termin3 = this.termin3 ? parseInt(this.termin3) : 0
+      const hasil = termin1 + termin2 + termin3
+      this.finalRate = hasil
+      return this.formatRupiah(hasil)
     },
+
+    getTotalRate(newVal) {
+      let total = null
+      let id = newVal?.map((item) => item.id)
+
+      switch (this.typeRate) {
+        case 'artikel':
+          total = newVal?.map((item) => this.modelTayang === 'PRMN' ? item.prmn : item.mitra)
+          break
+        case 'sosmed':
+          const mediaTayangRest = this.sosmedOption
+          total = newVal?.map((item) => mediaTayangRest === 'Facebook' ? item.facebook : mediaTayangRest === 'Instagram' ? item.instagram : item.rate)
+          break
+        case 'other_content':
+          total = newVal?.map((item) => item.is_custom_price ? 0 : item.rate)
+          break
+        case 'cpd':
+          total = newVal?.map((item) => this.typeCpd === 'home' ? item.rate_home : this.typeCpd === 'detail' ? item.rate_detail : item.rate_section)
+          break
+        case 'cpm':
+          total = newVal?.map((item) => item.rate)
+          break
+      }
+
+      this.totalRate = total.reduce((a, b) => a + b, 0)
+      this.id = id
+    },
+
 
     calculateFinalRate() {
       const discountAmount = (this.value / 100) * this.totalRate;
@@ -809,7 +911,7 @@ export default {
         currency: 'IDR',
       })
       this.formattedFinalRate = formatter.format(finalPrice);
-      this.totalRate === 0 ? this.customPrice = false : this.customPrice = true
+
     },
 
     formatRupiah(value) {
@@ -885,9 +987,7 @@ export default {
           'Authorization': `Bearer ${this.token}`
         }
       });
-
-      this.article = response.data
-
+      this.dataRate = response.data
     },
 
     async getSosmed() {
@@ -904,7 +1004,6 @@ export default {
     async createOrder() {
       const token = sessionStorage.getItem('token')
       const id = sessionStorage.getItem('id')
-      const mediaTayangRest = this.typeRate === 'sosmed' ? this.sosmedOption : this.modelTayang
 
       const data = {
         idCust: this.custname.value,
@@ -916,57 +1015,17 @@ export default {
         period_start: new Date(this.date2).toISOString(),
         period_end: new Date(this.date3).toISOString(),
         pay_type: this.pay,
-        mediaTayang: mediaTayangRest,
+        opsiMediatayang: this.modelTayang,
         OrderMitra: Array.isArray(this.mitraData) ? this.mitraData.map(option => option.value) : this.mitraData,
-        typeRate: this.typeRate,
         rateCard: {
-          article: this.idArticle,
-          sosmed: this.idSosmed
-        }
-
-      }
-
-      if (this.pay === 'cash') {
-        data.payment = {
-          tempo: new Date(this.tempo).toISOString(),
-          diskon: parseInt(this.value)
-        }
-      }
-      if (this.pay === 'deposit') {
-        data.payment = {
-          deposit: this.deposit,
-          minDeposit: this.minDeposit
-        }
-      }
-      if (this.pay === 'barter') {
-        data.payment = {
-          tempo: new Date(this.date).toISOString(),
-          barang: this.barangBarter,
-          diskon: parseInt(this.value)
-        }
-      }
-      if (this.pay === 'semi') {
-        data.payment = {
-          cash: parseInt(this.semiCash),
-          tempoBarter: new Date(this.date).toISOString(),
-          tempoCash: new Date(this.date).toISOString(),
-          diskon: parseInt(this.value),
-          barang: this.barangBarter
-        }
-      }
-      if (this.pay === 'kredit') {
-        data.payment = {
-          tempo: new Date(this.date2).toISOString(),
-          diskon: parseInt(this.value),
-        }
-      }
-      if (this.pay === 'termin') {
-        data.payment = {
-          tempo1: new Date(this.date).toISOString(),
-          tempo2: new Date(this.date2).toISOString(),
-          tempo3: new Date(this.date3).toISOString(),
-          diskon: parseInt(this.value),
-        }
+          article: this.id,
+          sosmed: this.id,
+          cpd: this.id,
+          other: this.id,
+          cpm: this.id
+        },
+        mediaTayang: this.getMediaTayang(),
+        payment: this.getPayment()
       }
 
       try {
@@ -995,17 +1054,87 @@ export default {
           icon: "error",
           title: "Oops...",
           text: error.message,
-
         });
         console.log(error);
       } finally {
         this.submit = false
       }
+    },
 
+    getMediaTayang() {
+      switch (this.typeRate) {
+        case 'artikel':
+          return {
+            type: this.typeRate,
+          }
+        case 'sosmed':
+          return {
+            type: this.typeRate,
+            media: this.sosmedOption,
+          }
+        case 'cpd':
+          return {
+            type: this.typeRate,
+            media: this.rateList,
+          }
+        case 'cpm':
+          return {
+            type: this.typeRate,
+          }
+        case 'other_content':
+          return {
+            type: this.typeRate,
+            total: this.finalRate
+          }
+      }
+    },
+
+    getPayment() {
+      switch (this.pay) {
+        case 'cash':
+          return {
+            tempo: new Date(this.tempo).toISOString(),
+            diskon: this.value
+          }
+        case 'deposit':
+          return {
+            deposit: this.deposit,
+            minDeposit: this.minDeposit
+          }
+        case 'barter':
+          return {
+            tempo: new Date(this.date).toISOString(),
+            barang: this.barangBarter,
+            diskon: this.value
+          }
+        case 'semi':
+          return {
+            cash: parseInt(this.semiCash),
+            tempoBarter: new Date(this.date).toISOString(),
+            tempoCash: new Date(this.date).toISOString(),
+            diskon: this.value,
+            barang: this.barangBarter
+          }
+        case 'kredit':
+          return {
+            tempo: new Date(this.date2).toISOString(),
+            diskon: this.value,
+          }
+        case 'termin':
+          return {
+            termin1: this.termin1,
+            termin2: this.termin2,
+            termin3: this.termin3,
+            tempo1: new Date(this.date).toISOString(),
+            tempo2: new Date(this.date2).toISOString(),
+            tempo3: new Date(this.date3).toISOString(),
+            diskon: this.value,
+          }
+      }
     },
 
     async getMitra() {
-      console.log('mitra jalan');
+
       try {
         const response = await this.$api.get(`/media/mitra/all/drop`, {
           headers: {
@@ -1017,7 +1146,50 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    }
+    },
+    async getCpdData() {
+      const token = sessionStorage.getItem("token");
+      try {
+        const response = await this.$api.get(`/rate-card/cpd/all`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        this.dataRate = response.data;
+
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getOtherData() {
+      const token = sessionStorage.getItem("token");
+      try {
+        const response = await this.$api.get(`/rate-card/other-constent/all`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        this.dataRate = response.data;
+
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getCpmData() {
+      const token = sessionStorage.getItem("token");
+      try {
+        const response = await this.$api.get(`/rate-card/cpm/all`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        this.dataRate = response.data;
+
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
   },
 }
 </script>

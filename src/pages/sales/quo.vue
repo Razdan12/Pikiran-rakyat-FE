@@ -107,17 +107,17 @@
                         </thead>
                         <tbody>
                           <tr style="height: 20vh;">
-                            <td class="text-left"></td>
+                            <td class="text-center"><img :hidden="sales_approve == false" src="https://png.pngtree.com/png-vector/20221009/ourmid/pngtree-original-approved-stamp-and-badget-design-red-grunge-png-image_6293837.png" alt="approve" style="width: 100px;"></td>
                             <td class="text-right"></td>
                             <td class="text-right"></td>
                             <td class="text-right"></td>
 
                           </tr>
                           <tr>
-                            <td class="text-left"></td>
-                            <td class="text-right"></td>
-                            <td class="text-right"></td>
-                            <td class="text-right"></td>
+                            <td class="text-center"> <q-btn :disable="sales_approve" color="secondary" label="Approv" @click=" handleApprove"/></td>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
                           </tr>
 
                         </tbody>
@@ -172,6 +172,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 import { ref } from 'vue'
 const columns = [
   {
@@ -253,6 +254,7 @@ export default {
       cust_name: ref('name'),
       pic_name: ref('pic'),
       pic_contact: ref('contact'),
+      sales_approve: ref(false)
     }
   },
   mounted() {
@@ -268,18 +270,44 @@ export default {
           }
         });
        
+        console.log(response);
+
         this.camp_name = response.data.camp_name
         this.camp_period = `${response.data.period_start} - ${response.data.period_end}`
         this.cust_type = response.data.cust_type
         this.cust_name = response.data.cust_name
         this.pic_name = response.data.pic_name
         this.pic_contact = response.data.pic_contact
+        this.sales_approve = response.data.sales_approve
 
       } catch (error) {
         console.log(error);
       }
 
     },
+    handleApprove(){
+      Swal.fire({
+                title: "Are you sure?",
+                text: "Are you sure you want to approve?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, Approve Now"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                  this.sales_approve = true
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Success Approved!",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                }
+            });
+      
+    }
   }
 }
 </script>

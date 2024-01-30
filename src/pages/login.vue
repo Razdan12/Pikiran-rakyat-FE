@@ -1,71 +1,95 @@
 <template>
-  <div class="q-pa-md bg-image">
-    <q-page class="col .self-center">
-      <br><br> <br><br><br><br>
-      <div class="row">
-        <div class="col-2"></div>
+  <div class="bg-image">
+    <q-page class="col flex justify-center items-center">
+      <div class="tw-w-5/6 flex justify-center items-center">
+        <q-card class="tw-w-full">
+          <q-card-section class="tw-w-full">
+            <div class="flex justify-center items-center">
+              <div class="form ">
+                <p
+                  class="text-center text-blue-6 text-bold"
+                  style="font-size: x-large"
+                >
+                  SALES INFORMATION SYSTEM <br />
+                  <span class="text-blue-6" style="font-size: large"
+                    >PIKIRAN RAKYAT MEDIA NETWORK</span
+                  >
+                </p>
+                <div class="text-center ">
+                  <q-img
+                    class="q-my-xl"
+                    src="../assets/lock.png"
+                    style="width: 20%"
+                  />
+                </div>
 
-        <div class="col-8">
+                <div class="flex tw-flex-col justify-center item-center">
+                  <div class="col-10">
+                    <q-form
+                      @submit.prevent="loginUser"
+                      class="tw-w-full flex justify-center"
+                    >
+                      <q-input
+                        v-model="email"
+                        class="text-center"
+                        bottom-slots
+                        filled
+                        type="text"
+                        label="Username/Email"
+                        style="width: 70%"
+                      >
+                        <template v-slot:prepend>
+                          <q-icon name="email" />
+                        </template>
+                      </q-input>
 
-          <q-card style="width: 100%; height: 67vh;">
-            <q-card-section>
-
-              <div class="row">
-                <div class="col-6 text-center q-my-sm" style="height: 52vh;">
-                  <br>
-                  <p class="text-center text-blue-6 q-ml-xl text-bold" style="font-size: x-large;">SALES INFORMATION SYSTEM <br>
-                     <span class="text-blue-6" style="font-size: large;">PIKIRAN RAKYAT MEDIA NETWORK</span> </p>
-                     <div class="text-center q-ml-xl">
-                      <q-img class="q-my-xl" src="../assets/lock.png" style="width: 20%;" />
-
-                     </div>
-
-                  <div class="row">
-                    <div class="col-2"></div>
-                    <div class="col-10">
-                      <q-form @submit.prevent="loginUser" class="tw-w-full flex justify-center">
-                          <q-input v-model="email" class="text-center " bottom-slots filled type="text"
-                            label="Username/Email" style="width: 70%">
-                            <template v-slot:prepend>
-                              <q-icon name="email" />
-                            </template>
-                          </q-input>
-
-                          <q-input v-model="password" class="tw-w-full" bottom-slots filled type="password"
-                            label="Password" style="width: 70%">
-                            <template v-slot:prepend>
-                              <q-icon name="key" />
-                            </template>
-                          </q-input>
-                          <q-btn type="submit" color="blue-grey-6" glossy label="Login" :disable="submit" style="width: 40%" />
-                        </q-form>
-                    </div>
-                    <div class="col-1"></div>
+                      <q-input
+                        v-model="password"
+                        class="tw-w-full"
+                        bottom-slots
+                        filled
+                        type="password"
+                        label="Password"
+                        style="width: 70%"
+                      >
+                        <template v-slot:prepend>
+                          <q-icon name="key" />
+                        </template>
+                      </q-input>
+                      <q-btn
+                        type="submit"
+                        color="blue-grey-6"
+                        glossy
+                        label="Login"
+                        :disable="submit"
+                        style="width: 40%"
+                      />
+                    </q-form>
                   </div>
-
+                 
                 </div>
-                <div class="col-6 text-center">
-                  <q-img class="full-width" src="../assets/media.jpg" style="width: 100%;" flat />
-                </div>
-                <!-- <div class="col-1"></div> -->
               </div>
-
-            </q-card-section>
-          </q-card>
-        </div>
-        <div class="col-2"></div>
+              <div class="bgImage">
+                <q-img
+                  class="full-width"
+                  src="../assets/media.jpg"
+                  flat
+                />
+              </div>
+             
+            </div>
+          </q-card-section>
+        </q-card>
+        
       </div>
-
-
     </q-page>
   </div>
 </template>
 <script>
-import Swal from 'sweetalert2';
-import { ref } from 'vue';
+import Swal from "sweetalert2";
+import { ref } from "vue";
 
 export default {
-
   methods: {
     async loginUser() {
       const loginData = {
@@ -73,62 +97,77 @@ export default {
         password: this.password,
       };
       try {
-        this.submit = true
+        this.submit = true;
         const response = await this.$api.post("/user/login", loginData);
-        const token = response.data.accessToken
-        const name = response.data.name
-        const email = response.data.email
-        const role = response.data.role
-        const id = response.data.uuid
-        sessionStorage.setItem("token", token)
-        sessionStorage.setItem("name", name )
-        sessionStorage.setItem("email", email )
-        sessionStorage.setItem("role", role )
-        sessionStorage.setItem("id", id  )
+        const token = response.data.accessToken;
+        const name = response.data.name;
+        const email = response.data.email;
+        const role = response.data.role;
+        const id = response.data.uuid;
+        sessionStorage.setItem("token", token);
+        sessionStorage.setItem("name", name);
+        sessionStorage.setItem("email", email);
+        sessionStorage.setItem("role", role);
+        sessionStorage.setItem("id", id);
 
-        
-        if (role === 'admin'){
-          this.$router.push("/admin/customer")
-        } else if (role === 'sales'){
-          this.$router.push("/sales/customer")
+        if (role === "admin") {
+          this.$router.push("/admin/customer");
+        } else if (role === "sales") {
+          this.$router.push("/sales/customer");
         }
-
       } catch (error) {
         Swal.fire({
           icon: "error",
           title: "Oops...",
           text: "Email atau Password salah!",
-
         });
       } finally {
-        this.submit = false
+        this.submit = false;
       }
     },
   },
-  
+
   data() {
     return {
       email: "",
       password: "",
-      submit: ref(false)
+      submit: ref(false),
     };
   },
-}
+};
 </script>
-
 
 <style>
 .bg-image {
-  background-image: url('../assets/bg.png');
+  background-image: url("../assets/bg.png");
   background-repeat: no-repeat;
   background-size: cover;
-
 }
 
 .bg-image2 {
-  background-image: url('.../assets/media.jpg');
+  background-image: url(".../assets/media.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
+}
+.form, .bgImage{
+  width: 50%;
+}
 
+@media (min-width: 768px) and (max-width: 1199px) {
+  .bgImage {
+    display: none;
+  }
+  .form{
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .bgImage {
+    display: none;
+  }
+  .form{
+    width: 100%;
+  }
 }
 </style>
