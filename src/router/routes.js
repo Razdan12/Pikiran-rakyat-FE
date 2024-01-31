@@ -73,38 +73,59 @@ const routes = [
       {
         path: "/admin/customer",
         component: () => import("pages/admin/listCoustumer.vue"),
+         meta: { requiresAuth: true },
       },
       {
         path: "/admin/mitra",
         component: () => import("pages/admin/listMitra.vue"),
+         meta: { requiresAuth: true },
       },
       {
         path: "/admin/user",
         component: () => import("pages/admin/listUser.vue"),
+         meta: { requiresAuth: true },
       },
       {
         path: "/admin/report",
         component: () => import("pages/admin/report.vue"),
+         meta: { requiresAuth: true },
       },
       {
         path: "/admin/rate-card/artikel",
         component: () => import("pages/admin/rateArtikel.vue"),
+         meta: { requiresAuth: true },
       },
       {
         path: "/admin/rate-card/sosmed",
         component: () => import("pages/admin/rateSosmed.vue"),
+         meta: { requiresAuth: true },
       },
       {
         path: "/admin/rate-card/other-content",
         component: () => import("pages/admin/rateOtherContent.vue"),
+         meta: { requiresAuth: true },
       },
       {
         path: "/admin/rate-card/ads-cpd",
         component: () => import("pages/admin/rateCPD.vue"),
+         meta: { requiresAuth: true },
       },
       {
         path: "/admin/rate-card/ads-cpm",
         component: () => import("pages/admin/rateCPM.vue"),
+         meta: { requiresAuth: true },
+      },
+    ],
+  },
+  {
+    path: "/manager",
+    component: () => import("layouts/ManagerLayout.vue"),
+    children: [
+    
+      {
+        path: "/manager/customer",
+        component: () => import("pages/admin/listCoustumer.vue"),
+         meta: { requiresAuth: true },
       },
     ],
   },

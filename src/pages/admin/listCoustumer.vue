@@ -57,11 +57,11 @@
                             Edit
                           </q-tooltip>
                         </q-btn>
-                        <q-btn color="blue" icon="article">
+                        <!-- <q-btn color="blue" icon="article">
                           <q-tooltip class="bg-blue text-body2" :offset="[10, 10]">
                             Detail
                           </q-tooltip>
-                        </q-btn>
+                        </q-btn> -->
                         <q-btn color="red" icon="delete" @click="deleteItem(item.id)">
                           <q-tooltip class="bg-red text-body2" :offset="[10, 10]">
                             Hapus
@@ -147,7 +147,7 @@
                   <span class="text-bold" style="font-size: medium">
                     Company NPWP</span>
                 </p>
-                <q-input v-model="companyNPWP" class="q-my-md" dense outlined label="Company NPWP" />
+                <q-input v-model="companyNPWP" class="q-my-md" dense outlined label="Company NPWP" mask="##.###.###.#-###.###" fill-mask />
               </div>
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
@@ -191,7 +191,7 @@
             EDIT CUSTOMER
           </p>
           <q-separator class="q-my-lg" color="orange" inset />
-          <q-form @submit.prevent="addCustomer">
+          <q-form @submit.prevent="editCustomer">
             <div class="col">
 
               <div class="q-mt-md">
@@ -234,7 +234,7 @@
                 </p>
                 <q-card class="my-card q-pa-sm" flat bordered>
                   <div class="cursor-pointer">
-                    {{ phoneNumber == 'null' ? '-' :  phoneNumber }}
+                    {{ phoneNumber == 'null' ? '-' : phoneNumber }}
                     <q-popup-edit v-model="phoneNumber" auto-save v-slot="scope">
                       <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
                     </q-popup-edit>
@@ -250,7 +250,7 @@
                 </p>
                 <q-card class="my-card q-pa-sm" flat bordered>
                   <div class="cursor-pointer">
-                    {{ companyEmail == 'null' ? '-' :  companyEmail}}
+                    {{ companyEmail == 'null' ? '-' : companyEmail }}
                     <q-popup-edit v-model="companyEmail" auto-save v-slot="scope">
                       <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
                     </q-popup-edit>
@@ -266,9 +266,9 @@
                 </p>
                 <q-card class="my-card q-pa-sm" flat bordered>
                   <div class="cursor-pointer">
-                    {{ companyNPWP == 'null' ? '-' :  companyNPWP }}
+                    {{ companyNPWP == 'null' ? '-' : companyNPWP }}
                     <q-popup-edit v-model="companyNPWP" auto-save v-slot="scope">
-                      <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
+                      <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" mask="##.###.###.#-###.###" fill-mask />
                     </q-popup-edit>
                   </div>
                 </q-card>
@@ -282,7 +282,7 @@
                 </p>
                 <q-card class="my-card q-pa-sm" flat bordered>
                   <div class="cursor-pointer">
-                    {{ companyAdress == 'null' ? '-' :  companyAdress}}
+                    {{ companyAdress == 'null' ? '-' : companyAdress }}
                     <q-popup-edit v-model="companyAdress" auto-save v-slot="scope">
                       <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
                     </q-popup-edit>
@@ -298,7 +298,7 @@
                 </p>
                 <q-card class="my-card q-pa-sm" flat bordered>
                   <div class="cursor-pointer">
-                    {{ finNameContact == 'null' ? '-' :  finNameContact}}
+                    {{ finNameContact == 'null' ? '-' : finNameContact }}
                     <q-popup-edit v-model="finNameContact" auto-save v-slot="scope">
                       <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
                     </q-popup-edit>
@@ -314,7 +314,7 @@
                 </p>
                 <q-card class="my-card q-pa-sm" flat bordered>
                   <div class="cursor-pointer">
-                    {{ finPhone  == 'null' ? '-' :  finPhone}}
+                    {{ finPhone == 'null' ? '-' : finPhone }}
                     <q-popup-edit v-model="finPhone" auto-save v-slot="scope">
                       <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
                     </q-popup-edit>
@@ -326,7 +326,7 @@
             <div class="text-right">
               <q-card-actions align="right">
                 <q-btn class="q-mx-sm" type="submit" color="secondary" label="Create" :disable="btn" />
-                <q-btn color="black" label="Cancel" v-close-popup @click="resetForm()"/>
+                <q-btn color="black" label="Cancel" v-close-popup @click="resetForm()" />
               </q-card-actions>
             </div>
           </q-form>
@@ -350,16 +350,17 @@ export default {
       totalPage: ref(1),
       medium: ref(false),
       edit: ref(false),
-      customerName: ref(null),
-      contactName: ref(null),
-      phoneNumber: ref(null),
-      companyEmail: ref(null),
-      companyNPWP: ref(null),
-      companyAdress: ref(null),
-      finNameContact: ref(null),
-      finPhone: ref(null),
-      type: ref(null),
+      customerName: ref(),
+      contactName: ref(),
+      phoneNumber: ref(),
+      companyEmail: ref(),
+      companyNPWP: ref(),
+      companyAdress: ref(),
+      finNameContact: ref(),
+      finPhone: ref(),
+      type: ref(),
       btn: ref(false),
+      id: ref('')
     };
   },
 
@@ -529,6 +530,7 @@ export default {
     handleEdit(id) {
       this.edit = true
       this.getCustomerById(id)
+      this.id = id
     },
 
     async editCustomer() {
@@ -562,9 +564,10 @@ export default {
             showConfirmButton: false,
             timer: 1500,
           });
-          this.getCpmData()
+          this.getCustData()
         }
       } catch (error) {
+        // console.log(error);
         this.edit = false
 
         Swal.fire({

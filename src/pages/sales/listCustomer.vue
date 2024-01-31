@@ -48,10 +48,7 @@
     </div>
 
     <q-dialog v-model="medium">
-      <q-card
-        style="width: 700px; max-width: 80vw"
-        class="justify-center q-pa-md"
-      >
+      <q-card style="width: 700px; max-width: 80vw" class="justify-center q-pa-md">
         <q-scroll-area style="height: 70vh" class="q-pa-sm">
           <p class="text-center text-bold" style="font-size: x-large">
             CUSTOMER FORM
@@ -67,42 +64,14 @@
 
                 <q-card class="bg-light-blue-1 text-center text-bold" flat>
                   <q-card-section>
-                    <q-radio
-                      class="text-blue"
-                      v-model="type"
-                      checked-icon="task_alt"
-                      unchecked-icon="panorama_fish_eye"
-                      val="AGENCY"
-                      label="AGENCY"
-                      style="font-size: larger"
-                    />
-                    <q-radio
-                      class="text-blue"
-                      v-model="type"
-                      checked-icon="task_alt"
-                      unchecked-icon="panorama_fish_eye"
-                      val="BRAND"
-                      label="BRAND"
-                      style="font-size: larger"
-                    />
-                    <q-radio
-                      class="text-blue"
-                      v-model="type"
-                      checked-icon="task_alt"
-                      unchecked-icon="panorama_fish_eye"
-                      val="COMPANY"
-                      label="COMPANY"
-                      style="font-size: larger"
-                    />
-                    <q-radio
-                      class="text-blue"
-                      v-model="type"
-                      checked-icon="task_alt"
-                      unchecked-icon="panorama_fish_eye"
-                      val="FREELANCER"
-                      label="FREELANCER"
-                      style="font-size: larger"
-                    />
+                    <q-radio class="text-blue" v-model="type" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
+                      val="AGENCY" label="AGENCY" style="font-size: larger" />
+                    <q-radio class="text-blue" v-model="type" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
+                      val="BRAND" label="BRAND" style="font-size: larger" />
+                    <q-radio class="text-blue" v-model="type" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
+                      val="COMPANY" label="COMPANY" style="font-size: larger" />
+                    <q-radio class="text-blue" v-model="type" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
+                      val="FREELANCER" label="FREELANCER" style="font-size: larger" />
                   </q-card-section>
                 </q-card>
               </div>
@@ -110,132 +79,71 @@
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="portrait" />
                   <span class="text-bold" style="font-size: medium">
-                    Customer Name</span
-                  >
+                    Customer Name</span>
                 </p>
-                <q-input
-                  v-model="customerName"
-                  class="q-my-md"
-                  dense
-                  outlined
-                  label="Customer Name"
-                />
+                <q-input v-model="customerName" class="q-my-md" dense outlined label="Customer Name" />
               </div>
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="portrait" />
                   <span class="text-bold" style="font-size: medium">
-                    Contact Name</span
-                  >
+                    Contact Name</span>
                 </p>
-                <q-input
-                  v-model="contactName"
-                  class="q-my-md"
-                  dense
-                  outlined
-                  label="Contact Name"
-                />
+                <q-input v-model="contactName" class="q-my-md" dense outlined label="Contact Name" />
               </div>
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="local_phone" />
                   <span class="text-bold" style="font-size: medium">
-                    Contact Phone Number</span
-                  >
+                    Contact Phone Number</span>
                 </p>
-                <q-input
-                  v-model="phoneNumber"
-                  class="q-my-md"
-                  dense
-                  outlined
-                  label="Contact Phone Number"
-                />
+                <q-input v-model="phoneNumber" class="q-my-md" dense outlined label="Contact Phone Number" />
               </div>
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="email" />
                   <span class="text-bold" style="font-size: medium">
-                    Company Email</span
-                  >
+                    Company Email</span>
                 </p>
-                <q-input
-                  v-model="companyEmail"
-                  class="q-my-md"
-                  dense
-                  outlined
-                  label="Company Email"
-                />
+                <q-input v-model="companyEmail" class="q-my-md" dense outlined label="Company Email" />
               </div>
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="numbers" />
                   <span class="text-bold" style="font-size: medium">
-                    Company NPWP</span
-                  >
+                    Company NPWP</span>
                 </p>
-                <q-input
-                  v-model="companyNPWP"
-                  class="q-my-md"
-                  dense
-                  outlined
-                  label="Company NPWP"
-                />
+                <q-input v-model="companyNPWP" class="q-my-md" dense outlined label="Company NPWP"
+                  mask="##.###.###.#-###.###" fill-mask />
               </div>
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="home_filled" />
                   <span class="text-bold" style="font-size: medium">
-                    Company Address</span
-                  >
+                    Company Address</span>
                 </p>
-                <q-input
-                  v-model="companyAdress"
-                  class="q-my-md"
-                  dense
-                  outlined
-                  label="Company Address"
-                />
+                <q-input v-model="companyAdress" class="q-my-md" dense outlined label="Company Address" />
               </div>
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="portrait" />
                   <span class="text-bold" style="font-size: medium">
-                    Finance Contact Name (Optional)</span
-                  >
+                    Finance Contact Name (Optional)</span>
                 </p>
-                <q-input
-                  v-model="finNameContact"
-                  class="q-my-md"
-                  dense
-                  outlined
-                  label="Finance Contact Name"
-                />
+                <q-input v-model="finNameContact" class="q-my-md" dense outlined label="Finance Contact Name" />
               </div>
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="local_phone" />
                   <span class="text-bold" style="font-size: medium">
-                    Finance Phone Number</span
-                  >
+                    Finance Phone Number</span>
                 </p>
-                <q-input
-                  v-model="finPhone"
-                  class="q-my-md"
-                  dense
-                  outlined
-                  label="Finance Phone Number"
-                />
+                <q-input v-model="finPhone" class="q-my-md" dense outlined label="Finance Phone Number" />
               </div>
             </div>
             <div class="text-right">
               <q-card-actions align="right">
-                <q-btn
-                  class="q-mx-sm"
-                  type="submit"
-                  color="secondary"
-                  label="Create"
-                  :disable="btn"
-                />
+                <q-btn class="q-mx-sm" type="submit" color="secondary" label="Create" :disable="btn" />
                 <q-btn color="black" label="Cancel" v-close-popup />
               </q-card-actions>
             </div>
@@ -257,15 +165,15 @@ export default {
       current: ref(1),
       totalPage: ref(1),
       medium: ref(false),
-      customerName: ref(null),
-      contactName: ref(null),
-      phoneNumber: ref(null),
-      companyEmail: ref(null),
-      companyNPWP: ref(null),
-      companyAdress: ref(null),
-      finNameContact: ref(null),
-      finPhone: ref(null),
-      type: ref(null),
+      customerName: ref(),
+      contactName: ref(),
+      phoneNumber: ref(),
+      companyEmail: ref(),
+      companyNPWP: ref(),
+      companyAdress: ref(),
+      finNameContact: ref(),
+      finPhone: ref(),
+      type: ref(),
       btn: ref(false),
     };
   },

@@ -20,7 +20,9 @@ export default route(function (/* { store, ssrContext } */) {
     if (to.matched.some(record => record.meta.requiresAuth)) {
       if (isAuthenticated()) {
         if ((role === 'admin' && to.path.startsWith('/admin')) || 
-            (role === 'sales' && to.path.startsWith('/sales'))) {
+            (role === 'sales' && to.path.startsWith('/sales')) ||
+            (role === 'manager' && to.path.startsWith('/manager'))
+            ){
           next(); // Jika role dan path sesuai, lanjutkan
         } else {
           Swal.fire({
