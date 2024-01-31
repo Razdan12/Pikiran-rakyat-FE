@@ -1,10 +1,8 @@
 <template>
     <q-page>
-        <div class="q-my-md">
-
-            <div class="row">
-                <div class="col-md-1"></div>
-                <div class="col-md-10">
+        <div class="">
+            <div class="q-pa-md">
+                <div class="">
                     <q-card class="full-width">
                         <q-card-section>
                             <p class="text-center text-bold" style="font-size: large">
@@ -60,7 +58,6 @@
                         </q-card-section>
                     </q-card>
                 </div>
-                <div class="col-md-1"></div>
             </div>
         </div>
 
@@ -175,8 +172,8 @@
                                     </q-card>
                                 </div>
                             </div>
-                            
-                            
+
+
 
                         </div>
                         <div class="text-right">
@@ -241,11 +238,11 @@ export default {
             try {
                 this.btn = true;
                 const data = {
-                    name : this.nama,
+                    name: this.nama,
                     type: this.type,
                     size: this.size,
                     rate: parseInt(this.rate),
-                   
+
                 };
                 const response = await this.$api.post(`/rate-card/cpm/create`, data, {
                     headers: {
@@ -289,7 +286,7 @@ export default {
                     }
                 );
                 this.cpmList = response.data
-                
+
             } catch (error) {
                 console.log(error);
             }
@@ -322,7 +319,7 @@ export default {
             const token = sessionStorage.getItem("token");
             try {
                 this.btn = true;
-               
+
                 const response = await this.$api.patch(`rate-card/cpm/edit-by-id/${this.id}`, data, {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -343,7 +340,7 @@ export default {
                 }
             } catch (error) {
                 this.edit = false
-                
+
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
@@ -389,7 +386,7 @@ export default {
             });
         },
 
-        trigerEdit(id){
+        trigerEdit(id) {
             this.edit = true
             this.getCpmById(id)
             this.id = id
@@ -399,9 +396,9 @@ export default {
 
         resetForm() {
             this.nama = null,
-            this.type = null,
-            this.rate = null,
-            this.size = null
+                this.type = null,
+                this.rate = null,
+                this.size = null
         }
     },
 };
