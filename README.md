@@ -10,14 +10,14 @@
 ## log update 16/01/24
 - private route ( role admin & sales)
 - halaman customer ( role admin )
-	``tambah customer``
+	- tambah customer
 - halaman MT - Network ( role admin )
-	``tambah network``
+	- tambah network
 	- edit Network
 - halaman MT - Mitra ( role admin )
-	``tambah mitra``
+	- tambah mitra
 - halaman MT - sosmed ( role admin )
-	``tambah sosmed ``
+	- tambah sosmed
 
 
 ## update log 18/01/24
