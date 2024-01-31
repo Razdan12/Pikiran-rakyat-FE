@@ -47,3 +47,18 @@ role Sales
 1. update fitur order tampilan disesuaikan dengan rate card.
 2. update jumlah tagihan langsung muncul ketika pilih produk.
 3. update diskon otomatis 
+
+
+Update log 31/01/24
+Role Admin
+1. Penambahan Fitur Rate Card Artikel ( CRUD )
+2. Penambahan Fitur Rate Card Sosmed ( CRUD )
+3. Penambahan Fitur Rate Card Other Content ( CRUD)
+4. Penambahan Fitur Rate Card Ads CPD ( CRUD )
+5. Penambahan Fitur Rate Card Ads CPM ( CRUD )
+6. penambahan menu kelola user ( CRUD )
+
+Role Sales
+1. fitur Payment dengan metode cash, kredit, barter, semi barter, termin
+2. penambahan produk yang bisa dipilih ( Artikel, Sosmed, Other Conten, Iklan CPD & CPD)
+3. fix responsive design
