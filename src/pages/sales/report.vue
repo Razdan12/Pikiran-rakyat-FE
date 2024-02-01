@@ -84,32 +84,32 @@
               <q-markup-table>
                 <thead>
                   <tr>
-                    <th class="text-left">No</th>
-                    <th class="text-right">Client</th>
-                    <th class="text-right">Campaign</th>
-                    <th class="text-right">Tanggal Order</th>
-                    <th class="text-right">No Quotation</th>
-                    <th class="text-right">Mitra</th>
-                    <th class="text-right">Media Tayang</th>
-                    <th class="text-right">No MO</th>
-                    <th class="text-right">Periode</th>
-                    <th class="text-right">OTI</th>
-                    <th class="text-right">Status</th>
+                    <th class="text-center">No</th>
+                    <th class="text-center">Client</th>
+                    <th class="text-center">Campaign</th>
+                    <th class="text-center">Tanggal Order</th>
+                    <th class="text-center">No Quotation</th>
+                    <th class="text-center">Mitra</th>
+                    <th class="text-center">Media Tayang</th>
+                    <th class="text-center">No MO</th>
+                    <th class="text-center">Periode</th>
+                    <th class="text-center">OTI</th>
+                    <th class="text-center">Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="(item, index) in dataList" :key="item.idOrder">
                     <td class="text-left">{{ index + 1 }}</td>
-                    <td class="text-right">{{ item.client }}</td>
-                    <td class="text-right">{{ item.campaign }}</td>
-                    <td class="text-right">{{ item.tgl_order }}</td>
-                    <td class="text-right">{{ item.noQuo }}</td>
-                    <td class="text-right">-</td>
-                    <td class="text-right">{{ item.media_tayang }}</td>
-                    <td class="text-right">{{ item.noMo }}</td>
-                    <td class="text-right">{{ item.period_start }} - {{ item.period_end }}</td>
-                    <td class="text-right">{{ item.oti }}</td>
-                    <td class="text-right" :class="{ 'text-red': !item.status, 'text-green': item.status }">
+                    <td class="text-center">{{ item.client }}</td>
+                    <td class="text-center">{{ item.campaign }}</td>
+                    <td class="text-center">{{ item.tgl_order }}</td>
+                    <td class="text-center">{{ item.noQuo }}</td>
+                    <td class="text-center" ><p v-for="(mitra, index) in item.mitra">{{ mitra }}</p></td>
+                    <td class="text-center">{{ item.media_tayang }}</td>
+                    <td class="text-center">{{ item.noMo }}</td>
+                    <td class="text-center">{{ item.period_start }} - {{ item.period_end }}</td>
+                    <td class="text-center">{{ item.oti }}</td>
+                    <td class="text-center" :class="{ 'text-red': !item.status, 'text-green': item.status }">
                       {{ item.status ? 'Open' : 'Close' }}
                     </td>
                   </tr>
@@ -117,14 +117,9 @@
                 </tbody>
               </q-markup-table>
             </div>
-
-
-
           </q-card-section>
         </q-card>
-
       </div>
-     
     </div>
    
   </q-page>
@@ -154,15 +149,13 @@ export default {
   methods: {
     async getMoData() {
       try {
-
-        const response = await this.$api.get(`/oti/report?pageNumber=${this.current}`, {
+        const id = sessionStorage.getItem('id')
+        const response = await this.$api.get(`/oti/report-user/${id}`, {
           headers: {
             'Authorization': `Bearer ${this.token}`
           }
         });
-        console.log(response.data);
         this.dataList = response.data
-
 
       } catch (error) {
         console.log(error);

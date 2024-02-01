@@ -2,9 +2,9 @@ import { route } from 'quasar/wrappers'
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from 'vue-router'
 import routes from './routes'
 import Swal from 'sweetalert2'
+import { api } from '../boot/axios'
 
-
-export default route(function (/* { store, ssrContext } */) {
+export default route(function () {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : (process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory)
@@ -15,10 +15,10 @@ export default route(function (/* { store, ssrContext } */) {
     history: createHistory(process.env.VUE_ROUTER_BASE)
   })
 
-  Router.beforeEach((to, from, next) => {
+  Router.beforeEach(async (to, from, next) => {
     const role = sessionStorage.getItem('role'); // Ambil role dari sessionStorage
     if (to.matched.some(record => record.meta.requiresAuth)) {
-      if (isAuthenticated()) {
+      if (await isAuthenticated()) {
         if ((role === 'admin' && to.path.startsWith('/admin')) || 
             (role === 'sales' && to.path.startsWith('/sales')) ||
             (role === 'manager' && to.path.startsWith('/manager'))
@@ -46,11 +46,21 @@ export default route(function (/* { store, ssrContext } */) {
   })
   
 
-  function isAuthenticated() {
-    const token = sessionStorage.getItem('token')
-    return !!token
+  const isAuthenticated = async () =>{
+    const token = sessionStorage.getItem("token")
+    try {
+      const response = await api.get(`/user/auth/me`, { 
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      return response
+
+    } catch (error) {
+      console.log(error);
+    }
   }
-  
+ 
 
   return Router
 })

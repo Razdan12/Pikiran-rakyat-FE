@@ -314,11 +314,11 @@
                           </q-card>
                         </q-expansion-item>
                         <q-separator />
-                        <q-expansion-item group="somegroup" class="text-left text-light-blue-10" icon="ads_click"
-                          label="Display Ads CPM" style="font-size: larger;" @click="typeRate = 'cpm'">
+                        <q-expansion-item group="somegroup" class="text-left text-light-blue-10" icon="ads_click" label="Display Ads CPM" style="font-size: larger;" @click="typeRate = 'cpm'">
                           <q-separator />
                           <q-card>
                             <q-card-section>
+                              <q-input type="number" v-model="impresi" outlined dense label="Qty Impresi" style="width: 30%; margin-bottom: 20px;"  />
                               <div>
                                 <q-markup-table>
                                   <thead>
@@ -332,6 +332,7 @@
                                     </tr>
                                   </thead>
                                   <tbody>
+                                   
                                     <tr v-for="(item, index) in dataRate" :key="item.id">
                                       <td class="text-center"><q-checkbox v-model="rateList" :val='item' /></td>
                                       <td class="text-center">{{ item.name }}</td>
@@ -707,7 +708,7 @@ export default {
           mitras.value = mitraListt.filter(v => v.label.toLowerCase().indexOf(needle) > -1)
         })
       },
-      mitraData: ref(null),
+      mitraData: ref([]),
       custname: ref(null),
       picName: ref(''),
       picNumber: ref(''),
@@ -756,7 +757,8 @@ export default {
       typeOptionCpd: ['home', 'detail', 'section'],
       id: ref([]),
       dataRate: ref([]),
-      rateList: ref([])
+      rateList: ref([]),
+      impresi: ref()
 
     }
   },
@@ -792,7 +794,6 @@ export default {
       newVal === 'Mitra' ? this.getMitra() : ''
     },
     totalRate: {
-
       handler() {
         this.calculateFinalRate();
       },
@@ -903,13 +904,24 @@ export default {
 
 
     calculateFinalRate() {
+      const qtyOrder =
+      (new Date(this.date3) - new Date(this.date2)) /
+        (24 * 60 * 60 * 1000) + 1;
+
       const discountAmount = (this.value / 100) * this.totalRate;
-      const finalPrice = this.totalRate - discountAmount;
-      this.finalRate = finalPrice;
+
+      const jumlah = this.modelTayang === 'PRMN' ? this.totalRate * qtyOrder : (this.totalRate * this.mitraData.length) * qtyOrder
+
+      const jumlahCpm = (this.totalRate * this.mitraData.length * this.impresi) / 1000;
+      const hasil = this.typeRate === 'cpm' ? jumlahCpm : jumlah
+      const finalPrice = hasil - discountAmount;
       const formatter = new Intl.NumberFormat('id-ID', {
         style: 'currency',
         currency: 'IDR',
       })
+
+
+      this.finalRate = finalPrice;
       this.formattedFinalRate = formatter.format(finalPrice);
 
     },
@@ -1080,6 +1092,7 @@ export default {
         case 'cpm':
           return {
             type: this.typeRate,
+            impresi: this.impresi
           }
         case 'other_content':
           return {
