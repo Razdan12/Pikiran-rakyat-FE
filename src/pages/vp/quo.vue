@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div class="q-pa-md">
-     
+
       <div>
         <q-card class="full-width q-my-lg">
           <q-card-section>
@@ -115,15 +115,16 @@
                           <td class=" justify-center items-center"><img :hidden="pic_approve == false"
                               src="https://png.pngtree.com/png-vector/20221009/ourmid/pngtree-original-approved-stamp-and-badget-design-red-grunge-png-image_6293837.png"
                               alt="approve" style="width: 100px;"></td>
-                          
+
+
                           <td class="text-right"></td>
 
                         </tr>
                         <tr>
-                          <td class="text-center"> <q-btn :disable="sales_approve" color="secondary" label="Approv"
-                              @click="handleApprove" /></td>
                           <td class="text-center"></td>
-                          <td class="text-center"></td>
+                          <td class="text-center"><q-btn v-if="request_by == 'manager'" :disable="(sales_approve === false) || manager_approve" color="secondary" label="Approv" @click="handleApprove" /></td>
+                          <td class="text-center"><q-btn v-if="approve()" :disable="(sales_approve === false && manager_approve === false) || pic_approve" color="secondary" label="Approv" @click="handleApprove" /></td>
+
                           <td class="text-center"></td>
                         </tr>
 
@@ -171,9 +172,9 @@
         </q-card>
 
       </div>
-      
+
     </div>
-    
+
   </q-page>
 </template>
 
@@ -263,11 +264,14 @@ export default {
       sales_approve: ref(false),
       manager_approve: ref(false),
       pic_approve: ref(false),
+      request_by: ref(''),
     }
   },
   mounted() {
     this.getQuoData()
   },
+
+  
   methods: {
     async getQuoData() {
       const id = sessionStorage.getItem("idOrder")
@@ -286,20 +290,30 @@ export default {
         this.pic_name = response.data.pic_name
         this.pic_contact = response.data.pic_contact
         this.sales_approve = response.data.approve1
-        this.manager_approve = response.data.approve2 
+        this.manager_approve = response.data.approve2
         this.pic_approve = response.data.approve3
+        this.request_by = response.data.request_by
 
       } catch (error) {
         console.log(error);
       }
 
     },
+
+
     async editOrder() {
       const id = sessionStorage.getItem("idOrder")
       const token = sessionStorage.getItem("token")
       try {
-        const data = {
-          sales_approve: true
+       
+        let data = {
+          pic_approve: true
+        }
+
+        if (this.request_by === 'manager') {
+          data = {
+            manager_approve: data.pic_approve
+          }
         }
 
         const response = await this.$api.patch(`/order/edit-order/${id}`, data, {
@@ -307,7 +321,7 @@ export default {
             'Authorization': `Bearer ${token}`
           }
         });
-       
+
         Swal.fire({
           position: "center",
           icon: "success",
@@ -319,6 +333,13 @@ export default {
 
       } catch (error) {
         console.log(error);
+      }
+    },
+    approve() {
+      if(this.request_by === 'manager'){
+        return false
+      }else{
+        return true
       }
     },
 
@@ -334,7 +355,6 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.editOrder()
-
         }
       });
 

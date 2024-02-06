@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div class="q-pa-md">
-     
+
       <div>
         <q-card class="full-width q-my-lg">
           <q-card-section>
@@ -109,26 +109,26 @@
                           <td class=" justify-center items-center"><img :hidden="sales_approve == false"
                               src="https://png.pngtree.com/png-vector/20221009/ourmid/pngtree-original-approved-stamp-and-badget-design-red-grunge-png-image_6293837.png"
                               alt="approve" style="width: 100px;"></td>
-                          <td class=" justify-center items-center"><img :hidden="manager_approve == false"
+                          <td class=" justify-center items-center"><img :hidden="manager_approve === false"
                               src="https://png.pngtree.com/png-vector/20221009/ourmid/pngtree-original-approved-stamp-and-badget-design-red-grunge-png-image_6293837.png"
                               alt="approve" style="width: 100px;"></td>
-                          <td class=" justify-center items-center"><img :hidden="pic_approve == false"
-                              src="https://png.pngtree.com/png-vector/20221009/ourmid/pngtree-original-approved-stamp-and-badget-design-red-grunge-png-image_6293837.png"
-                              alt="approve" style="width: 100px;"></td>
-                          
+
+                          <td class="text-right"></td>
                           <td class="text-right"></td>
 
                         </tr>
                         <tr>
-                          <td class="text-center"> <q-btn :disable="sales_approve" color="secondary" label="Approv"
-                              @click="handleApprove" /></td>
-                          <td class="text-center"></td>
+                          <td class="text-center"><q-btn v-if="request_by == 'manager'" :disable="sales_approve"
+                              color="secondary" label="Approv" @click="handleApprove" /></td>
+                          <td class="text-center"> <q-btn v-if="approve()"
+                              :disable="sales_approve === false || manager_approve" color="secondary" label="Approv" @click="handleApprove" /></td>
                           <td class="text-center"></td>
                           <td class="text-center"></td>
                         </tr>
 
                       </tbody>
                     </q-markup-table>
+                   
                   </div>
                   <div class="col-md-4">
                     <br>
@@ -171,9 +171,9 @@
         </q-card>
 
       </div>
-      
+
     </div>
-    
+
   </q-page>
 </template>
 
@@ -262,7 +262,7 @@ export default {
       pic_contact: ref('contact'),
       sales_approve: ref(false),
       manager_approve: ref(false),
-      pic_approve: ref(false),
+      request_by: ref(''),
     }
   },
   mounted() {
@@ -278,6 +278,7 @@ export default {
             'Authorization': `Bearer ${token}`
           }
         });
+        console.log(response);
 
         this.camp_name = response.data.camp_name
         this.camp_period = `${response.data.period_start} - ${response.data.period_end}`
@@ -286,8 +287,8 @@ export default {
         this.pic_name = response.data.pic_name
         this.pic_contact = response.data.pic_contact
         this.sales_approve = response.data.approve1
-        this.manager_approve = response.data.approve2 
-        this.pic_approve = response.data.approve3
+        this.manager_approve = response.data.approve2
+        this.request_by = response.data.request_by
 
       } catch (error) {
         console.log(error);
@@ -298,8 +299,15 @@ export default {
       const id = sessionStorage.getItem("idOrder")
       const token = sessionStorage.getItem("token")
       try {
-        const data = {
-          sales_approve: true
+
+        let data = {
+          manager_approve: true
+        }
+
+        if (this.request_by === 'manager') {
+          data = {
+            sales_approve: data.manager_approve
+          }
         }
 
         const response = await this.$api.patch(`/order/edit-order/${id}`, data, {
@@ -307,7 +315,7 @@ export default {
             'Authorization': `Bearer ${token}`
           }
         });
-       
+
         Swal.fire({
           position: "center",
           icon: "success",
@@ -319,6 +327,14 @@ export default {
 
       } catch (error) {
         console.log(error);
+      }
+    },
+
+    approve() {
+      if(this.request_by === 'manager'){
+        return false
+      }else{
+        return true
       }
     },
 

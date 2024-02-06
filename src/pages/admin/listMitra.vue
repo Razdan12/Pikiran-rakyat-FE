@@ -10,25 +10,19 @@
               </p>
               <q-separator class="q-my-md" color="light-blue-7" inset />
               <div class="text-right q-pa-md flex items-center justify-between">
-                <q-input
-                  v-model="search"
-                  debounce="500"
-                  filled
-                  placeholder="Search"
-                  style="margin-right: 10px"
-                >
+                <q-input v-model="search" debounce="500" filled placeholder="Search" style="margin-right: 10px">
                   <template v-slot:append>
                     <q-icon name="search" />
                   </template>
                 </q-input>
                 <div>
                   <q-btn-group>
-                    <q-btn color="cyan" icon="add" @click="medium = true" />
-                    <q-btn
-                      color="green"
-                      icon="cloud_upload"
-                      @click="upload = true"
-                    />
+                    <q-btn color="cyan" icon="add" @click="medium = true">
+                      <q-tooltip class="bg-cyan text-body2" :offset="[10, 10]">
+                        Tambah Mitra
+                      </q-tooltip>
+                    </q-btn>
+                    <!-- <q-btn color="green" icon="cloud_upload" @click="upload = true" /> -->
                   </q-btn-group>
                 </div>
               </div>
@@ -52,19 +46,13 @@
                       <td class="text-center">
                         <q-btn-group>
                           <q-btn color="orange" icon="border_color">
-                            <q-tooltip
-                              class="bg-orange text-body2"
-                              :offset="[10, 10]"
-                            >
-                              Edit Network
+                            <q-tooltip class="bg-orange text-body2" :offset="[10, 10]">
+                              Edit Mitra
                             </q-tooltip>
                           </q-btn>
-                          <q-btn color="red" icon="delete">
-                            <q-tooltip
-                              class="bg-red text-body2"
-                              :offset="[10, 10]"
-                            >
-                              Hapus Network
+                          <q-btn color="red" icon="delete" @click="Delete(item.id)">
+                            <q-tooltip class="bg-red text-body2" :offset="[10, 10]">
+                              Hapus Mitra
                             </q-tooltip>
                           </q-btn>
                         </q-btn-group>
@@ -83,10 +71,7 @@
     </div>
 
     <q-dialog v-model="medium">
-      <q-card
-        style="width: 700px; max-width: 80vw"
-        class="justify-center q-pa-md"
-      >
+      <q-card style="width: 700px; max-width: 80vw" class="justify-center q-pa-md">
         <q-scroll-area style="height: 39vh" class="q-pa-sm">
           <p class="text-center text-bold" style="font-size: x-large">
             TAMBAH NETWORK
@@ -98,42 +83,24 @@
                 <p class="text-bold text-blue" style="font-size: medium">
                   <span class="text-bold" style="font-size: medium"> Nama</span>
                 </p>
-                <q-input
-                  v-model="nama"
-                  class="q-my-md"
-                  dense
-                  outlined
-                  label="Nama network"
-                />
+                <q-input v-model="nama" class="q-my-md" dense outlined label="Nama network" />
               </div>
 
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
                   <span class="text-bold" style="font-size: medium">
-                    Status</span
-                  >
+                    Status</span>
                 </p>
                 <div>
                   <label for="">Non Aktif</label>
-                  <q-toggle
-                    v-model="status"
-                    checked-icon="check"
-                    color="green"
-                    unchecked-icon="clear"
-                  />
+                  <q-toggle v-model="status" checked-icon="check" color="green" unchecked-icon="clear" />
                   <label for="">Aktif</label>
                 </div>
               </div>
             </div>
             <div class="text-right">
               <q-card-actions align="right">
-                <q-btn
-                  class="q-mx-sm"
-                  type="submit"
-                  color="secondary"
-                  label="Create"
-                  :disable="btn"
-                />
+                <q-btn class="q-mx-sm" type="submit" color="secondary" label="Create" :disable="btn" />
                 <q-btn color="black" label="Cancel" v-close-popup />
               </q-card-actions>
             </div>
@@ -142,10 +109,7 @@
       </q-card>
     </q-dialog>
     <q-dialog v-model="edit">
-      <q-card
-        style="width: 700px; max-width: 80vw"
-        class="justify-center q-pa-md"
-      >
+      <q-card style="width: 700px; max-width: 80vw" class="justify-center q-pa-md">
         <q-scroll-area style="height: 39vh" class="q-pa-sm">
           <p class="text-center text-bold" style="font-size: x-large">
             EDIT NETWORK
@@ -157,20 +121,10 @@
                 <p class="text-bold text-blue" style="font-size: medium">
                   <span class="text-bold" style="font-size: medium"> Nama</span>
                 </p>
-                <div
-                  class="cursor-pointer text-bold"
-                  style="margin-bottom: 20px"
-                >
+                <div class="cursor-pointer text-bold" style="margin-bottom: 20px">
                   {{ nama == null ? dataNetwork.name : nama }}
                   <q-popup-edit v-model="nama" v-slot="scope">
-                    <q-input
-                      color="blue"
-                      v-model="scope.value"
-                      dense
-                      autofocus
-                      counter
-                      @keyup.enter="scope.set"
-                    >
+                    <q-input color="blue" v-model="scope.value" dense autofocus counter @keyup.enter="scope.set">
                       <template v-slot:append>
                         <q-icon name="edit" />
                       </template>
@@ -182,30 +136,18 @@
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
                   <span class="text-bold" style="font-size: medium">
-                    Status</span
-                  >
+                    Status</span>
                 </p>
                 <div>
                   <label for="">Non Aktif</label>
-                  <q-toggle
-                    v-model="dataNetwork.status"
-                    checked-icon="check"
-                    color="green"
-                    unchecked-icon="clear"
-                  />
+                  <q-toggle v-model="dataNetwork.status" checked-icon="check" color="green" unchecked-icon="clear" />
                   <label for="">Aktif</label>
                 </div>
               </div>
             </div>
             <div class="text-right">
               <q-card-actions align="right">
-                <q-btn
-                  class="q-mx-sm"
-                  type="submit"
-                  color="secondary"
-                  label="Create"
-                  :disable="btn"
-                />
+                <q-btn class="q-mx-sm" type="submit" color="secondary" label="Create" :disable="btn" />
                 <q-btn color="black" label="Cancel" v-close-popup />
               </q-card-actions>
             </div>
@@ -213,40 +155,44 @@
         </q-scroll-area>
       </q-card>
     </q-dialog>
-    <q-dialog v-model="upload">
-      <q-card
-        style="width: 700px; max-width: 80vw"
-        class="justify-center q-pa-md"
-      >
-        <q-scroll-area style="height: 55vh" class="q-pa-sm">
+    <q-dialog v-model="edit">
+      <q-card style="width: 700px; max-width: 80vw" class="justify-center q-pa-md">
+        <q-scroll-area style="height: 70vh" class="q-pa-sm">
           <p class="text-center text-bold" style="font-size: x-large">
-            UPLOAD MITRA
+            Edit Mitra
           </p>
           <q-separator class="q-my-lg" color="orange" inset />
-          <div class="text-left" style="margin-bottom: 10px">
-            <q-btn
-              class="q-mx-sm"
-              type="submit"
-              color="secondary"
-              icon="cloud_download"
-            />
-          </div>
-          <div class="">
-            <q-uploader
-              url="http://localhost:4444/upload"
-              label="No thumbnails"
-              color="amber"
-              text-color="black"
-              no-thumbnails
-              style="width: 650px; height: 300px"
-            />
-          </div>
-
-          <div class="text-right">
-            <q-card-actions align="right">
-              <q-btn color="black" label="Cancel" v-close-popup />
-            </q-card-actions>
-          </div>
+          <q-form @submit.prevent="editCpd">
+            <div class="col">
+              <div>
+                <p class="text-bold text-blue" style="font-size: medium">
+                  <span class="text-bold" style="font-size: medium"> Nama</span>
+                </p>
+                <div class="" style="margin-bottom: 20px">
+                  <q-card class="my-card q-pa-sm" flat bordered>
+                    <div class="cursor-pointer">
+                      {{ nama }}
+                      <q-popup-edit v-model="nama" auto-save v-slot="scope">
+                        <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
+                      </q-popup-edit>
+                    </div>
+                  </q-card>
+                </div>
+              </div>
+              <div>
+                <p class="text-bold text-blue" style="font-size: medium">
+                  <span class="text-bold" style="font-size: medium"> Status</span>
+                </p>
+              </div>
+            
+            </div>
+            <div class="text-right">
+              <q-card-actions align="right">
+                <q-btn class="q-mx-sm" type="submit" color="secondary" label="Submit" :disable="btn" />
+                <q-btn color="black" label="Cancel" v-close-popup />
+              </q-card-actions>
+            </div>
+          </q-form>
         </q-scroll-area>
       </q-card>
     </q-dialog>
@@ -358,6 +304,41 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+
+    async deleteMitra(id) {
+      try {
+        const token = sessionStorage.getItem("token");
+        const response = await this.$api.delete(`media/mitra/delete-by-id/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success"
+        });
+        this.getMitraData()
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    Delete(id) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.deleteMitra(id)
+        }
+      });
     },
   },
 };

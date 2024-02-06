@@ -8,9 +8,7 @@
               LIST ORDER
             </p>
             <q-separator class="q-my-md" color="light-blue-7" inset />
-            <div class="text-right q-pa-md">
-              <q-btn color="secondary" label="TAMBAH" to="/sales/order" />
-            </div>
+
             <div>
               <q-markup-table>
                 <thead>
@@ -21,7 +19,7 @@
                     <th class="text-center">Campaign Name</th>
                     <th class="text-center">No Order</th>
                     <th class="text-center">Produk</th>
-                    <th class="text-center">action</th>
+                   
                   </tr>
                 </thead>
                 <tbody>
@@ -36,9 +34,7 @@
                         {{ Item.name }}
                       </p>
                     </td>
-                    <td class="text-center">
-                      <q-btn :color="item.approve1 ? 'secondary' : 'red'" icon="remove_red_eye" to="/sales/quotation" @click="clickBtn(item.idOrder)" />
-                    </td>
+                   
                   </tr>
                 </tbody>
               </q-markup-table>
@@ -63,7 +59,12 @@ export default {
       current: ref(1),
       totalPage: ref(1),
       medium: ref(false),
+
     };
+  },
+
+  computed: {
+
   },
 
   mounted() {
@@ -78,9 +79,12 @@ export default {
     async getMoData() {
       try {
         const token = sessionStorage.getItem("token");
-        const idUser = sessionStorage.getItem("id")
+        const role = sessionStorage.getItem("role")
+
+        const produk = role.split('_')
+
         const response = await this.$api.get(
-          `order/data/by-user/${idUser}?pageNumber=${this.current}`,
+          `order/by-produk/${produk[produk.length - 1]}?pageNumber=${this.current}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -88,7 +92,7 @@ export default {
           }
         );
 
-        console.log(response);
+
         this.orderList = response.data.dataOrder;
         this.current = response.data.pageNumber;
         this.totalPage = response.data.totalPage;
@@ -98,6 +102,7 @@ export default {
     },
 
     clickBtn(idOrder) {
+      console.log({ idOrder });
       sessionStorage.setItem("idOrder", idOrder);
     },
   },

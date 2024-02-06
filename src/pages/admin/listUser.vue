@@ -106,6 +106,20 @@
                 </p>
                 <q-input v-model="password" class="q-my-md" dense outlined label="Password" />
               </div>
+              <div>
+                <p class="text-bold text-blue" style="font-size: medium">
+                  <span class="text-bold" style="font-size: medium">
+                    Jabatan</span>
+                </p>
+                <q-input v-model="jabatan" class="q-my-md" dense outlined label="Password" />
+              </div>
+              <div>
+                <p class="text-bold text-blue" style="font-size: medium">
+                  <span class="text-bold" style="font-size: medium">
+                    Nomor Handphone</span>
+                </p>
+                <q-input v-model="phone" type="number" class="q-my-md" dense outlined label="Password" />
+              </div>
 
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
@@ -147,6 +161,8 @@ export default {
       btn: ref(false),
       namaEdit: ref(null),
       idUser: ref(null),
+      jabatan : ref(),
+      phone: ref()
     };
   },
 
@@ -171,6 +187,8 @@ export default {
         password: this.password,
         repassword: this.password,
         role_id: this.role,
+        jabatan: this.jabatan,
+        phone: this.phone
       };
       try {
         this.btn = true;

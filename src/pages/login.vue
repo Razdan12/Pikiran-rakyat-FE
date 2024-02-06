@@ -112,8 +112,16 @@ export default {
 
         if (role === "admin") {
           this.$router.push("/admin/customer");
-        } else if (role === "sales") {
+        } else if (role === "sales" || role === "mitra") {
           this.$router.push("/sales/customer");
+        }else if (role === "manager") {
+          this.$router.push("/manager/customer");
+        }else if (role === "finance") {
+          this.$router.push("/finance/molist");
+        }else if (role === "pic_artikel" || role === "pic_sosmed" || role === "pic_cpd" || role === "pic_cpm" || role === "pic_other_content") {
+          this.$router.push("/prod/oti");
+        }else if (role === 'VP'){
+          this.$router.push("/vp/oti");
         }
       } catch (error) {
         Swal.fire({

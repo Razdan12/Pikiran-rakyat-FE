@@ -121,12 +121,153 @@ const routes = [
     path: "/manager",
     component: () => import("layouts/ManagerLayout.vue"),
     children: [
-    
+      {
+        path: "/manager/user",
+        component: () => import("pages/manager/dashboard.vue"),
+        meta: { requiresAuth: true },
+      },
       {
         path: "/manager/customer",
-        component: () => import("pages/admin/listCoustumer.vue"),
-         meta: { requiresAuth: true },
+        component: () => import("pages/manager/listCustomer.vue"),
+        meta: { requiresAuth: true },
       },
+      {
+        path: "/manager/order",
+        component: () => import("pages/manager/order.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "/manager/quotation",
+        component: () => import("pages/manager/quo.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "/manager/oti",
+        component: () => import("pages/manager/oti.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "/manager/mo",
+        component: () => import("pages/manager/mo.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "/manager/molist",
+        component: () => import("pages/manager/molist.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "/manager/order-list",
+        component: () => import("pages/manager/orderList.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "/manager/report",
+        component: () => import("pages/manager/report.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "/manager/otipic",
+        component: () => import("pages/manager/otipic.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "/manager/test",
+        component: () => import("pages/test.vue"),
+        meta: { requiresAuth: true },
+      },
+    ],
+  },
+  {
+    path: "/vp",
+    component: () => import("layouts/VpLayout.vue"),
+    children: [
+      {
+        path: "/vp/quotation",
+        component: () => import("pages/vp/quo.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "/vp/order-list",
+        component: () => import("pages/vp/orderList.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "/vp/oti",
+        component: () => import("pages/vp/oti.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "/vp/mo",
+        component: () => import("pages/vp/mo.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "/vp/report",
+        component: () => import("pages/vp/report.vue"),
+        meta: { requiresAuth: true },
+      },
+     
+    ],
+  },
+  {
+    path: "/prod",
+    component: () => import("layouts/ProdLayout.vue"),
+    children: [
+      {
+        path: "/prod/quotation",
+        component: () => import("pages/production/quo.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "/prod/order-list",
+        component: () => import("pages/production/orderList.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "/prod/oti",
+        component: () => import("pages/production/oti.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "/prod/mo",
+        component: () => import("pages/production/mo.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "/prod/report",
+        component: () => import("pages/production/report.vue"),
+        meta: { requiresAuth: true },
+      },
+     
+    ],
+  },
+  {
+    path: "/finance",
+    component: () => import("layouts/FinanceLayout.vue"),
+    children: [
+     
+      {
+        path: "/finance/mo",
+        component: () => import("pages/finance/mo.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "/finance/molist",
+        component: () => import("pages/finance/molist.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "/finance/order-list",
+        component: () => import("pages/finance/orderList.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "/finance/report",
+        component: () => import("pages/finance/report.vue"),
+        meta: { requiresAuth: true },
+      }
+     
     ],
   },
 

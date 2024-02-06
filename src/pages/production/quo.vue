@@ -115,15 +115,17 @@
                           <td class=" justify-center items-center"><img :hidden="pic_approve == false"
                               src="https://png.pngtree.com/png-vector/20221009/ourmid/pngtree-original-approved-stamp-and-badget-design-red-grunge-png-image_6293837.png"
                               alt="approve" style="width: 100px;"></td>
-                          
+                         
+                         
                           <td class="text-right"></td>
 
                         </tr>
                         <tr>
-                          <td class="text-center"> <q-btn :disable="sales_approve" color="secondary" label="Approv"
+                          <td class="text-center"></td>
+                          <td class="text-center"></td>
+                          <td class="text-center"> <q-btn :disable="pic_approve" color="secondary" label="Approv"
                               @click="handleApprove" /></td>
-                          <td class="text-center"></td>
-                          <td class="text-center"></td>
+                          
                           <td class="text-center"></td>
                         </tr>
 
@@ -262,7 +264,7 @@ export default {
       pic_contact: ref('contact'),
       sales_approve: ref(false),
       manager_approve: ref(false),
-      pic_approve: ref(false),
+      pic_approve: ref(false)
     }
   },
   mounted() {
@@ -279,6 +281,7 @@ export default {
           }
         });
 
+       
         this.camp_name = response.data.camp_name
         this.camp_period = `${response.data.period_start} - ${response.data.period_end}`
         this.cust_type = response.data.cust_type
@@ -286,8 +289,8 @@ export default {
         this.pic_name = response.data.pic_name
         this.pic_contact = response.data.pic_contact
         this.sales_approve = response.data.approve1
-        this.manager_approve = response.data.approve2 
-        this.pic_approve = response.data.approve3
+        this.manager_approve = response.data.approve2 == null ? false : true
+        this.pic_approve = response.data.approve3 == null ? false : true
 
       } catch (error) {
         console.log(error);
@@ -299,7 +302,7 @@ export default {
       const token = sessionStorage.getItem("token")
       try {
         const data = {
-          sales_approve: true
+          pic_approve: true
         }
 
         const response = await this.$api.patch(`/order/edit-order/${id}`, data, {

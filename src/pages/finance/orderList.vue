@@ -37,7 +37,7 @@
                       </p>
                     </td>
                     <td class="text-center">
-                      <q-btn :color="item.approve1 ? 'secondary' : 'red'" icon="remove_red_eye" to="/sales/quotation" @click="clickBtn(item.idOrder)" />
+                      <q-btn color="secondary" icon="remove_red_eye" to="/sales/quotation" @click="clickBtn(item.idOrder)" />
                     </td>
                   </tr>
                 </tbody>
@@ -80,15 +80,13 @@ export default {
         const token = sessionStorage.getItem("token");
         const idUser = sessionStorage.getItem("id")
         const response = await this.$api.get(
-          `order/data/by-user/${idUser}?pageNumber=${this.current}`,
+          `order/data/?pageNumber=${this.current}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
-
-        console.log(response);
         this.orderList = response.data.dataOrder;
         this.current = response.data.pageNumber;
         this.totalPage = response.data.totalPage;

@@ -2,7 +2,7 @@
   <q-page>
     <div class="q-pa-md">
       <div class="">
-
+        
         <div class="">
           <q-card class="full-width">
             <q-card-section>
@@ -45,7 +45,6 @@
                         {{ item.noMo }}
                       </td>
 
-                      
                       <td>{{ item.product }}</td>
                       <td>{{ item.sub }}</td>
                       <td>{{ item.oti }}</td>
@@ -65,7 +64,7 @@
           </q-card>
 
         </div>
-
+      
       </div>
 
     </div>
@@ -82,7 +81,7 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
-  
+
 </template>
 
 <script>
@@ -129,15 +128,14 @@ export default {
     },
     async getMoData() {
       try {
-        const id = sessionStorage.getItem("id")
-        const response = await this.$api.get(`/oti/report-user/${id}?pageNumber=${this.current}`, {
+       
+        const response = await this.$api.get(`/oti?pageNumber=${this.current}`, {
           headers: {
             'Authorization': `Bearer ${this.token}`
           }
         });
-
-        console.log(response.data);
-        this.otiList = response.data
+       
+        this.otiList = response.data.data
         this.current = response.data.pageNumber
         this.totalPage = response.data.totalPage
         this.rowIndex = 1;
