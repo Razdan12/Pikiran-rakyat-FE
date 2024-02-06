@@ -49,7 +49,7 @@
                       <td>{{ item.sub }}</td>
                       <td>{{ item.oti }}</td>
                       <td>
-                        <q-btn :disable="item.tayang == false" :key="`btn_size_dense_round_md`" round dense color="green"
+                        <q-btn :hidden="item.tayang == false" :key="`btn_size_dense_round_md`" round dense color="green"
                           :size="size" icon="perm_media" @click="clickBtnImage(item.file_bukti_tayang)" />
                         {{ item.tayang ? 'Tayang' : "On Progress" }}
                       </td>

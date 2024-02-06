@@ -17,6 +17,8 @@
                     <th class="text-center">No Quotation</th>
                     <th class="text-center">Periode</th>
                     <th class="text-center">Media Order</th>
+                    <th class="text-center">Cashback</th>
+                    <th class="text-center">Intensive</th>
                     <th class="text-center">action</th>
                   </tr>
                 </thead>
@@ -28,6 +30,8 @@
                     <td class="text-center">{{ item.no_quo }}</td>
                     <td class="text-center">{{ item.period_start }} - {{ item.period_end }}</td>
                     <td class="text-center">{{ item.media_order }}</td>
+                    <td class="text-center">{{ item.cashBack ? formatRupiah(item.cashBack) : `Rp. 0` }}</td>
+                    <td class="text-center">{{ item.intensive ? formatRupiah(item.intensive) : `Rp. 0` }}</td>
                     <td class="text-center">
                       <q-btn-group>
 
@@ -67,32 +71,33 @@
     <q-dialog v-model="prompt1" persistent>
       <q-card style="min-width: 350px">
         <q-card-section>
-          <div class="text-h6">Cashback : {{ formatRupiah(Cashback) }}</div>
+          <div class="text-h6">Cashback : {{ Cashback ? formatRupiah(Cashback) : 'Rp.0'}}</div>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          <q-input dense v-model="Cashback" prefix="Rp"  type="number" autofocus @keyup.enter="prompt1 = false" />
+          <q-input dense v-model="Cashback" prefix="Rp" type="number" autofocus @keyup.enter="prompt1 = false" />
         </q-card-section>
 
         <q-card-actions align="right" class="text-primary">
           <q-btn flat label="Cancel" v-close-popup />
-          <q-btn flat label="Add CashBack" v-close-popup />
+          <q-btn flat label="Add CashBack" v-close-popup @click="addCashBack('cashBack')" />
         </q-card-actions>
       </q-card>
     </q-dialog>
+
     <q-dialog v-model="prompt2" persistent>
       <q-card style="min-width: 350px">
         <q-card-section>
-          <div class="text-h6">Intensive : {{ formatRupiah(Intensif) }}</div>
+          <div class="text-h6">Intensive : {{ Intensif ? formatRupiah(Intensif) : 'Rp.0'}}</div>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          <q-input dense v-model="Intensif" prefix="Rp"  type="number" autofocus @keyup.enter="prompt2 = false" />
+          <q-input dense v-model="Intensif" prefix="Rp" type="number" autofocus @keyup.enter="prompt2 = false" />
         </q-card-section>
 
         <q-card-actions align="right" class="text-primary">
           <q-btn flat label="Cancel" v-close-popup />
-          <q-btn flat label="Add Intensive" v-close-popup />
+          <q-btn flat label="Add Intensive" v-close-popup @click="addCashBack('intensive')" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -102,6 +107,7 @@
 
 
 <script>
+import Swal from 'sweetalert2';
 import { ref } from 'vue';
 
 
@@ -113,9 +119,10 @@ export default {
       current: ref(1),
       totalPage: ref(1),
       prompt1: ref(false),
-      Cashback: ref(0),
+      Cashback: ref(),
       prompt2: ref(false),
-      Intensif: ref(0)
+      Intensif: ref(),
+      id: ref('')
     }
   },
 
@@ -136,10 +143,10 @@ export default {
       });
       return formatter.format(value);
     },
+
     async getMoData() {
       try {
         const token = sessionStorage.getItem('token')
-        const id = sessionStorage.getItem("id")
         const response = await this.$api.get(`quotation/mo/all?pageNumber=${this.current}`, {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -156,16 +163,57 @@ export default {
 
     },
 
+    async addCashBack(type) {
+      try {
+        const token = sessionStorage.getItem('token');
+        let data = {};
+
+        if (type === 'cashBack') {
+          data = {
+            cashBack: this.Cashback,
+          };
+        } else if (type === 'intensive') {
+          data = {
+            intensive: this.Intensif
+          };
+        } else {
+          throw new Error('Invalid type');
+        }
+
+        const response = await this.$api.patch(`quotation/mo/update-cash-intensive/${this.id}`, data, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        this.Cashback = undefined
+        this.Intensif = undefined
+
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your work has been saved",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        this.getMoData();
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+
     clickBtn(idOrder) {
       sessionStorage.setItem('idMo', idOrder)
     },
     clickCashBack(idOrder) {
       this.prompt1 = true
-      sessionStorage.setItem('idMo', idOrder)
+      this.id = idOrder
     },
     clickIntensive(idOrder) {
       this.prompt2 = true
-      sessionStorage.setItem('idMo', idOrder)
+      this.id = idOrder
     }
   }
 

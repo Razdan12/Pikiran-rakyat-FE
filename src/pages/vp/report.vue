@@ -150,7 +150,7 @@ export default {
     async getMoData() {
       try {
         const id = sessionStorage.getItem('id')
-        const response = await this.$api.get(`/oti/report-user/${id}`, {
+        const response = await this.$api.get(`/oti/report`, {
           headers: {
             'Authorization': `Bearer ${this.token}`
           }

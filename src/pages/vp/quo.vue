@@ -87,7 +87,34 @@
                     ONLINE
                   </span>
 
-                  <q-table class="q-mt-xl" :rows="rows" :columns="columns" row-key="name" hide-bottom dense />
+                  <q-markup-table flat bordered style="margin-top: 20px; margin-bottom: 50px;">
+                    <thead class="bg-blue-grey-2 text-bold">
+                      <tr>
+
+                        <th class="text-center">Spot Promo</th>
+                        <th class="text-center">Promo Type</th>
+                        <th class="text-center">Detail</th>
+                        <th class="text-center">QTY</th>
+                        <th class="text-center">Day</th>
+                        <th class="text-center">Remaks</th>
+                        <th class="text-center">Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="text-center">{{ data?.spot_promo }}</td>
+                        <td class="text-center">{{ data?.spot_promo }}</td>
+                        <td class="text-center">{{ data?.camp_name }}</td>
+                        <td class="text-center">{{ data?.qty }}</td>
+                        <td class="text-center">{{ data?.day }}</td>
+                        <td class="text-center">{{ data?.remaks }}</td>
+                        <td class="text-center">{{ formatRupiah(data?.payment.data.finalPrice) }}</td>
+
+                      </tr>
+
+
+                    </tbody>
+                  </q-markup-table>
 
                 </div>
                 <div class="row q-m-t-xl">
@@ -122,8 +149,12 @@
                         </tr>
                         <tr>
                           <td class="text-center"></td>
-                          <td class="text-center"><q-btn v-if="request_by == 'manager'" :disable="(sales_approve === false) || manager_approve" color="secondary" label="Approv" @click="handleApprove" /></td>
-                          <td class="text-center"><q-btn v-if="approve()" :disable="(sales_approve === false && manager_approve === false) || pic_approve" color="secondary" label="Approv" @click="handleApprove" /></td>
+                          <td class="text-center"><q-btn v-if="request_by == 'manager'"
+                              :disable="(sales_approve === false) || manager_approve" color="secondary" label="Approv"
+                              @click="handleApprove" /></td>
+                          <td class="text-center"><q-btn v-if="approve()"
+                              :disable="(sales_approve === false && manager_approve === false) || pic_approve"
+                              color="secondary" label="Approv" @click="handleApprove" /></td>
 
                           <td class="text-center"></td>
                         </tr>
@@ -138,22 +169,23 @@
                       <tbody>
                         <tr>
                           <td class="text-left">Total Package (Rp)</td>
-                          <td class="text-right">5.000.000</td>
+                          <td class="text-right">{{ formatRupiah(data?.payment.data.finalPrice) }}</td>
 
                         </tr>
                         <tr>
                           <td class="text-left">Best Price Package (Rp)</td>
-                          <td class="text-right">5.000.000</td>
+                          <td class="text-right">{{ formatRupiah(data?.payment.data.finalPrice) }}</td>
 
                         </tr>
                         <tr>
                           <td class="text-left">VAT 11% (Rp)</td>
-                          <td class="text-right">550.000</td>
+                          <td class="text-right">{{ formatRupiah((11 * data?.payment.data.finalPrice) / 100) }}</td>
 
                         </tr>
                         <tr class="text-bold">
                           <td class="text-left">PAID Incl VAT 11% (Rp)</td>
-                          <td class="text-right">5.550.000</td>
+                          <td class="text-right">{{ formatRupiah(data?.payment.data.finalPrice + ((11 *
+                            data?.payment.data.finalPrice) / 100)) }}</td>
                         </tr>
                       </tbody>
                     </q-markup-table>
@@ -181,80 +213,12 @@
 <script>
 import Swal from 'sweetalert2'
 import { ref } from 'vue'
-const columns = [
-  {
-    name: 'no',
-    required: true,
-    label: 'No',
-    align: 'left',
-    field: row => row.no,
-    format: val => `${val}`,
-    sortable: true
-  },
-  { name: 'calories', align: 'center', label: 'Spot Promo', field: 'calories', sortable: true },
-  { name: 'fat', label: 'Promo Type', field: 'fat', sortable: true },
-  { name: 'carbs', label: 'Details', field: 'carbs' },
-  { name: 'protein', label: 'Qty', field: 'protein' },
-  { name: 'sodium', label: 'Day', field: 'sodium' },
-  { name: 'calcium', label: 'Remakrs', field: 'calcium', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) },
-  { name: 'iron', label: 'Rate/Item (Rp)', field: 'iron', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) },
-  { name: 'total', label: 'Totals (Rp)', field: 'total', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) }
-]
 
-const rows = [
-  {
-    no: '1',
-    calories: 'Pikiran Rakyat',
-    fat: 'Media Sosial',
-    carbs: 'Agustusan di PR',
-    protein: 1,
-    sodium: '-',
-    calcium: 'by PRMN',
-    iron: '5.000.000',
-    total: '5.000.000'
-  },
-  {
-    no: '',
-    calories: '',
-    fat: '',
-    carbs: '',
-    protein: '',
-    sodium: '',
-    calcium: '',
-    iron: '',
-    total: ''
-  },
-  {
-    no: '',
-    calories: '',
-    fat: '',
-    carbs: '',
-    protein: '',
-    sodium: '',
-    calcium: '',
-    iron: '',
-    total: ''
-  },
-  {
-    no: '',
-    calories: '',
-    fat: '',
-    carbs: '',
-    protein: '',
-    sodium: '',
-    calcium: 'Total',
-    iron: '',
-    total: '5.000.000'
-  },
-
-
-]
 
 export default {
   setup() {
     return {
-      columns,
-      rows,
+     
       camp_name: ref('name'),
       camp_period: ref('period'),
       cust_type: ref('cust_name'),
@@ -265,14 +229,22 @@ export default {
       manager_approve: ref(false),
       pic_approve: ref(false),
       request_by: ref(''),
+      data: ref()
     }
   },
   mounted() {
     this.getQuoData()
   },
 
-  
+
   methods: {
+    formatRupiah(value) {
+      const formatter = new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+      });
+      return formatter.format(value);
+    },
     async getQuoData() {
       const id = sessionStorage.getItem("idOrder")
       const token = sessionStorage.getItem("token")
@@ -283,6 +255,7 @@ export default {
           }
         });
 
+        this.data = response.data
         this.camp_name = response.data.camp_name
         this.camp_period = `${response.data.period_start} - ${response.data.period_end}`
         this.cust_type = response.data.cust_type
@@ -305,7 +278,7 @@ export default {
       const id = sessionStorage.getItem("idOrder")
       const token = sessionStorage.getItem("token")
       try {
-       
+
         let data = {
           pic_approve: true
         }
@@ -336,9 +309,9 @@ export default {
       }
     },
     approve() {
-      if(this.request_by === 'manager'){
+      if (this.request_by === 'manager') {
         return false
-      }else{
+      } else {
         return true
       }
     },

@@ -111,14 +111,14 @@
                   <span class="text-bold" style="font-size: medium">
                     Jabatan</span>
                 </p>
-                <q-input v-model="jabatan" class="q-my-md" dense outlined label="Password" />
+                <q-input v-model="jabatan" class="q-my-md" dense outlined label="Jabatan" />
               </div>
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
                   <span class="text-bold" style="font-size: medium">
                     Nomor Handphone</span>
                 </p>
-                <q-input v-model="phone" type="number" class="q-my-md" dense outlined label="Password" />
+                <q-input v-model="phone" type="number" class="q-my-md" dense outlined label="Nomor Handphone" />
               </div>
 
               <div>

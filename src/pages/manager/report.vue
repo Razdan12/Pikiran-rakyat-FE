@@ -56,29 +56,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-6 text-left">
-                <div class="row">
-                  <div class="col-md-4"></div>
-                  <div class="col-md-4">
-                    <div class="col-md-2 q-my-auto">
-                      <p class="text-bold text-light-blue-10" style="font-size: medium;">Filter by :</p>
-                    </div>
-                    <div class="col-md-4">
-                      <q-select filled v-model="filter" :options="optionsfilter" label="Filter by" dense
-                        style="width: 90%;" />
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="col-md-2 q-my-auto">
-                      <p class="text-bold text-light-blue-10" style="font-size: medium;">sub Filter :</p>
-                    </div>
-                    <div class="col-md-4">
-                      <q-select filled v-model="sub" :options="optionssub" label="sub Filter" dense
-                        style="width: 90%;" />
-                    </div>
-                  </div>
-                </div>
-              </div>
+              
             </div>
             <div>
               <q-markup-table>
