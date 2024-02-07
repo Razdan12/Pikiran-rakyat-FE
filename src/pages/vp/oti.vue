@@ -9,6 +9,53 @@
               <p class="text-center text-bold" style="font-size: x-large;">ORDER TAYANG IKLAN</p>
               <q-separator class="q-my-md" color="light-blue-7" inset />
               <div>
+                <div class="row">
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="col-md-2 q-my-auto">
+                      <p class="text-bold text-light-blue-10" style="font-size: large;">From :</p>
+                    </div>
+                    <div class="col-md-4">
+                      <q-input filled v-model="date" mask="date" :rules="['date2']" dense style="width: 90%;">
+                        <template v-slot:append>
+                          <q-icon name="event" class="cursor-pointer">
+                            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                              <q-date v-model="date" color="cyan">
+                                <div class="row items-center justify-end">
+                                  <q-btn v-close-popup label="Close" color="primary" flat />
+                                </div>
+                              </q-date>
+                            </q-popup-proxy>
+                          </q-icon>
+                        </template>
+                      </q-input>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="col-md-2 q-my-auto">
+                      <p class="text-bold text-light-blue-10" style="font-size: large;">To :</p>
+                    </div>
+                    <div class="col-md-4">
+                      <q-input filled v-model="date2" mask="date" :rules="['date2']" dense style="width: 90%;">
+                        <template v-slot:append>
+                          <q-icon name="event" class="cursor-pointer">
+                            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                              <q-date v-model="date2" color="cyan">
+                                <div class="row items-center justify-end">
+                                  <q-btn v-close-popup label="Close" color="primary" flat />
+                                </div>
+                              </q-date>
+                            </q-popup-proxy>
+                          </q-icon>
+                        </template>
+                      </q-input>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
                 <q-markup-table separator="cell" flat bordered>
                   <thead>
                     <tr>
@@ -99,21 +146,49 @@ export default {
       rowIndex: 1,
       carousel: ref(false),
       url: ref(''),
-      file: ref('')
+      file: ref(''),
+      date: ref(),
+      date2: ref(),
     }
   },
 
   mounted() {
+    this.getDate()
     this.getMoData()
     this.url = import.meta.env.VITE_BASE_URL
   },
   watch: {
+    date(newVal) {
+      this.getMoData()
+    },
+    date2(newVal) {
+      this.getMoData()
+    },
     current(newVal) {
       this.getMoData()
     },
 
   },
   methods: {
+    formatDate(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+
+      return `${year}/${month}/${day}`;
+    },
+
+    getDate() {
+      const dateNow = new Date();
+      dateNow.setDate(dateNow.getDate() - 30); // set to 30 days ago
+
+      this.date = this.formatDate(dateNow);
+
+      // for date2, we use today's date
+      const dateNow2 = new Date();
+
+      this.date2 = this.formatDate(dateNow2); // this will be today's date in the same format
+    },
     countIdOrder(idOrder) {
       return this.otiList.filter(item => item.idOrder === idOrder).length;
     },
@@ -129,7 +204,7 @@ export default {
     async getMoData() {
       try {
        
-        const response = await this.$api.get(`/oti?pageNumber=${this.current}`, {
+        const response = await this.$api.get(`/oti?pageNumber=${this.current}&from=${this.date}&to=${this.date2}`, {
           headers: {
             'Authorization': `Bearer ${this.token}`
           }

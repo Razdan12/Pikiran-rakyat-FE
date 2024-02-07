@@ -52,7 +52,7 @@
                       <td class="text-center">{{ item.role }}</td>
                       <td class="text-center">
                         <q-btn-group>
-                          <q-btn color="blue" icon="vpn_key">
+                          <q-btn color="blue" icon="vpn_key" @click="reset(item.id)">
                             <q-tooltip class="bg-blue text-body2" :offset="[10, 10]">
                               Reset Password
                             </q-tooltip>
@@ -138,6 +138,22 @@
         </q-scroll-area>
       </q-card>
     </q-dialog>
+    <q-dialog v-model="resetPassword" persistent>
+      <q-card style="min-width: 350px">
+        <q-card-section>
+          <div class="text-h6">Reset Password</div>
+        </q-card-section>
+        <q-card-section class="q-pt-none">
+          <q-input dense v-model="password"  autofocus @keyup.enter="prompt1 = false" />
+        </q-card-section>
+
+        <q-card-actions align="right" class="text-primary">
+          <q-btn flat label="Cancel" v-close-popup />
+          <q-btn flat label="Reset" v-close-popup @click="resetPass()" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
   </q-page>
 </template>
 
@@ -152,6 +168,7 @@ export default {
       current: ref(1),
       totalPage: ref(1),
       medium: ref(false),
+      resetPassword: ref(false),
       edit: ref(false),
       nama: ref(null),
       email: ref(null),
@@ -242,6 +259,7 @@ export default {
         console.log(error);
       }
     },
+
     async getRole() {
       const token = sessionStorage.getItem("token");
       try {
@@ -319,6 +337,39 @@ export default {
         }
       });
     },
+
+    reset(id){
+      this.resetPassword = true
+      this.idUser = id
+    },
+    async resetPass(){
+      const token = sessionStorage.getItem("token");
+      const data = {
+        password : this.password
+      }
+      
+      try {
+        const response = await this.$api.patch(
+          `/user/reset-password-user/${this.idUser}`,
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your work has been saved",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        this.getUserData();
+      } catch (error) {
+        console.log(error);
+      }
+    }
   },
 };
 </script>

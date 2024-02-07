@@ -18,7 +18,7 @@
                         <span class="q-mt-xl" style="font-size: large;">No :</span>
                       </div>
                       <div class="col">
-                        <q-input class=" q-ml-md text-bold" dense disable label="294/MO-CRW/PRMN/VIII/2023"
+                        <q-input class=" q-ml-md text-bold" dense disable :label="dataMo?.no_mo"
                           style="font-size: large;" />
                       </div>
                     </div>
@@ -42,7 +42,7 @@
                         <span style="font-size: large;">Nama </span>
                       </div>
                       <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Nabati"
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.customer.contact"
                           style="font-size: large; width: 75%;" />
                       </div>
                     </div>
@@ -62,7 +62,7 @@
                         <span style="font-size: large;">Perusahaan </span>
                       </div>
                       <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Nabati"
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.customer.name"
                           style="font-size: large; width: 75%;" />
                       </div>
                     </div>
@@ -72,24 +72,81 @@
                         <span style="font-size: large;">Alamat </span>
                       </div>
                       <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Jl. Cikutra 77 "
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.customer.address"
                           style="font-size: large; width: 75%;" />
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col-2">
-                        <br>
-                        <span style="font-size: large;">Kota </span>
-                      </div>
-                      <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Bandung"
-                          style="font-size: large; width: 75%;" />
-                      </div>
-                    </div>
+                    
                     <div class="row">
                       <div class="col-2">
                         <br>
                         <span style="font-size: large;">NPWP </span>
+                      </div>
+                      <div class="col">
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.customer.npwp"
+                          style="font-size: large; width: 75%;" />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-2">
+                        <br>
+                        <span style="font-size: large;">Email </span>
+                      </div>
+                      <div class="col">
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.customer.email"
+                          style="font-size: large; width: 75%;" />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-2">
+                        <br>
+                        <span style="font-size: large;">contact</span>
+                      </div>
+                      <div class="col">
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.customer.contact_phone"
+                          style="font-size: large; width: 75%;" />
+                      </div>
+                    </div><br>
+                    <span class="text-bold q-mt-xl" style="font-size: large;">Bertindak untuk dan atas nama</span>
+                    <div>
+                      <div class="row">
+                        <div class="col-2">
+                          <br>
+                          <span style="font-size: large;">Perusahaan </span>
+                        </div>
+                        <div class="col">
+                          <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.customer.name"
+                            style="font-size: large; width: 75%;" />
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-2">
+                          <br>
+                          <span style="font-size: large;">Alamat </span>
+                        </div>
+                        <div class="col">
+                          <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.customer.address"
+                            style="font-size: large; width: 75%;" />
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-6 q-pl-md">
+                    <div class="row">
+                      <div class="col-2">
+                        <br>
+                        <span style="font-size: large;">Nama </span>
+                      </div>
+                      <div class="col">
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.customer.fincontact"
+                          style="font-size: large; width: 75%;" />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-2">
+                        <br>
+                        <span style="font-size: large;">Jabatan </span>
                       </div>
                       <div class="col">
                         <q-input class="q-mt-md q-ml-md text-bold" dense disable label="-"
@@ -102,82 +159,7 @@
                         <span style="font-size: large;">Email </span>
                       </div>
                       <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="dudung@nabati.com"
-                          style="font-size: large; width: 75%;" />
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-2">
-                        <br>
-                        <span style="font-size: large;">contact</span>
-                      </div>
-                      <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="022-123456"
-                          style="font-size: large; width: 75%;" />
-                      </div>
-                    </div><br>
-                    <span class="text-bold q-mt-xl" style="font-size: large;">Bertindak untuk dan atas nama</span>
-                    <div>
-                      <div class="row">
-                        <div class="col-2">
-                          <br>
-                          <span style="font-size: large;">Perusahaan </span>
-                        </div>
-                        <div class="col">
-                          <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Nabari"
-                            style="font-size: large; width: 75%;" />
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-2">
-                          <br>
-                          <span style="font-size: large;">Alamat </span>
-                        </div>
-                        <div class="col">
-                          <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Jl.Cikutra 77"
-                            style="font-size: large; width: 75%;" />
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-2">
-                          <br>
-                          <span style="font-size: large;">Kota </span>
-                        </div>
-                        <div class="col">
-                          <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Bandung"
-                            style="font-size: large; width: 75%;" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-6 q-pl-md">
-                    <div class="row">
-                      <div class="col-2">
-                        <br>
-                        <span style="font-size: large;">Nama </span>
-                      </div>
-                      <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Vivi Safitri"
-                          style="font-size: large; width: 75%;" />
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-2">
-                        <br>
-                        <span style="font-size: large;">Jabatan </span>
-                      </div>
-                      <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Sales"
-                          style="font-size: large; width: 75%;" />
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-2">
-                        <br>
-                        <span style="font-size: large;">Email </span>
-                      </div>
-                      <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="vivi@nabati.com"
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.customer.email"
                           style="font-size: large; width: 75%;" />
                       </div>
                     </div>
@@ -197,7 +179,7 @@
                         <span style="font-size: large;">Telepon/HP. </span>
                       </div>
                       <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="08112345667"
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.customer.fincontact_phone"
                           style="font-size: large; width: 75%;" />
                       </div>
                     </div>
@@ -223,8 +205,8 @@
                     </div>
                     <br><br>
                     <span class="text-bold q-mt-xl" style="font-size: large;">Jenis Penjualan</span>
-                    <br> <br> <br>
-                    <q-checkbox class="text-bold" size="lg" v-model="shape" val="md" label="Direct Selling"
+                   
+                    <q-checkbox class="text-bold" size="lg" v-model="shape" val="md" :label="dataMo?.jenis_penjualan"
                       style="font-size: large;" />
                   </div>
                 </div>
@@ -248,7 +230,7 @@
                         <span style="font-size: large;">Nama </span>
                       </div>
                       <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Fadly"
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.user.name"
                           style="font-size: large; width: 75%;" />
                       </div>
                     </div>
@@ -258,7 +240,7 @@
                         <span style="font-size: large;">Jabatan </span>
                       </div>
                       <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Seles"
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.user.jabatan"
                           style="font-size: large; width: 75%;" />
                       </div>
                     </div>
@@ -271,7 +253,7 @@
                         <span style="font-size: large;">Nama </span>
                       </div>
                       <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Fadly"
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.user.name"
                           style="font-size: large; width: 75%;" />
                       </div>
                     </div>
@@ -281,7 +263,7 @@
                         <span style="font-size: large;">Jabatan </span>
                       </div>
                       <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Sales"
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.user.jabatan"
                           style="font-size: large; width: 75%;" />
                       </div>
                     </div>
@@ -291,7 +273,7 @@
                         <span style="font-size: large;">Email </span>
                       </div>
                       <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="fadly@pikiranr-rakyat.com"
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.user.email"
                           style="font-size: large; width: 75%;" />
                       </div>
                     </div>
@@ -301,7 +283,7 @@
                         <span style="font-size: large;">Telepon/HP. </span>
                       </div>
                       <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="081993077778888"
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.user.phone"
                           style="font-size: large; width: 75%;" />
                       </div>
                     </div>
@@ -311,24 +293,12 @@
                 <span class="text-bold q-ml-md" style="font-size: large">Produk Yang Dipilih</span>
                 <div class="row">
                   <div class="col-md-3">
-                    <q-checkbox class="text-bold" size="md" v-model="shape" val="md" label="Single Produk"
-                      style="font-size: medium;" /> <br>
-                    <q-checkbox class="text-bold" size="md" v-model="shape" val="md" label="Bundling Produk"
+                    <q-checkbox class="text-bold" size="md" v-model="shape" val="md" :label="dataMo?.produk"
                       style="font-size: medium;" />
+                    
                   </div>
-                  <div class="col-md-3">
-                    <q-checkbox class="text-bold" size="md" v-model="shape" val="md"
-                      label="Iklan Online Pikiran-Rakyat.com" style="font-size: medium;" /> <br>
-                    <q-checkbox class="text-bold" size="md" v-model="shape" val="md" label="Iklan Social Media"
-                      style="font-size: medium;" />
-                  </div>
-                  <div class="col-md-3">
-                    <q-checkbox class="text-bold" size="md" v-model="shape" val="md" label="Iklan Online Network PRMN"
-                      style="font-size: medium;" />
-                  </div>
-                  <div class="col-md-3">
-
-                  </div>
+                 
+                  
                 </div>
                 <q-separator class="q-my-md" color="light-blue-7" inset />
                 <span class="text-bold q-ml-md " style="font-size: large">Detail Produk</span>
@@ -564,7 +534,34 @@ export default {
   setup() {
     return {
       shape: ref(['line']),
-      bayar: ref('dp')
+      bayar: ref('dp'),
+      dataMo: ref()
+    }
+  },
+
+  mounted() {
+    this.getMoData()
+  },
+  methods: {
+    async getMoData() {
+      try {
+        const token = sessionStorage.getItem('token')
+        const id = sessionStorage.getItem("idOrder")
+        const response = await this.$api.get(`/quotation/mo/data/${id}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        console.log(response.data);
+        this.dataMo = response.data
+      } catch (error) {
+        console.log(error);
+      }
+
+    },
+
+    clickBtn(idOrder) {
+      sessionStorage.setItem('idMo', idOrder)
     }
   }
 }
