@@ -19,7 +19,7 @@
                     <th class="text-center">Campaign Name</th>
                     <th class="text-center">No Order</th>
                     <th class="text-center">Produk</th>
-                   
+
                   </tr>
                 </thead>
                 <tbody>
@@ -31,13 +31,15 @@
                     <td class="text-center">{{ item.order_no }}</td>
                     <td class="text-center">
                       <p v-for="(Item, index) in item.produk" :key="index">
-                        {{ Item.name }}
+                        {{ Item.nama }}
                       </p>
                     </td>
-                   
+
                   </tr>
                 </tbody>
+
               </q-markup-table>
+
               <div class="q-pa-lg flex flex-center">
                 <q-pagination v-model="current" :max="totalPage" input />
               </div>
@@ -82,6 +84,7 @@ export default {
         const role = sessionStorage.getItem("role")
 
         const produk = role.split('_')
+        console.log(produk[produk.length - 1]);
 
         const response = await this.$api.get(
           `order/by-produk/${produk[produk.length - 1]}?pageNumber=${this.current}`,
@@ -91,6 +94,7 @@ export default {
             },
           }
         );
+        console.log(response.data);
 
 
         this.orderList = response.data.dataOrder;

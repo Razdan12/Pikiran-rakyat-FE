@@ -2,7 +2,7 @@
     <q-page>
         <div class="">
             <div class="q-pa-md">
-               
+
                 <div class="col-md-10">
                     <q-card class="full-width">
                         <q-card-section>
@@ -63,10 +63,10 @@
                         </q-card-section>
                     </q-card>
                 </div>
-               
+
             </div>
             <div class="q-pa-md" style="margin-top: 20px">
-               
+
                 <div class="col-md-10">
                     <q-card class="full-width">
                         <q-card-section>
@@ -104,7 +104,8 @@
                                             </td>
                                             <td class="text-center">
                                                 <q-btn-group>
-                                                    <q-btn color="orange" icon="border_color" @click="editOtherTriger(item.id)">
+                                                    <q-btn color="orange" icon="border_color"
+                                                        @click="editOtherTriger(item.id)">
                                                         <q-tooltip class="bg-orange text-body2" :offset="[10, 10]">
                                                             Edit
                                                         </q-tooltip>
@@ -126,7 +127,7 @@
                         </q-card-section>
                     </q-card>
                 </div>
-               
+
             </div>
         </div>
 
@@ -276,7 +277,7 @@
                                     </q-card>
                                 </div>
                             </div>
-                            
+
                             <div>
                                 <p class="text-bold text-blue" style="font-size: medium">
                                     <span class="text-bold" style="font-size: medium">Note</span>
@@ -450,6 +451,16 @@ export default {
 
         async addMeta() {
             const token = sessionStorage.getItem("token");
+            if (!this.nama) {
+                this.other = false
+                this.medium = false
+                Swal.fire({
+                    icon: "warning",
+                    title: "Oops...",
+                    text: "Please fill all the form data",
+                });
+                return;
+            }
             try {
                 this.btn = true;
                 const data = {
@@ -596,7 +607,7 @@ export default {
                 this.instagram = response.data.instagram
                 this.rate = response.data.rate
                 this.note = response.data.note
-                
+
 
 
             } catch (error) {
@@ -614,7 +625,7 @@ export default {
             this.getSosmedById(id)
             this.idSosmed = id
         },
-        resetForm(){
+        resetForm() {
             this.nama = null
             this.facebook = null
             this.instagram = null

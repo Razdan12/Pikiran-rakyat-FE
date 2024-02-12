@@ -188,6 +188,21 @@ export default {
   },
   methods: {
     async addCustomer() {
+      if (
+        !this.customerName ||
+        !this.type  ||
+        !this.contactName  ||
+        !this.companyEmail
+      ) {
+       
+        this.medium = false;
+        Swal.fire({
+          icon: "warning",
+          title: "Oops...",
+          text: "Please fill all the form data",
+        });
+        return;
+      }
       let formData = new FormData();
       formData.append("name", this.customerName);
       formData.append("type", this.type);

@@ -36,19 +36,19 @@
                     <td class="text-left">{{ item.custname }}</td>
                     <td class="text-center">{{ item.contactName }}</td>
                     <td class="text-center">
-                      {{ item.phone !== null ? item.phone : "-" }}
+                      {{ item.phone}}
                     </td>
                     <td class="text-center">
-                      {{ item.email !== null ? item.email : "-" }}
+                      {{ item.email }}
                     </td>
                     <td class="text-center">
-                      {{ item.address !== null ? item.address : "-" }}
+                      {{ item.address }}
                     </td>
                     <td class="text-center">
-                      {{ item.finName != 'null' ? item.finName : "-" }}
+                      {{ item.finName }}
                     </td>
                     <td class="text-center">
-                      {{ item.finContact != 'null' ? item.finContact : "-" }}
+                      {{ item.finContact  }}
                     </td>
                     <td class="text-center">
                       <q-btn-group>
@@ -389,11 +389,12 @@ export default {
       const token = sessionStorage.getItem("token");
 
       if (
-        this.customerName === null ||
-        this.type === null ||
-        this.contactName === null ||
-        this.companyEmail === null
+        !this.customerName ||
+        !this.type  ||
+        !this.contactName  ||
+        !this.companyEmail
       ) {
+       
         this.medium = false;
         Swal.fire({
           icon: "warning",
@@ -435,15 +436,15 @@ export default {
     },
 
     resetForm() {
-      this.type = null;
-      this.customerName = null;
-      this.contactName = null;
-      this.phoneNumber = null;
-      this.companyEmail = null;
-      this.companyNPWP = null;
-      this.companyAdress = null;
-      this.finNameContact = null;
-      this.finPhone = null;
+      this.type = '';
+      this.customerName = '';
+      this.contactName = '';
+      this.phoneNumber = '';
+      this.companyEmail = '';
+      this.companyNPWP = '';
+      this.companyAdress = '';
+      this.finNameContact = '';
+      this.finPhone = '';
     },
 
     async getCustData() {
@@ -459,6 +460,7 @@ export default {
         );
 
         this.custList = response.data.data;
+       
         this.current = response.data.pageNumber;
         this.totalPage = response.data.totalPage;
       } catch (error) {

@@ -18,7 +18,7 @@
                         <span class="q-mt-xl" style="font-size: large;">No :</span>
                       </div>
                       <div class="col">
-                        <q-input class=" q-ml-md text-bold" dense disable label="294/MO-CRW/PRMN/VIII/2023"
+                        <q-input class=" q-ml-md text-bold" dense disable :label="dataMo?.no_mo"
                           style="font-size: large;" />
                       </div>
                     </div>
@@ -42,7 +42,7 @@
                         <span style="font-size: large;">Nama </span>
                       </div>
                       <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Nabati"
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.customer.contact"
                           style="font-size: large; width: 75%;" />
                       </div>
                     </div>
@@ -62,7 +62,7 @@
                         <span style="font-size: large;">Perusahaan </span>
                       </div>
                       <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Nabati"
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.customer.name"
                           style="font-size: large; width: 75%;" />
                       </div>
                     </div>
@@ -72,24 +72,81 @@
                         <span style="font-size: large;">Alamat </span>
                       </div>
                       <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Jl. Cikutra 77 "
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.customer.address"
                           style="font-size: large; width: 75%;" />
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col-2">
-                        <br>
-                        <span style="font-size: large;">Kota </span>
-                      </div>
-                      <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Bandung"
-                          style="font-size: large; width: 75%;" />
-                      </div>
-                    </div>
+
                     <div class="row">
                       <div class="col-2">
                         <br>
                         <span style="font-size: large;">NPWP </span>
+                      </div>
+                      <div class="col">
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.customer.npwp"
+                          style="font-size: large; width: 75%;" />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-2">
+                        <br>
+                        <span style="font-size: large;">Email </span>
+                      </div>
+                      <div class="col">
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.customer.email"
+                          style="font-size: large; width: 75%;" />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-2">
+                        <br>
+                        <span style="font-size: large;">contact</span>
+                      </div>
+                      <div class="col">
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.customer.contact_phone"
+                          style="font-size: large; width: 75%;" />
+                      </div>
+                    </div><br>
+                    <span class="text-bold q-mt-xl" style="font-size: large;">Bertindak untuk dan atas nama</span>
+                    <div>
+                      <div class="row">
+                        <div class="col-2">
+                          <br>
+                          <span style="font-size: large;">Perusahaan </span>
+                        </div>
+                        <div class="col">
+                          <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.customer.name"
+                            style="font-size: large; width: 75%;" />
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-2">
+                          <br>
+                          <span style="font-size: large;">Alamat </span>
+                        </div>
+                        <div class="col">
+                          <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.customer.address"
+                            style="font-size: large; width: 75%;" />
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="col-6 q-pl-md">
+                    <div class="row">
+                      <div class="col-2">
+                        <br>
+                        <span style="font-size: large;">Nama </span>
+                      </div>
+                      <div class="col">
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.customer.fincontact"
+                          style="font-size: large; width: 75%;" />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-2">
+                        <br>
+                        <span style="font-size: large;">Jabatan </span>
                       </div>
                       <div class="col">
                         <q-input class="q-mt-md q-ml-md text-bold" dense disable label="-"
@@ -102,82 +159,7 @@
                         <span style="font-size: large;">Email </span>
                       </div>
                       <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="dudung@nabati.com"
-                          style="font-size: large; width: 75%;" />
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-2">
-                        <br>
-                        <span style="font-size: large;">contact</span>
-                      </div>
-                      <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="022-123456"
-                          style="font-size: large; width: 75%;" />
-                      </div>
-                    </div><br>
-                    <span class="text-bold q-mt-xl" style="font-size: large;">Bertindak untuk dan atas nama</span>
-                    <div>
-                      <div class="row">
-                        <div class="col-2">
-                          <br>
-                          <span style="font-size: large;">Perusahaan </span>
-                        </div>
-                        <div class="col">
-                          <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Nabari"
-                            style="font-size: large; width: 75%;" />
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-2">
-                          <br>
-                          <span style="font-size: large;">Alamat </span>
-                        </div>
-                        <div class="col">
-                          <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Jl.Cikutra 77"
-                            style="font-size: large; width: 75%;" />
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-2">
-                          <br>
-                          <span style="font-size: large;">Kota </span>
-                        </div>
-                        <div class="col">
-                          <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Bandung"
-                            style="font-size: large; width: 75%;" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-6 q-pl-md">
-                    <div class="row">
-                      <div class="col-2">
-                        <br>
-                        <span style="font-size: large;">Nama </span>
-                      </div>
-                      <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Vivi Safitri"
-                          style="font-size: large; width: 75%;" />
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-2">
-                        <br>
-                        <span style="font-size: large;">Jabatan </span>
-                      </div>
-                      <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Sales"
-                          style="font-size: large; width: 75%;" />
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-2">
-                        <br>
-                        <span style="font-size: large;">Email </span>
-                      </div>
-                      <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="vivi@nabati.com"
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.customer.email"
                           style="font-size: large; width: 75%;" />
                       </div>
                     </div>
@@ -197,8 +179,8 @@
                         <span style="font-size: large;">Telepon/HP. </span>
                       </div>
                       <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="08112345667"
-                          style="font-size: large; width: 75%;" />
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable
+                          :label="dataMo?.customer.fincontact_phone" style="font-size: large; width: 75%;" />
                       </div>
                     </div>
                     <div class="row">
@@ -223,8 +205,8 @@
                     </div>
                     <br><br>
                     <span class="text-bold q-mt-xl" style="font-size: large;">Jenis Penjualan</span>
-                    <br> <br> <br>
-                    <q-checkbox class="text-bold" size="lg" v-model="shape" val="md" label="Direct Selling"
+
+                    <q-checkbox class="text-bold" size="lg" v-model="shape" val="md" :label="dataMo?.jenis_penjualan"
                       style="font-size: large;" />
                   </div>
                 </div>
@@ -248,7 +230,7 @@
                         <span style="font-size: large;">Nama </span>
                       </div>
                       <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Fadly"
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.user.name"
                           style="font-size: large; width: 75%;" />
                       </div>
                     </div>
@@ -258,7 +240,7 @@
                         <span style="font-size: large;">Jabatan </span>
                       </div>
                       <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Seles"
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.user.jabatan"
                           style="font-size: large; width: 75%;" />
                       </div>
                     </div>
@@ -271,7 +253,7 @@
                         <span style="font-size: large;">Nama </span>
                       </div>
                       <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Fadly"
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.user.name"
                           style="font-size: large; width: 75%;" />
                       </div>
                     </div>
@@ -281,7 +263,7 @@
                         <span style="font-size: large;">Jabatan </span>
                       </div>
                       <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Sales"
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.user.jabatan"
                           style="font-size: large; width: 75%;" />
                       </div>
                     </div>
@@ -291,7 +273,7 @@
                         <span style="font-size: large;">Email </span>
                       </div>
                       <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="fadly@pikiranr-rakyat.com"
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.user.email"
                           style="font-size: large; width: 75%;" />
                       </div>
                     </div>
@@ -301,7 +283,7 @@
                         <span style="font-size: large;">Telepon/HP. </span>
                       </div>
                       <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="081993077778888"
+                        <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.user.phone"
                           style="font-size: large; width: 75%;" />
                       </div>
                     </div>
@@ -311,174 +293,79 @@
                 <span class="text-bold q-ml-md" style="font-size: large">Produk Yang Dipilih</span>
                 <div class="row">
                   <div class="col-md-3">
-                    <q-checkbox class="text-bold" size="md" v-model="shape" val="md" label="Single Produk"
-                      style="font-size: medium;" /> <br>
-                    <q-checkbox class="text-bold" size="md" v-model="shape" val="md" label="Bundling Produk"
+                    <q-checkbox class="text-bold" checked size="md" v-model="shape" val="md" :label="dataMo?.produk"
                       style="font-size: medium;" />
-                  </div>
-                  <div class="col-md-3">
-                    <q-checkbox class="text-bold" size="md" v-model="shape" val="md"
-                      label="Iklan Online Pikiran-Rakyat.com" style="font-size: medium;" /> <br>
-                    <q-checkbox class="text-bold" size="md" v-model="shape" val="md" label="Iklan Social Media"
-                      style="font-size: medium;" />
-                  </div>
-                  <div class="col-md-3">
-                    <q-checkbox class="text-bold" size="md" v-model="shape" val="md" label="Iklan Online Network PRMN"
-                      style="font-size: medium;" />
-                  </div>
-                  <div class="col-md-3">
 
                   </div>
+
+
                 </div>
                 <q-separator class="q-my-md" color="light-blue-7" inset />
                 <span class="text-bold q-ml-md " style="font-size: large">Detail Produk</span>
-                <q-markup-table class="q-mt-md" separator="cell" flat bordered>
-                  <thead>
+                <q-markup-table flat bordered style="margin-top: 20px; margin-bottom: 50px;">
+                  <thead class="bg-blue-grey-2 text-bold">
                     <tr>
-                      <th class="text-left">No</th>
-                      <th class="text-right">Klien</th>
-                      <th class="text-right">Jenis Produk</th>
-                      <th class="text-right">Ukuran</th>
-                      <th class="text-right">Insertion</th>
-                      <th class="text-right">Harga/Tayang</th>
-                      <th class="text-right">Discount</th>
-                      <th class="text-right">Jumlah</th>
-                      <th class="text-right">Jadwal Tayang</th>
+
+                      <th class="text-center">Spot Promo</th>
+                      <th class="text-center">Promo Type</th>
+                      <th class="text-center">Detail</th>
+                      <th class="text-center">QTY</th>
+                      <th class="text-center">Day</th>
+                      <th class="text-center">Remaks</th>
+                      <th class="text-center">Total</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr style="height: 5vh;">
-                      <td class="text-left">1</td>
-                      <td class="text-right">Nabati Group</td>
-                      <td class="text-right">Article Headline</td>
-                      <td class="text-right">Text & Image</td>
-                      <td class="text-right">1x</td>
-                      <td class="text-right">Rp. 7.200.000</td>
-                      <td class="text-right">10%</td>
-                      <td class="text-right">Rp. 6.480.000</td>
-                      <td rowspan="3" class="text-right">November 2023</td>
-                    </tr>
-                    <tr style="height: 5vh;">
-                      <td class="text-left">2</td>
-                      <td class="text-right"></td>
-                      <td class="text-right"></td>
-                      <td class="text-right"></td>
-                      <td class="text-right"></td>
-                      <td class="text-right"></td>
-                      <td class="text-right"></td>
-                      <td class="text-right"></td>
+                    <tr>
+                      <td class="text-center">{{ dataMo?.spot_promo }}</td>
+                      <td class="text-center">{{ dataMo?.spot_promo }}</td>
+                      <td class="text-center">{{ dataMo?.camp_name }}</td>
+                      <td class="text-center">{{ dataMo?.qty }}</td>
+                      <td class="text-center">{{ dataMo?.day }}</td>
+                      <td class="text-center">{{ dataMo?.remaks }}</td>
+                      <td class="text-center">{{ formatRupiah(dataMo?.payment.data.finalPrice) }}</td>
 
                     </tr>
-                    <tr style="height: 5vh;">
-                      <td class="text-left">3</td>
-                      <td class="text-right"></td>
-                      <td class="text-right"></td>
-                      <td class="text-right"></td>
-                      <td class="text-right"></td>
-                      <td class="text-right"></td>
-                      <td class="text-right"></td>
-                      <td class="text-right"></td>
 
-                    </tr>
-                    <tr class="text-bold bg-blue-grey-2">
-                      <td colspan="6" class="text-right">Total</td>
-                      <td class="text-right">10%</td>
-                      <td class="text-right">Rp. 6.480.000</td>
-                      <td class="text-right"></td>
-
-                    </tr>
 
                   </tbody>
                 </q-markup-table>
-                <div class="row q-my-md">
-                  <div class="col-md-8">
-                    <span>Total Harga</span><br>
-                    <span>PPN 11%</span><br>
-                    <span>Jumlah</span><br>
-                    <span>Pembayaran di Muka ( DP )</span><br><br>
-                    <span class="text-bold">Sisa yang harus dibayar</span>
-                  </div>
-                  <div class="col-md-1">
-                    <span>Rp</span><br>
-                    <span>Rp</span><br>
-                    <span>Rp</span><br>
-                    <span>Rp</span><br><br>
-                    <span class="text-bold">Rp</span>
-                  </div>
-                  <div class="col-md-1 text-right">
-                    <span>6.480.000</span><br>
-                    <span>712.800</span><br>
-                    <span>7.192.800</span>
-                    <q-input dense flat />
-                    <span class="text-bold">7.192.800</span>
-                  </div>
-                </div>
+
+                <q-markup-table class="q-pa-md">
+
+                  <tbody>
+                    <tr>
+                      <td class="text-left">Total Package (Rp)</td>
+                      <td class="text-right">{{ formatRupiah(dataMo?.payment.data.finalPrice) }}</td>
+
+                    </tr>
+                    <tr>
+                      <td class="text-left">Best Price Package (Rp)</td>
+                      <td class="text-right">{{ formatRupiah(dataMo?.payment.data.finalPrice) }}</td>
+
+                    </tr>
+                    <tr>
+                      <td class="text-left">VAT 11% (Rp)</td>
+                      <td class="text-right">{{ formatRupiah(((11 * dataMo?.payment.data.finalPrice)) / 100) }}</td>
+
+                    </tr>
+                    <tr class="text-bold">
+                      <td class="text-left">PAID Incl VAT 11% (Rp)</td>
+                      <td class="text-right">{{ formatRupiah(dataMo?.payment.data.finalPrice + ((11 *
+                        dataMo?.payment.data.finalPrice) / 100)) }}</td>
+                    </tr>
+                  </tbody>
+                </q-markup-table>
+
                 <q-separator class="q-my-md" color="light-blue-7" inset />
                 <span class="text-bold q-ml-md " style="font-size: large">POLA PEMBAYARAN</span>
                 <div class="row">
 
                   <div class="col-md-6">
-                    <q-radio class="q-mt-sm" size="lg" v-model="bayar" val="dp" label="Pembayaran Dimuka" checked/> <br>
-                    <q-radio class="q-mt-sm" size="lg" v-model="bayar" val="kredit" label="Kredit" /> <br>
-                    <q-radio class="q-mt-sm" size="lg" v-model="bayar" val="barter" label="Barter" /> <br><br>
-                    <div>
-                      <div class="row">
-                        <div class="col-4">
-                          <br>
-                          <span style="font-size: medium;">Nama Barang/Jasa Barter </span>
-                        </div>
-                        <div class="col">
-                          <q-input class="q-mt-md q-ml-md text-bold" dense disable label="-"
-                            style="font-size: medium; width: 75%;" />
-                        </div>
-                      </div>
-                    </div>
+                    <q-radio class="q-mt-sm" size="lg" v-model="bayar" val="dp" :label="`Pembayaran ${dataMo?.type_bayar}`" checked /> <br>
+                    
                   </div>
-                  <div class="col-md-6">
-                    <div class="row">
-                      <div class="col-4 q-ml-md">
-                        <br>
-                        <span style="font-size: medium;">Tanggal Pembayaran </span>
-                      </div>
-                      <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="-"
-                          style="font-size: medium; width: 75%;" />
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-4">
-                        <br>
-                        <span style="font-size: medium;">Tanggal jatuh tempo </span>
-                      </div>
-                      <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="-"
-                          style="font-size: medium; width: 75%;" />
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-4">
-                        <br>
-                        <span style="font-size: medium;">Penyerahan Barang/Jasa </span>
-                      </div>
-                      <div class="col">
-                        <q-input class="q-mt-md q-ml-md text-bold" dense disable label="-"
-                          style="font-size: medium; width: 75%;" />
-                      </div>
-                    </div>
-                    <br><br>
-                    <div>
-                      <div class="row">
-                        <div class="col-2">
-                          <br>
-                          <span style="font-size: medium;">Jumlah</span>
-                        </div>
-                        <div class="col">
-                          <q-input class="q-mt-md q-ml-md text-bold" dense disable label="-"
-                            style="font-size: medium; width: 75%;" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  
 
                 </div>
                 <div class="q-ml-md q-mt-xl">
@@ -488,7 +375,7 @@
                       <span style="font-size: medium;">ALAMAT PENAGIHAN </span>
                     </div>
                     <div class="col">
-                      <q-input class="q-mt-md q-ml-md text-bold" dense disable label="jl. cikutra &&"
+                      <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.customer.address"
                         style="font-size: medium; width: 75%;" />
                     </div>
                   </div>
@@ -498,7 +385,7 @@
                       <span style="font-size: medium;">ATAS NAMA </span>
                     </div>
                     <div class="col">
-                      <q-input class="q-mt-md q-ml-md text-bold" dense disable label="Nabati"
+                      <q-input class="q-mt-md q-ml-md text-bold" dense disable :label="dataMo?.customer.name"
                         style="font-size: medium; width: 75%;" />
                     </div>
                   </div>
@@ -541,7 +428,8 @@
 
                 <q-card class="full-width bg-blue-grey-2 q-mt-md">
                   <q-card-section>
-                    <p>Media Order akan ditindaklanjuti dalam Perjanjian Kerja Sama yang memuat hak & kewajiban antara PT. Kolaborasi Mediapreneur Nusantara dan Pemasang
+                    <p>Media Order akan ditindaklanjuti dalam Perjanjian Kerja Sama yang memuat hak & kewajiban antara PT.
+                      Kolaborasi Mediapreneur Nusantara dan Pemasang
                     </p>
                   </q-card-section>
                 </q-card>
@@ -564,7 +452,42 @@ export default {
   setup() {
     return {
       shape: ref(['line']),
-      bayar: ref('dp')
+      bayar: ref('dp'),
+      dataMo: ref(),
+      data: ref()
+    }
+  },
+
+  mounted() {
+    this.getMoData()
+  },
+  methods: {
+    formatRupiah(value) {
+      const formatter = new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+      });
+      return formatter.format(value);
+    },
+    async getMoData() {
+      try {
+        const token = sessionStorage.getItem('token')
+        const id = sessionStorage.getItem("idMo")
+        const response = await this.$api.get(`/quotation/mo/data/${id}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        console.log(response.data);
+        this.dataMo = response.data
+      } catch (error) {
+        console.log(error);
+      }
+
+    },
+
+    clickBtn(idOrder) {
+      sessionStorage.setItem('idMo', idOrder)
     }
   }
 }

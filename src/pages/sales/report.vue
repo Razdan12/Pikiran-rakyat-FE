@@ -181,7 +181,6 @@ export default {
 
 
     async getMoData() {
-      console.log('ini jalan');
       try {
         const id = sessionStorage.getItem('id')
         const response = await this.$api.get(`/oti/report-user/${id}?from=${this.date}&to=${this.date2}`, {

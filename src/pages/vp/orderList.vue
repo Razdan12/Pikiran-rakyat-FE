@@ -25,13 +25,13 @@
                 <tbody>
                   <tr v-for="(item, index) in orderList" :key="item.idOrder">
                     <td class="text-center">{{ index + 1 }}</td>
-                    <td class="text-center">{{ item.customer.name }}</td>
-                    <td class="text-center">{{ item.order_date }}</td>
-                    <td class="text-center">{{ item.camp_name }}</td>
-                    <td class="text-center">{{ item.order_no }}</td>
+                    <td class="text-center">{{ item?.customer.name }}</td>
+                    <td class="text-center">{{ item?.order_date }}</td>
+                    <td class="text-center">{{ item?.camp_name }}</td>
+                    <td class="text-center">{{ item?.order_no }}</td>
                     <td class="text-center">
-                      <p v-for="(Item, index) in item.produk" :key="index">
-                        {{ Item.name }}
+                      <p v-for="(Item, index) in item?.produk" :key="index">
+                        {{ Item?.name }}
                       </p>
                     </td>
                     <td class="text-center">

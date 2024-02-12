@@ -238,6 +238,15 @@ export default {
   methods: {
     async addMitra() {
       const token = sessionStorage.getItem("token");
+      if(!this.nama || !this.status){
+        this.medium = false
+        Swal.fire({
+          icon: "warning",
+          title: "Oops...",
+          text: "Please fill all the form data",
+        });
+        return;
+      }
       try {
         this.btn = true;
         const data = {

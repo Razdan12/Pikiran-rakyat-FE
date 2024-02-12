@@ -170,14 +170,14 @@ export default {
       medium: ref(false),
       resetPassword: ref(false),
       edit: ref(false),
-      nama: ref(null),
-      email: ref(null),
-      password: ref(null),
-      role: ref(null),
+      nama: ref(),
+      email: ref(),
+      password: ref(),
+      role: ref(),
       roleList: ref([]),
       btn: ref(false),
-      namaEdit: ref(null),
-      idUser: ref(null),
+      namaEdit: ref(),
+      idUser: ref(),
       jabatan : ref(),
       phone: ref()
     };
@@ -207,6 +207,14 @@ export default {
         jabatan: this.jabatan,
         phone: this.phone
       };
+      if(!this.nama || !this.email || !this.password || !this.role ){
+        Swal.fire({
+          icon: "warning",
+          title: "Oops...",
+          text: "Please fill all the form data",
+        });
+        return;
+      }
       try {
         this.btn = true;
         const response = await this.$api.post("/user/register", data, {

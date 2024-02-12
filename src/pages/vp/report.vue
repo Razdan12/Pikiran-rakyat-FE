@@ -6,10 +6,10 @@
         <q-card class="full-width">
           <q-card-section>
             <p class="text-center text-bold" style="font-size: large;">REPORT </p>
-            <div class="absolute-right q-gutter-sm q-mt-sm q-mr-xl">
+            <!-- <div class="absolute-right q-gutter-sm q-mt-sm q-mr-xl">
               <q-btn square color="blue" icon="print" />
               <q-btn color="blue" icon="table_view" />
-            </div>
+            </div> -->
             <q-separator class="q-my-md" color="light-blue-7" inset />
             <div class="row">
               <div class="col-md-6">

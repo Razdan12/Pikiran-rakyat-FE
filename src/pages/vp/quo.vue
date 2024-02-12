@@ -88,33 +88,33 @@
                   </span>
 
                   <q-markup-table flat bordered style="margin-top: 20px; margin-bottom: 50px;">
-                    <thead class="bg-blue-grey-2 text-bold">
-                      <tr>
+                      <thead class="bg-blue-grey-2 text-bold">
+                        <tr>
 
-                        <th class="text-center">Spot Promo</th>
-                        <th class="text-center">Promo Type</th>
-                        <th class="text-center">Detail</th>
-                        <th class="text-center">QTY</th>
-                        <th class="text-center">Day</th>
-                        <th class="text-center">Remaks</th>
-                        <th class="text-center">Total</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td class="text-center">{{ data?.spot_promo }}</td>
-                        <td class="text-center">{{ data?.spot_promo }}</td>
-                        <td class="text-center">{{ data?.camp_name }}</td>
-                        <td class="text-center">{{ data?.qty }}</td>
-                        <td class="text-center">{{ data?.day }}</td>
-                        <td class="text-center">{{ data?.remaks }}</td>
-                        <td class="text-center">{{ formatRupiah(data?.payment.data.finalPrice) }}</td>
+                          <th class="text-center">Spot Promo</th>
+                          <th class="text-center">Promo Type</th>
+                          <th class="text-center">Detail</th>
+                          <th class="text-center">QTY</th>
+                          <th class="text-center">Day</th>
+                          <th class="text-center">Remaks</th>
+                          <th class="text-center">Rate Produk</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="(item, index) in data?.data" :key="item.id">
+                          <td class="text-center">{{ item?.kategori }}</td>
+                          <td class="text-center">{{ item?.produk }}</td>
+                          <td class="text-center">{{ item?.camp_name }}</td>
+                          <td class="text-center">{{ data?.qty }}</td>
+                          <td class="text-center">{{ data?.day }}</td>
+                          <td class="text-center">{{ data?.remaks }}</td>
+                          <td class="text-center">{{ formatRupiah(parseInt(item?.rate)) }}</td>
 
-                      </tr>
+                        </tr>
 
 
-                    </tbody>
-                  </q-markup-table>
+                      </tbody>
+                    </q-markup-table>
 
                 </div>
                 <div class="row q-m-t-xl">
@@ -194,9 +194,9 @@
                 </div>
 
                 <div class="text-right q-mt-md">
-                  <q-btn class="q-mr-sm bg-blue" color="gray-2" icon="mail" />
-                  <q-btn class="q-mr-sm bg-blue" color="primary" icon="print" />
-                  <q-btn class=" bg-blue" color="primary" icon="list" label="Next" to="/sales/molist" />
+                  <!-- <q-btn class="q-mr-sm bg-blue" color="gray-2" icon="mail" />
+                  <q-btn class="q-mr-sm bg-blue" color="primary" icon="print" /> -->
+                  <q-btn class=" bg-blue" color="primary" icon="list" label="Next" to="/vp/order-list" />
                 </div>
               </div>
             </q-scroll-area>
@@ -254,6 +254,7 @@ export default {
             'Authorization': `Bearer ${token}`
           }
         });
+        console.log(response);
 
         this.data = response.data
         this.camp_name = response.data.camp_name

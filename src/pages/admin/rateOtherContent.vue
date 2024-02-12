@@ -296,6 +296,15 @@ export default {
 
     async addOtherSosmed() {
       const token = sessionStorage.getItem("token");
+      if(!this.nama ){
+        this.medium = false
+        Swal.fire({
+          icon: "warning",
+          title: "Oops...",
+          text: "Please fill all the form data",
+        });
+        return;
+      }
       try {
         this.btn = true;
         const data = {
@@ -360,7 +369,7 @@ export default {
             },
           }
         );
-        console.log(response);
+      
         this.nama = response.data.name;
         this.rate = response.data.rate;
         this.customPrice = response.data.is_custom_price;

@@ -71,7 +71,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(item, index) in otiList" :key="item.idOrder">
+                    <tr v-for="(item, index) in otiList" :key="item.idOrder" >
                       <td v-if="shouldShowIndex(index)" :rowspan="countIdOrder(item.idOrder)">
                         {{ getRowIndex(index) }}
                       </td>
@@ -183,6 +183,7 @@ export default {
       url: ref(''),
       date: ref(),
       date2: ref(),
+      produk: ref()
     }
   },
 
@@ -295,11 +296,13 @@ export default {
             produk = 'other';
         }
 
+        this.produk = produk
         const response = await this.$api.get(`/oti/report-produk/${produk}?pageNumber=${this.current}&from=${this.date}&to=${this.date2}`, {
           headers: {
             'Authorization': `Bearer ${this.token}`
           }
         });
+        console.log(response);
 
         this.otiList = response.data
         this.current = response.data.pageNumber
@@ -328,7 +331,7 @@ export default {
 
     clickBtn(idOti) {
       this.idOti = idOti
-      console.log(idOti);
+      
       this.upload = true
 
     },

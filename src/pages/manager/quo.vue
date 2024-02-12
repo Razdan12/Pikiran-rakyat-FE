@@ -90,28 +90,28 @@
                   <q-markup-table flat bordered style="margin-top: 20px; margin-bottom: 50px;">
                     <thead class="bg-blue-grey-2 text-bold">
                       <tr>
-                        
+
                         <th class="text-center">Spot Promo</th>
                         <th class="text-center">Promo Type</th>
                         <th class="text-center">Detail</th>
                         <th class="text-center">QTY</th>
                         <th class="text-center">Day</th>
                         <th class="text-center">Remaks</th>
-                        <th class="text-center">Total</th>
+                        <th class="text-center">Rate Produk</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr >
-                        <td class="text-center">{{data?.spot_promo}}</td>
-                        <td class="text-center">{{data?.spot_promo}}</td>
-                        <td class="text-center">{{data?.camp_name}}</td>
-                        <td class="text-center">{{data?.qty}}</td>
-                        <td class="text-center">{{data?.day}}</td>
-                        <td class="text-center">{{data?.remaks}}</td>
-                        <td class="text-center">{{formatRupiah(data?.payment.data.finalPrice)}}</td>
-                        
+                      <tr v-for="(item, index) in data.data" :key="item.id">
+                        <td class="text-center">{{ item?.kategori }}</td>
+                        <td class="text-center">{{ item?.produk }}</td>
+                        <td class="text-center">{{ item?.camp_name }}</td>
+                        <td class="text-center">{{ data?.qty }}</td>
+                        <td class="text-center">{{ data?.day }}</td>
+                        <td class="text-center">{{ data?.remaks }}</td>
+                        <td class="text-center">{{ formatRupiah(parseInt(item?.rate)) }}</td>
+
                       </tr>
-                      
+
 
                     </tbody>
                   </q-markup-table>
@@ -148,14 +148,15 @@
                           <td class="text-center"><q-btn v-if="request_by == 'manager'" :disable="sales_approve"
                               color="secondary" label="Approv" @click="handleApprove" /></td>
                           <td class="text-center"> <q-btn v-if="approve()"
-                              :disable="sales_approve === false || manager_approve" color="secondary" label="Approv" @click="handleApprove" /></td>
+                              :disable="sales_approve === false || manager_approve" color="secondary" label="Approv"
+                              @click="handleApprove" /></td>
                           <td class="text-center"></td>
                           <td class="text-center"></td>
                         </tr>
 
                       </tbody>
                     </q-markup-table>
-                   
+
                   </div>
                   <div class="col-md-4">
                     <br>
@@ -164,22 +165,23 @@
                       <tbody>
                         <tr>
                           <td class="text-left">Total Package (Rp)</td>
-                          <td class="text-right">{{formatRupiah(data?.payment.data.finalPrice) }}</td>
+                          <td class="text-right">{{ formatRupiah(data?.payment.data.finalPrice) }}</td>
 
                         </tr>
                         <tr>
                           <td class="text-left">Best Price Package (Rp)</td>
-                          <td class="text-right">{{formatRupiah(data?.payment.data.finalPrice) }}</td>
+                          <td class="text-right">{{ formatRupiah(data?.payment.data.finalPrice) }}</td>
 
                         </tr>
                         <tr>
                           <td class="text-left">VAT 11% (Rp)</td>
-                          <td class="text-right">{{formatRupiah((11 * data?.payment.data.finalPrice) / 100) }}</td>
+                          <td class="text-right">{{ formatRupiah((11 * data?.payment.data.finalPrice) / 100) }}</td>
 
                         </tr>
                         <tr class="text-bold">
                           <td class="text-left">PAID Incl VAT 11% (Rp)</td>
-                          <td class="text-right">{{ formatRupiah(data?.payment.data.finalPrice + ((11 * data?.payment.data.finalPrice) / 100)) }}</td>
+                          <td class="text-right">{{ formatRupiah(data?.payment.data.finalPrice + ((11 *
+                            data?.payment.data.finalPrice) / 100)) }}</td>
                         </tr>
                       </tbody>
                     </q-markup-table>
@@ -212,7 +214,7 @@ import { ref } from 'vue'
 export default {
   setup() {
     return {
-     
+
       camp_name: ref('name'),
       camp_period: ref('period'),
       cust_type: ref('cust_name'),
@@ -297,9 +299,9 @@ export default {
     },
 
     approve() {
-      if(this.request_by === 'manager'){
+      if (this.request_by === 'manager') {
         return false
-      }else{
+      } else {
         return true
       }
     },

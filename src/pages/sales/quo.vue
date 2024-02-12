@@ -98,18 +98,18 @@
                           <th class="text-center">QTY</th>
                           <th class="text-center">Day</th>
                           <th class="text-center">Remaks</th>
-                          <th class="text-center">Total</th>
+                          <th class="text-center">Rate Produk</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td class="text-center">{{ data?.spot_promo }}</td>
-                          <td class="text-center">{{ data?.spot_promo }}</td>
-                          <td class="text-center">{{ data?.camp_name }}</td>
+                        <tr v-for="(item, index) in data.data" :key="item.id">
+                          <td class="text-center">{{ item?.kategori }}</td>
+                          <td class="text-center">{{ item?.produk }}</td>
+                          <td class="text-center">{{ item?.camp_name }}</td>
                           <td class="text-center">{{ data?.qty }}</td>
                           <td class="text-center">{{ data?.day }}</td>
                           <td class="text-center">{{ data?.remaks }}</td>
-                          <td class="text-center">{{ formatRupiah(data?.payment.data.finalPrice) }}</td>
+                          <td class="text-center">{{ formatRupiah(parseInt(item?.rate)) }}</td>
 
                         </tr>
 
@@ -264,6 +264,7 @@ export default {
             'Authorization': `Bearer ${token}`
           }
         });
+        console.log(response.data);
 
         this.data = response.data
         this.camp_name = response.data.camp_name
