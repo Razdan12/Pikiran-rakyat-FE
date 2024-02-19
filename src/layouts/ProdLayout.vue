@@ -30,25 +30,17 @@
                 <div class="text-black">{{ email }}</div>
                 <div class="text-black">{{ role }}</div>
               </div>
-  
+
             </div>
           </div>
         </q-img>
       </div>
       <!-- <div>
-      </div> -->
+        </div> -->
       <q-list padding class="menu-list">
-        
-        <q-item active clickable v-ripple to="/manager/customer">
-          <q-item-section avatar>
-            <q-icon name="supervised_user_circle" />
-          </q-item-section>
 
-          <q-item-section>
-            Customer
-          </q-item-section>
-        </q-item>
-        <q-item active clickable v-ripple to="/manager/order-list">
+        
+        <q-item active clickable v-ripple to="/prod/order-list">
           <q-item-section avatar>
             <q-icon name="supervised_user_circle" />
           </q-item-section>
@@ -57,27 +49,18 @@
             Order
           </q-item-section>
         </q-item>
-        <q-item clickable v-ripple to="/manager/molist">
-          <q-item-section avatar>
-            <q-icon name="perm_media" />
-          </q-item-section>
-
-          <q-item-section>
-            Media Order
-          </q-item-section>
-        </q-item>
-
-        <q-item clickable v-ripple to="/manager/oti">
+        <q-item clickable v-ripple to="/prod/oti">
           <q-item-section avatar>
             <q-icon name="content_copy" />
           </q-item-section>
 
+          
           <q-item-section>
             Order Tayang Iklan
           </q-item-section>
         </q-item>
 
-        <q-item clickable v-ripple to="/manager/report">
+        <q-item clickable v-ripple to="/prod/report">
           <q-item-section avatar>
             <q-icon name="summarize" />
           </q-item-section>
@@ -98,29 +81,31 @@
     </q-page-container>
   </q-layout>
 </template>
-
+  
 <style>
-  .jam{
-    font-size: larger;
-  }
-  .tanggal{
+.jam {
+  font-size: larger;
+}
+
+.tanggal {
+  font-size: medium;
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {}
+
+@media (max-width: 768px) {
+  .jam {
     font-size: medium;
   }
-  @media (min-width: 768px) and (max-width: 1199px) {
+
+  .tanggal {
+    font-size: small;
   }
+}
+</style>
   
-  @media (max-width: 768px) {
-    .jam{
-      font-size: medium;
-    }
-    .tanggal{
-      font-size: small;
-    }
-  }
-  </style>
-
-
-
+  
+  
 <script>
 import Swal from 'sweetalert2';
 import { ref } from 'vue'
@@ -130,9 +115,9 @@ export default {
     const leftDrawerOpen = ref(false);
     return {
       leftDrawerOpen,
-        toggleLeftDrawer() {
-          leftDrawerOpen.value = !leftDrawerOpen.value;
-        },
+      toggleLeftDrawer() {
+        leftDrawerOpen.value = !leftDrawerOpen.value;
+      },
       drawer: ref(false),
       name: ref(sessionStorage.getItem("name")),
       email: ref(sessionStorage.getItem("email")),
@@ -176,6 +161,6 @@ export default {
   },
 }
 </script>
-  
-  
-  
+    
+    
+    

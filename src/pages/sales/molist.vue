@@ -78,7 +78,8 @@ export default {
     async getMoData() {
       try {
         const token = sessionStorage.getItem('token')
-        const response = await this.$api.get(`quotation/mo/all?pageNumber=${this.current}`, {
+        const id = sessionStorage.getItem("id")
+        const response = await this.$api.get(`quotation/mo/by-user/${id}?pageNumber=${this.current}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }

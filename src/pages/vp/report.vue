@@ -163,6 +163,7 @@ export default {
         });
         this.dataList = response.data
 
+        
       } catch (error) {
         console.log(error);
       }

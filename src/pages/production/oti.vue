@@ -54,29 +54,7 @@
                   </div>
                 </div>
               </div>
-              <!-- <div class="col-md-6 text-left">
-                <div class="row">
-                  <div class="col-md-4"></div>
-                  <div class="col-md-4">
-                    <div class="col-md-2 q-my-auto">
-                      <p class="text-bold text-light-blue-10" style="font-size: medium;">Filter by :</p>
-                    </div>
-                    <div class="col-md-4">
-                      <q-select filled v-model="filter" :options="optionsfilter" label="Filter by" dense
-                        style="width: 90%;" />
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="col-md-2 q-my-auto">
-                      <p class="text-bold text-light-blue-10" style="font-size: medium;">sub Filter :</p>
-                    </div>
-                    <div class="col-md-4">
-                      <q-select filled v-model="sub" :options="optionssub" label="sub Filter" dense
-                        style="width: 90%;" />
-                    </div>
-                  </div>
-                </div>
-              </div> -->
+             
             </div>
                 <q-markup-table separator="cell" flat bordered>
                   <thead>
@@ -93,7 +71,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(item, index) in otiList" :key="item.idOrder">
+                    <tr v-for="(item, index) in otiList" :key="item.idOrder" >
                       <td v-if="shouldShowIndex(index)" :rowspan="countIdOrder(item.idOrder)">
                         {{ getRowIndex(index) }}
                       </td>
@@ -114,21 +92,32 @@
                         {{ item.noMo }}
                       </td>
 
-                      
                       <td>{{ item.product }}</td>
                       <td>{{ item.sub }}</td>
                       <td>{{ item.oti }}</td>
                       <td>
-                        <q-btn :hidden="item.tayang == false" :key="`btn_size_dense_round_md`" round dense color="green"
-                          :size="size" icon="perm_media" @click="clickBtnImage(item.file_bukti_tayang)" />
-                        {{ item.tayang ? 'Tayang' : "On Progress" }}
+                        <q-btn-group>
+                          <q-btn :disable="item.tayang == false" color="green" icon="perm_media" @click=" clickBtnImage(item.file_bukti_tayang)">
+                            <q-tooltip class="bg-green text-body2" :offset="[10, 10]">
+                              Bukti Tayang
+                            </q-tooltip>
+                          </q-btn>
+                          <q-btn color="blue" icon="upload" @click=" clickBtn(item.idOti)">
+                            <q-tooltip class="bg-blue text-body2" :offset="[10, 10]">
+                              Upload Bukti Tayang
+                            </q-tooltip>
+                          </q-btn>
+
+                        </q-btn-group>
+
                       </td>
                     </tr>
                   </tbody>
                 </q-markup-table>
-                <!-- <div class="q-pa-lg flex flex-center">
+             
+                <div class="q-pa-lg flex flex-center">
                   <q-pagination v-model="current" :max="totalPage" input />
-                </div> -->
+                </div>
               </div>
             </q-card-section>
           </q-card>
@@ -139,7 +128,7 @@
 
     </div>
   </q-page>
-
+  
   <q-dialog v-model="carousel">
     <q-card style="width: 90%; max-width: 80vw;">
       <q-card-section>
@@ -151,10 +140,30 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
-  
+
+  <q-dialog v-model="upload">
+    <q-card style="width: 700px; max-width: 80vw;">
+
+      <q-card-section>
+        <div class="text-center tw-text-2xl">
+          Upload Bukti Tayang
+        </div>
+      </q-card-section>
+
+      <q-card-section>
+        <q-uploader color="teal" flat bordered style="width: 100%" :factory="uploadFactory" />
+      </q-card-section>
+
+      <q-card-actions align="right" class="bg-white text-teal">
+        <q-btn flat label="Close" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+
 </template>
 
 <script>
+import Swal from 'sweetalert2';
 import { ref } from 'vue';
 
 
@@ -168,10 +177,13 @@ export default {
       lastIdOrder: null,
       rowIndex: 1,
       carousel: ref(false),
-      url: ref(''),
+      upload: ref(false),
+      idOti: ref(''),
       file: ref(''),
+      url: ref(''),
       date: ref(),
       date2: ref(),
+      produk: ref()
     }
   },
 
@@ -212,6 +224,39 @@ export default {
 
       this.date2 = this.formatDate(dateNow2); // this will be today's date in the same format
     },
+    async uploadFactory(files) {
+      const idUser = sessionStorage.getItem("id")
+      const data = new FormData();
+      files.forEach((file) => {
+        data.append('bukti_tayang', file);
+        data.append('idOti', this.idOti)
+        data.append('idUser', idUser)
+      });
+
+      // Anda bisa menambahkan lebih banyak data ke form-data di sini jika diperlukan
+
+      try {
+        const response = await this.$api.post(`/oti/bukti-tayang/upload`, data, {
+          headers: {
+            'Authorization': `Bearer ${this.token}`,
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        this.upload = false
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your work has been saved",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        this.getMoData()
+
+        return response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
 
     countIdOrder(idOrder) {
       return this.otiList.filter(item => item.idOrder === idOrder).length;
@@ -222,34 +267,74 @@ export default {
         return this.rowIndex++;
       }
     },
+
     shouldShowIndex(index) {
       return index === 0 || this.otiList[index - 1].idOrder !== this.otiList[index].idOrder;
     },
+
     async getMoData() {
+      
+
       try {
-        const id = sessionStorage.getItem("id")
-        const response = await this.$api.get(`/oti/report-user/${id}?pageNumber=${this.current}&from=${this.date}&to=${this.date2}`, {
+        const role = sessionStorage.getItem("role")
+        let produk;
+
+        switch (role) {
+          case 'pic_artikel':
+            produk = 'artikel';
+            break;
+          case 'pic_sosmed':
+            produk = 'sosmed';
+            break;
+          case 'pic_cpd':
+            produk = 'cpd';
+            break;
+          case 'pic_cpm':
+            produk = 'cpm';
+            break;
+          default:
+            produk = 'other';
+        }
+
+        this.produk = produk
+        const response = await this.$api.get(`/oti/report-produk/${produk}?pageNumber=${this.current}&from=${this.date}&to=${this.date2}`, {
           headers: {
             'Authorization': `Bearer ${this.token}`
           }
         });
+        console.log(response);
 
-        console.log(response.data);
         this.otiList = response.data
         this.current = response.data.pageNumber
         this.totalPage = response.data.totalPage
         this.rowIndex = 1;
 
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
-
     },
 
-    clickBtn(idOrder) {
-      sessionStorage.setItem('idMo', idOrder)
+    async getBuktiTayang(file){
+      try {
+
+        const response = await this.$api.get(`/image/${file}`, {
+          headers: {
+            'Authorization': `Bearer ${this.token}`
+          }
+        });
+       console.log(response);
+
+      } catch (error) {
+        console.error(error);
+      }
     },
-    
+
+    clickBtn(idOti) {
+      this.idOti = idOti
+      
+      this.upload = true
+
+    },
     clickBtnImage(file) {
      this.file = file
      this.carousel = true

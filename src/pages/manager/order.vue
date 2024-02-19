@@ -1209,7 +1209,7 @@ export default {
             showConfirmButton: false,
             timer: 1500,
           });
-          this.$router.push("/sales/quotation");
+          this.$router.push("/manager/quotation");
         }
       } catch (error) {
         Swal.fire({

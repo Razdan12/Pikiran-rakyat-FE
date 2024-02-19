@@ -326,12 +326,12 @@ export default {
       edit: ref(false),
       btn: ref(false),
       nama: ref(null),
-      pricePrmn: ref(null),
-      priceMitra: ref(null),
-      note: ref(null),
+      pricePrmn: ref(),
+      priceMitra: ref(),
+      note: ref(),
       prmn: ref(false),
       mitra: ref(false),
-      idArticel: ref(""),
+      idArticel: ref(),
     };
   },
 
@@ -354,6 +354,15 @@ export default {
 
     async addArticle() {
       const token = sessionStorage.getItem("token");
+      if(!this.nama ){
+        this.medium = false
+        Swal.fire({
+          icon: "warning",
+          title: "Oops...",
+          text: "Please fill all the form data",
+        });
+        return;
+      }
       try {
         this.btn = true;
         const data = {

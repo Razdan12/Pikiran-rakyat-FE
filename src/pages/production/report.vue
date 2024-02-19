@@ -56,7 +56,7 @@
                   </div>
                 </div>
               </div>
-              
+             
             </div>
             <div>
               <q-markup-table>
@@ -154,13 +154,16 @@ export default {
       this.date2 = this.formatDate(dateNow2); // this will be today's date in the same format
     },
     async getMoData() {
+      const role = sessionStorage.getItem("role")
+      const produk = role.split('_')
       try {
         const id = sessionStorage.getItem('id')
-        const response = await this.$api.get(`/oti/report?from=${this.date}&to=${this.date2}`, {
+        const response = await this.$api.get(`/oti/report-produk/${produk[produk.length - 1]}?from=${this.date}&to=${this.date2}`, {
           headers: {
             'Authorization': `Bearer ${this.token}`
           }
         });
+       
         this.dataList = response.data
 
       } catch (error) {

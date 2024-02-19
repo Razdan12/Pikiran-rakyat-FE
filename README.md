@@ -53,3 +53,14 @@
 -  fitur Payment dengan metode cash, kredit, barter, semi barter, termin
 -  penambahan produk yang bisa dipilih ( Artikel, Sosmed, Other Conten, Iklan CPD & CPD)
 -  fix responsive design
+
+
+## Update log 07/02/24
+- Penambahan role akses
+	- role manager
+	- role PIC
+	- role Mitra
+	- role VP
+	- role Finance
+- update beberapa bug di tampilan
+- update algoritma rumus total pembayaran

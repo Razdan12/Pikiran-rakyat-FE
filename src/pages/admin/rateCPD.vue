@@ -46,27 +46,13 @@
                       </td>
                       <td class="text-center">
                         <q-btn-group>
-                          <q-btn
-                            color="orange"
-                            icon="border_color"
-                            @click="trigerEdit(item.id, 'display')"
-                          >
-                            <q-tooltip
-                              class="bg-orange text-body2"
-                              :offset="[10, 10]"
-                            >
+                          <q-btn color="orange" icon="border_color" @click="trigerEdit(item.id, 'display')">
+                            <q-tooltip class="bg-orange text-body2" :offset="[10, 10]">
                               Edit
                             </q-tooltip>
                           </q-btn>
-                          <q-btn
-                            color="red"
-                            icon="delete"
-                            @click="DeleteCpd(item.id)"
-                          >
-                            <q-tooltip
-                              class="bg-red text-body2"
-                              :offset="[10, 10]"
-                            >
+                          <q-btn color="red" icon="delete" @click="DeleteCpd(item.id)">
+                            <q-tooltip class="bg-red text-body2" :offset="[10, 10]">
                               Hapus
                             </q-tooltip>
                           </q-btn>
@@ -83,14 +69,11 @@
           </q-card>
         </div>
       </div>
-     
+
     </div>
 
     <q-dialog v-model="medium">
-      <q-card
-        style="width: 700px; max-width: 80vw"
-        class="justify-center q-pa-md"
-      >
+      <q-card style="width: 700px; max-width: 80vw" class="justify-center q-pa-md">
         <q-scroll-area style="height: 70vh" class="q-pa-sm">
           <p class="text-center text-bold" style="font-size: x-large">
             Tambah Display Ads / Banner CPD
@@ -102,99 +85,43 @@
                 <p class="text-bold text-blue" style="font-size: medium">
                   <span class="text-bold" style="font-size: medium"> Nama</span>
                 </p>
-                <q-input
-                  v-model="nama"
-                  class="q-my-md"
-                  dense
-                  outlined
-                  label="Nama"
-                />
+                <q-input v-model="nama" class="q-my-md" dense outlined label="Nama" />
               </div>
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
                   <span class="text-bold" style="font-size: medium">Type</span>
                 </p>
-                <q-select
-                  dense
-                  outlined
-                  v-model="type"
-                  :options="typeOption"
-                  label="Type"
-                />
+                <q-select dense outlined v-model="type" :options="typeOption" label="Type" />
               </div>
               <div>
-                <p
-                  class="text-bold text-blue"
-                  style="font-size: medium; margin-top: 10px"
-                >
+                <p class="text-bold text-blue" style="font-size: medium; margin-top: 10px">
                   <span class="text-bold" style="font-size: medium">Size</span>
                 </p>
-                <q-input
-                  v-model="size"
-                  class="q-my-md"
-                  dense
-                  outlined
-                  label="Size"
-                />
+                <q-input v-model="size" class="q-my-md" dense outlined label="Size" />
               </div>
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
-                  <span class="text-bold" style="font-size: medium"
-                    >Rate Home</span
-                  >
+                  <span class="text-bold" style="font-size: medium">Rate Home</span>
                 </p>
-                <q-input
-                  v-model="home"
-                  class="q-my-md"
-                  prefix="Rp"
-                  type="number"
-                  dense
-                  outlined
-                  label="Rate Home"
-                />
+                <q-input v-model="home" class="q-my-md" prefix="Rp" type="number" dense outlined label="Rate Home" />
               </div>
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
-                  <span class="text-bold" style="font-size: medium"
-                    >Rate Detail</span
-                  >
+                  <span class="text-bold" style="font-size: medium">Rate Detail</span>
                 </p>
-                <q-input
-                  v-model="detail"
-                  class="q-my-md"
-                  prefix="Rp"
-                  type="number"
-                  dense
-                  outlined
-                  label="Rate Detal"
-                />
+                <q-input v-model="detail" class="q-my-md" prefix="Rp" type="number" dense outlined label="Rate Detal" />
               </div>
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
-                  <span class="text-bold" style="font-size: medium"
-                    >Rate Section</span
-                  >
+                  <span class="text-bold" style="font-size: medium">Rate Section</span>
                 </p>
-                <q-input
-                  v-model="section"
-                  class="q-my-md"
-                  prefix="Rp"
-                  type="number"
-                  dense
-                  outlined
-                  label="Rate Section"
-                />
+                <q-input v-model="section" class="q-my-md" prefix="Rp" type="number" dense outlined
+                  label="Rate Section" />
               </div>
             </div>
             <div class="text-right">
               <q-card-actions align="right">
-                <q-btn
-                  class="q-mx-sm"
-                  type="submit"
-                  color="secondary"
-                  label="Create"
-                  :disable="btn"
-                />
+                <q-btn class="q-mx-sm" type="submit" color="secondary" label="Create" :disable="btn" />
                 <q-btn color="black" label="Cancel" v-close-popup />
               </q-card-actions>
             </div>
@@ -202,12 +129,9 @@
         </q-scroll-area>
       </q-card>
     </q-dialog>
-    
+
     <q-dialog v-model="edit">
-      <q-card
-        style="width: 700px; max-width: 80vw"
-        class="justify-center q-pa-md"
-      >
+      <q-card style="width: 700px; max-width: 80vw" class="justify-center q-pa-md">
         <q-scroll-area style="height: 70vh" class="q-pa-sm">
           <p class="text-center text-bold" style="font-size: x-large">
             Edit Ads
@@ -224,13 +148,7 @@
                     <div class="cursor-pointer">
                       {{ nama }}
                       <q-popup-edit v-model="nama" auto-save v-slot="scope">
-                        <q-input
-                          v-model="scope.value"
-                          dense
-                          autofocus
-                          counter
-                          @keyup.enter="scope.set"
-                        />
+                        <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
                       </q-popup-edit>
                     </div>
                   </q-card>
@@ -245,13 +163,7 @@
                     <div class="cursor-pointer">
                       {{ size }}
                       <q-popup-edit v-model="size" auto-save v-slot="scope">
-                        <q-input
-                          v-model="scope.value"
-                          dense
-                          autofocus
-                          counter
-                          @keyup.enter="scope.set"
-                        />
+                        <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
                       </q-popup-edit>
                     </div>
                   </q-card>
@@ -266,13 +178,7 @@
                     <div class="cursor-pointer">
                       {{ formatRupiah(home) }}
                       <q-popup-edit v-model="home" auto-save v-slot="scope">
-                        <q-input
-                          v-model="scope.value"
-                          dense
-                          autofocus
-                          counter
-                          @keyup.enter="scope.set"
-                        />
+                        <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
                       </q-popup-edit>
                     </div>
                   </q-card>
@@ -280,9 +186,7 @@
               </div>
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
-                  <span class="text-bold" style="font-size: medium"
-                    >Detail</span
-                  >
+                  <span class="text-bold" style="font-size: medium">Detail</span>
                 </p>
 
                 <div class="" style="margin-bottom: 20px">
@@ -290,13 +194,7 @@
                     <div class="cursor-pointer">
                       {{ formatRupiah(detail) }}
                       <q-popup-edit v-model="detail" auto-save v-slot="scope">
-                        <q-input
-                          v-model="scope.value"
-                          dense
-                          autofocus
-                          counter
-                          @keyup.enter="scope.set"
-                        />
+                        <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
                       </q-popup-edit>
                     </div>
                   </q-card>
@@ -304,9 +202,7 @@
               </div>
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
-                  <span class="text-bold" style="font-size: medium"
-                    >Section</span
-                  >
+                  <span class="text-bold" style="font-size: medium">Section</span>
                 </p>
 
                 <div class="" style="margin-bottom: 20px">
@@ -314,13 +210,7 @@
                     <div class="cursor-pointer">
                       {{ formatRupiah(section) }}
                       <q-popup-edit v-model="section" auto-save v-slot="scope">
-                        <q-input
-                          v-model="scope.value"
-                          dense
-                          autofocus
-                          counter
-                          @keyup.enter="scope.set"
-                        />
+                        <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
                       </q-popup-edit>
                     </div>
                   </q-card>
@@ -329,13 +219,7 @@
             </div>
             <div class="text-right">
               <q-card-actions align="right">
-                <q-btn
-                  class="q-mx-sm"
-                  type="submit"
-                  color="secondary"
-                  label="Submit"
-                  :disable="btn"
-                />
+                <q-btn class="q-mx-sm" type="submit" color="secondary" label="Submit" :disable="btn" />
                 <q-btn color="black" label="Cancel" v-close-popup />
               </q-card-actions>
             </div>
@@ -343,7 +227,7 @@
         </q-scroll-area>
       </q-card>
     </q-dialog>
-    
+
   </q-page>
 </template>
 
@@ -372,7 +256,7 @@ export default {
       detail: ref(null),
       section: ref(null),
       other: ref(false),
-     
+
       id: ref(""),
     };
   },
@@ -396,6 +280,15 @@ export default {
 
     async addDisplayAds() {
       const token = sessionStorage.getItem("token");
+      if(!this.nama ){
+        this.medium = false
+        Swal.fire({
+          icon: "warning",
+          title: "Oops...",
+          text: "Please fill all the form data",
+        });
+        return;
+      }
       try {
         this.btn = true;
         const data = {
@@ -439,7 +332,7 @@ export default {
         this.btn = false;
       }
     },
-  
+
     async getMitraData() {
       const token = sessionStorage.getItem("token");
       try {
@@ -449,7 +342,7 @@ export default {
           },
         });
         this.cpdDisplayList = response.data;
-       
+
       } catch (error) {
         console.log(error);
       }
@@ -469,7 +362,7 @@ export default {
         this.home = response.data.rate_home;
         this.detail = response.data.rate_detail;
         this.section = response.data.rate_section;
-       
+
       } catch (error) {
         console.log(error);
       }

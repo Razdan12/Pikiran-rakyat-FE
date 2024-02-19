@@ -38,15 +38,7 @@
       <!-- <div>
       </div> -->
       <q-list padding class="menu-list">
-          <q-item clickable v-ripple class="q-mt-md" to="/admin/dashboard" disable>
-            <q-item-section avatar>
-              <q-icon name="dashboard" />
-            </q-item-section>
-
-            <q-item-section>
-              Dashboard
-            </q-item-section>
-          </q-item>
+          
 
           <q-item active clickable v-ripple to="/admin/customer">
             <q-item-section avatar>
