@@ -32,8 +32,8 @@
                       <td class="text-center">
                         {{
                           item.is_custom_price
-                            ? "Custom Price"
-                            : formatRupiah(item.rate)
+                          ? "Custom Price"
+                          : formatRupiah(item.rate)
                         }}
                       </td>
 
@@ -42,27 +42,13 @@
                       </td>
                       <td class="text-center">
                         <q-btn-group>
-                          <q-btn
-                            color="orange"
-                            icon="border_color"
-                            @click="trigerEdit(item.id)"
-                          >
-                            <q-tooltip
-                              class="bg-orange text-body2"
-                              :offset="[10, 10]"
-                            >
+                          <q-btn color="orange" icon="border_color" @click="trigerEdit(item.id)">
+                            <q-tooltip class="bg-orange text-body2" :offset="[10, 10]">
                               Edit
                             </q-tooltip>
                           </q-btn>
-                          <q-btn
-                            color="red"
-                            icon="delete"
-                            @click="DeleteOth(item.id)"
-                          >
-                            <q-tooltip
-                              class="bg-red text-body2"
-                              :offset="[10, 10]"
-                            >
+                          <q-btn color="red" icon="delete" @click="DeleteOth(item.id)">
+                            <q-tooltip class="bg-red text-body2" :offset="[10, 10]">
                               Hapus
                             </q-tooltip>
                           </q-btn>
@@ -82,10 +68,7 @@
     </div>
 
     <q-dialog v-model="medium">
-      <q-card
-        style="width: 700px; max-width: 80vw"
-        class="justify-center q-pa-md"
-      >
+      <q-card style="width: 700px; max-width: 80vw" class="justify-center q-pa-md">
         <q-scroll-area style="height: 65vh" class="q-pa-sm">
           <p class="text-center text-bold" style="font-size: x-large">
             Tambah Other Content
@@ -97,35 +80,18 @@
                 <p class="text-bold text-blue" style="font-size: medium">
                   <span class="text-bold" style="font-size: medium"> Nama</span>
                 </p>
-                <q-input
-                  v-model="nama"
-                  class="q-my-md"
-                  dense
-                  outlined
-                  label="Nama network"
-                />
+                <q-input v-model="nama" class="q-my-md" dense outlined label="Nama network" />
               </div>
               <div>
-                <p
-                  class="text-bold text-blue"
-                  style="font-size: medium; margin-top: 10px"
-                >
+                <p class="text-bold text-blue" style="font-size: medium; margin-top: 10px">
                   <span class="text-bold" style="font-size: medium">Rate</span>
                 </p>
                 <p>
                   <span>Custom Price ?</span>
                   <q-toggle v-model="customPrice" color="green" keep-color />
                 </p>
-                <q-input
-                  v-model="rate"
-                  class="q-my-md"
-                  prefix="Rp"
-                  type="number"
-                  :disable="customPrice"
-                  dense
-                  outlined
-                  label="Rate"
-                />
+                <q-input v-model="rate" class="q-my-md" prefix="Rp" type="number" :disable="customPrice" dense outlined
+                  label="Rate" />
               </div>
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
@@ -136,13 +102,7 @@
             </div>
             <div class="text-right">
               <q-card-actions align="right">
-                <q-btn
-                  class="q-mx-sm"
-                  type="submit"
-                  color="secondary"
-                  label="Create"
-                  :disable="btn"
-                />
+                <q-btn class="q-mx-sm" type="submit" color="secondary" label="Create" :disable="btn" />
                 <q-btn color="black" label="Cancel" v-close-popup />
               </q-card-actions>
             </div>
@@ -151,10 +111,7 @@
       </q-card>
     </q-dialog>
     <q-dialog v-model="edit">
-      <q-card
-        style="width: 700px; max-width: 80vw"
-        class="justify-center q-pa-md"
-      >
+      <q-card style="width: 700px; max-width: 80vw" class="justify-center q-pa-md">
         <q-scroll-area style="height: 55vh" class="q-pa-sm">
           <p class="text-center text-bold" style="font-size: x-large">
             Edit Data
@@ -171,13 +128,7 @@
                     <div class="cursor-pointer">
                       {{ nama }}
                       <q-popup-edit v-model="nama" auto-save v-slot="scope">
-                        <q-input
-                          v-model="scope.value"
-                          dense
-                          autofocus
-                          counter
-                          @keyup.enter="scope.set"
-                        />
+                        <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
                       </q-popup-edit>
                     </div>
                   </q-card>
@@ -193,22 +144,12 @@
                   <q-card class="my-card q-pa-sm" flat bordered>
                     <p>
                       <span>Custom Price ?</span>
-                      <q-toggle
-                        v-model="customPrice"
-                        color="green"
-                        keep-color
-                      />
+                      <q-toggle v-model="customPrice" color="green" keep-color />
                     </p>
                     <div class="cursor-pointer">
                       {{ formatRupiah(rate) }}
                       <q-popup-edit v-model="rate" auto-save v-slot="scope">
-                        <q-input
-                          v-model="scope.value"
-                          dense
-                          autofocus
-                          counter
-                          @keyup.enter="scope.set"
-                        />
+                        <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
                       </q-popup-edit>
                     </div>
                   </q-card>
@@ -224,12 +165,7 @@
                     <div class="cursor-pointer">
                       {{ note ? note : "-" }}
                       <q-popup-edit buttons v-model="note" v-slot="scope">
-                        <q-editor
-                          v-model="scope.value"
-                          min-height="5rem"
-                          autofocus
-                          @keyup.enter.stop
-                        />
+                        <q-editor v-model="scope.value" min-height="5rem" autofocus @keyup.enter.stop />
                       </q-popup-edit>
                     </div>
                   </q-card>
@@ -238,13 +174,7 @@
             </div>
             <div class="text-right">
               <q-card-actions align="right">
-                <q-btn
-                  class="q-mx-sm"
-                  type="submit"
-                  color="secondary"
-                  label="Save"
-                  :disable="btn"
-                />
+                <q-btn class="q-mx-sm" type="submit" color="secondary" label="Save" :disable="btn" />
                 <q-btn color="black" label="Cancel" v-close-popup />
               </q-card-actions>
             </div>
@@ -296,7 +226,7 @@ export default {
 
     async addOtherSosmed() {
       const token = sessionStorage.getItem("token");
-      if(!this.nama ){
+      if (!this.nama) {
         this.medium = false
         Swal.fire({
           icon: "warning",
@@ -323,16 +253,19 @@ export default {
           }
         );
 
-        if (response) {
-          (this.medium = false),
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              title: "Your work has been saved",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-        }
+        this.medium = false
+        this.nama = null
+        this.rate =null
+        this.note = null
+        this.customPrice = false
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your work has been saved",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
       } catch (error) {
         (this.medium = false), console.log(error);
         Swal.fire({
@@ -369,7 +302,7 @@ export default {
             },
           }
         );
-      
+
         this.nama = response.data.name;
         this.rate = response.data.rate;
         this.customPrice = response.data.is_custom_price;

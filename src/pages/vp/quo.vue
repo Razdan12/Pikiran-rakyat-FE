@@ -196,7 +196,7 @@
                 <div class="text-right q-mt-md">
                   <!-- <q-btn class="q-mr-sm bg-blue" color="gray-2" icon="mail" />
                   <q-btn class="q-mr-sm bg-blue" color="primary" icon="print" /> -->
-                  <q-btn class=" bg-blue" color="primary" icon="list" label="Next" to="/vp/order-list" />
+                  <q-btn class=" bg-blue" color="primary" icon="list" label="Next" to="/vp/mo" />
                 </div>
               </div>
             </q-scroll-area>

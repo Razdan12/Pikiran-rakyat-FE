@@ -33,7 +33,7 @@
                     <td class="text-center">{{ item.order_no }}</td>
                     <td class="text-center">
                       <p v-for="(Item, index) in item.produk" :key="index">
-                        {{ Item.name }}
+                        {{ Item.nama }}
                       </p>
                     </td>
                     <td class="text-center">

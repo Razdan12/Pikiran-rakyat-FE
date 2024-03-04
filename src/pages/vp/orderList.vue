@@ -31,7 +31,7 @@
                     <td class="text-center">{{ item?.order_no }}</td>
                     <td class="text-center">
                       <p v-for="(Item, index) in item?.produk" :key="index">
-                        {{ Item?.name }}
+                        {{ Item?.nama }}
                       </p>
                     </td>
                     <td class="text-center">
@@ -96,7 +96,7 @@ export default {
           }
         );
 
-
+          console.log(response);
         this.orderList = response.data.dataOrder;
         this.current = response.data.pageNumber;
         this.totalPage = response.data.totalPage;

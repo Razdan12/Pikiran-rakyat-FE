@@ -45,7 +45,7 @@
                       </td>
                       <td class="text-center">
                         <q-btn-group>
-                          <q-btn color="orange" icon="border_color">
+                          <q-btn color="orange" icon="border_color" @click="EditMitraTriger(item.id , item.name, item.status)">
                             <q-tooltip class="bg-orange text-body2" :offset="[10, 10]">
                               Edit Mitra
                             </q-tooltip>
@@ -74,7 +74,7 @@
       <q-card style="width: 700px; max-width: 80vw" class="justify-center q-pa-md">
         <q-scroll-area style="height: 39vh" class="q-pa-sm">
           <p class="text-center text-bold" style="font-size: x-large">
-            TAMBAH NETWORK
+            TAMBAH MITRA
           </p>
           <q-separator class="q-my-lg" color="orange" inset />
           <q-form @submit.prevent="addMitra">
@@ -108,29 +108,21 @@
         </q-scroll-area>
       </q-card>
     </q-dialog>
+   
     <q-dialog v-model="edit">
       <q-card style="width: 700px; max-width: 80vw" class="justify-center q-pa-md">
         <q-scroll-area style="height: 39vh" class="q-pa-sm">
           <p class="text-center text-bold" style="font-size: x-large">
-            EDIT NETWORK
+            TAMBAH MITRA
           </p>
           <q-separator class="q-my-lg" color="orange" inset />
-          <q-form @submit.prevent="addNetwork">
+          <q-form @submit.prevent="EditMitra">
             <div class="col">
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
                   <span class="text-bold" style="font-size: medium"> Nama</span>
                 </p>
-                <div class="cursor-pointer text-bold" style="margin-bottom: 20px">
-                  {{ nama == null ? dataNetwork.name : nama }}
-                  <q-popup-edit v-model="nama" v-slot="scope">
-                    <q-input color="blue" v-model="scope.value" dense autofocus counter @keyup.enter="scope.set">
-                      <template v-slot:append>
-                        <q-icon name="edit" />
-                      </template>
-                    </q-input>
-                  </q-popup-edit>
-                </div>
+                <q-input v-model="nama" class="q-my-md" dense outlined label="Nama network" />
               </div>
 
               <div>
@@ -140,7 +132,7 @@
                 </p>
                 <div>
                   <label for="">Non Aktif</label>
-                  <q-toggle v-model="dataNetwork.status" checked-icon="check" color="green" unchecked-icon="clear" />
+                  <q-toggle v-model="status" checked-icon="check" color="green" unchecked-icon="clear" />
                   <label for="">Aktif</label>
                 </div>
               </div>
@@ -148,47 +140,6 @@
             <div class="text-right">
               <q-card-actions align="right">
                 <q-btn class="q-mx-sm" type="submit" color="secondary" label="Create" :disable="btn" />
-                <q-btn color="black" label="Cancel" v-close-popup />
-              </q-card-actions>
-            </div>
-          </q-form>
-        </q-scroll-area>
-      </q-card>
-    </q-dialog>
-    <q-dialog v-model="edit">
-      <q-card style="width: 700px; max-width: 80vw" class="justify-center q-pa-md">
-        <q-scroll-area style="height: 70vh" class="q-pa-sm">
-          <p class="text-center text-bold" style="font-size: x-large">
-            Edit Mitra
-          </p>
-          <q-separator class="q-my-lg" color="orange" inset />
-          <q-form @submit.prevent="editCpd">
-            <div class="col">
-              <div>
-                <p class="text-bold text-blue" style="font-size: medium">
-                  <span class="text-bold" style="font-size: medium"> Nama</span>
-                </p>
-                <div class="" style="margin-bottom: 20px">
-                  <q-card class="my-card q-pa-sm" flat bordered>
-                    <div class="cursor-pointer">
-                      {{ nama }}
-                      <q-popup-edit v-model="nama" auto-save v-slot="scope">
-                        <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
-                      </q-popup-edit>
-                    </div>
-                  </q-card>
-                </div>
-              </div>
-              <div>
-                <p class="text-bold text-blue" style="font-size: medium">
-                  <span class="text-bold" style="font-size: medium"> Status</span>
-                </p>
-              </div>
-            
-            </div>
-            <div class="text-right">
-              <q-card-actions align="right">
-                <q-btn class="q-mx-sm" type="submit" color="secondary" label="Submit" :disable="btn" />
                 <q-btn color="black" label="Cancel" v-close-popup />
               </q-card-actions>
             </div>
@@ -217,6 +168,7 @@ export default {
       nama: ref(null),
       status: ref(false),
       search: ref(null),
+      idMitra: ref('')
     };
   },
 
@@ -269,6 +221,7 @@ export default {
             timer: 1500,
           });
         }
+        this.getMitraData()
       } catch (error) {
         Swal.fire({
           icon: "error",
@@ -314,7 +267,6 @@ export default {
         console.log(error);
       }
     },
-
     async deleteMitra(id) {
       try {
         const token = sessionStorage.getItem("token");
@@ -332,6 +284,39 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    async EditMitra(id) {
+      try {
+        const token = sessionStorage.getItem("token");
+        const data = {
+          name: this.nama,
+          status: this.status,
+        };
+        const response = await this.$api.patch(`order/edit-mitra/${this.idMitra}`, data, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+       
+        (this.edit = false), (this.nama = null), (this.status = false);
+        Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        this.getMitraData()
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    EditMitraTriger(id, nama, status){
+    
+      this.idMitra = id
+      this.edit = true
+      this.nama = nama
+      this.status = status
     },
 
     Delete(id) {

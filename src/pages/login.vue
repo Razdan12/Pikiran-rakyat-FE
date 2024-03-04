@@ -119,9 +119,9 @@ export default {
         }else if (role === "finance") {
           this.$router.push("/finance/molist");
         }else if (role === "pic_artikel" || role === "pic_sosmed" || role === "pic_cpd" || role === "pic_cpm" || role === "pic_other_content") {
-          this.$router.push("/prod/oti");
+          this.$router.push("/prod/order-list");
         }else if (role === 'VP'){
-          this.$router.push("/vp/oti");
+          this.$router.push("/vp/order-list");
         }
       } catch (error) {
         Swal.fire({

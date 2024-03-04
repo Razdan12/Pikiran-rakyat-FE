@@ -72,26 +72,11 @@
                   </thead>
                   <tbody>
                     <tr v-for="(item, index) in otiList" :key="item.idOrder" >
-                      <td v-if="shouldShowIndex(index)" :rowspan="countIdOrder(item.idOrder)">
-                        {{ getRowIndex(index) }}
-                      </td>
-                      <td v-if="!index || otiList[index - 1].idOrder !== item.idOrder"
-                        :rowspan="countIdOrder(item.idOrder)">
-                        {{ item.client }}
-                      </td>
-                      <td v-if="!index || otiList[index - 1].idOrder !== item.idOrder"
-                        :rowspan="countIdOrder(item.idOrder)">
-                        {{ item.tgl_order }}
-                      </td>
-                      <td v-if="!index || otiList[index - 1].idOrder !== item.idOrder"
-                        :rowspan="countIdOrder(item.idOrder)">
-                        {{ item.period_start }} - {{ item.period_end }}
-                      </td>
-                      <td v-if="!index || otiList[index - 1].idOrder !== item.idOrder"
-                        :rowspan="countIdOrder(item.idOrder)">
-                        {{ item.noMo }}
-                      </td>
-
+                      <td>{{ index + 1 }}</td>
+                      <td>{{ item.client }}</td>
+                      <td>{{ item.tgl_order }}</td>
+                      <td>{{ item.period_start }} - {{ item.period_end }}</td>
+                      <td>{{ item.noMo }}</td>
                       <td>{{ item.product }}</td>
                       <td>{{ item.sub }}</td>
                       <td>{{ item.oti }}</td>
