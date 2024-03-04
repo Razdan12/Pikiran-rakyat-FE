@@ -1024,11 +1024,20 @@ export default {
 
   methods: {
     getTotalSemi() {
-      const val1 = this.semiBarter ? parseInt(this.semiBarter) : 0;
-      const val2 = this.semiCash ? parseInt(this.semiCash) : 0;
-      const hasil = val1 + val2;
-      this.finalRate = hasil;
-      return this.formatRupiah(hasil);
+      if(parseInt(this.semiCash) > this.finalRate){
+        Swal.fire({
+          icon: "warning",
+          title: "Oops...",
+          text: "Nilai Cash tidak boleh lebih besar dari total order",
+        });
+        this.semiCash = this.finalRate
+      } else {
+
+        const hasil = this.semiCash ? this.finalRate - parseInt(this.semiCash) : this.finalRate
+        this.semiBarter = hasil
+      }
+
+      return this.formatRupiah();
     },
 
     getTotalTermin() {
@@ -1162,8 +1171,7 @@ export default {
         const [produk, rate, kategori] = card.split('#');
         return { produk, rate, kategori };
       });
-      console.log(splitCardLists);
-
+ 
       const data = {
         idCust: this.custname.value,
         idUser: id,

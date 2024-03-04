@@ -203,11 +203,7 @@
                           style="font-size: large; width: 75%;" />
                       </div>
                     </div>
-                    <br><br>
-                    <span class="text-bold q-mt-xl" style="font-size: large;">Jenis Penjualan</span>
-
-                    <q-checkbox class="text-bold" size="lg" v-model="shape" val="md" :label="dataMo?.jenis_penjualan"
-                      style="font-size: large;" />
+                   
                   </div>
                 </div>
 
@@ -289,17 +285,7 @@
                     </div>
                   </div>
                 </div>
-                <q-separator class="q-my-md" color="light-blue-7" inset />
-                <span class="text-bold q-ml-md" style="font-size: large">Produk Yang Dipilih</span>
-                <div class="row">
-                  <div class="col-md-3">
-                    <q-checkbox class="text-bold" checked size="md" v-model="shape" val="md" :label="dataMo?.produk"
-                      style="font-size: medium;" />
-
-                  </div>
-
-
-                </div>
+               
                 <q-separator class="q-my-md" color="light-blue-7" inset />
                 <span class="text-bold q-ml-md " style="font-size: large">Detail Produk</span>
                 <q-markup-table flat bordered style="margin-top: 20px; margin-bottom: 50px;">
@@ -312,28 +298,33 @@
                       <th class="text-center">QTY</th>
                       <th class="text-center">Day</th>
                       <th class="text-center">Remaks</th>
-                      <th class="text-center">Total</th>
+                      <th class="text-center">Rate Produk</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td class="text-center">{{ dataMo?.spot_promo }}</td>
-                      <td class="text-center">{{ dataMo?.spot_promo }}</td>
-                      <td class="text-center">{{ dataMo?.camp_name }}</td>
-                      <td class="text-center">{{ dataMo?.qty }}</td>
-                      <td class="text-center">{{ dataMo?.day }}</td>
-                      <td class="text-center">{{ dataMo?.remaks }}</td>
-                      <td class="text-center">{{ formatRupiah(dataMo?.payment.data.finalPrice) }}</td>
+                    <tr v-for="(item, index) in dataMo?.data" :key="item.id">
+                          <td class="text-center">{{ item?.kategori }}</td>
+                          <td class="text-center">{{ item?.produk }}</td>
+                          <td class="text-center">{{ dataMo?.camp_name }}</td>
+                          <td class="text-center">{{ dataMo?.qty }}</td>
+                          <td class="text-center">{{ dataMo?.day }}</td>
+                          <td class="text-center">{{ dataMo?.remaks }}</td>
+                          <td class="text-center">{{ formatRupiah(parseInt(item?.rate)) }}</td>
 
-                    </tr>
+                        </tr>
 
 
                   </tbody>
                 </q-markup-table>
 
                 <q-markup-table class="q-pa-md">
-
+                
                   <tbody>
+                    <tr class="text-bold">
+                      <td class="text-left">Pola Pembayaran</td>
+                      <td class="text-right">{{ dataMo?.type_bayar == 'semi' ? 'Semi Barter' : dataMo?.type_bayar}}</td>
+
+                    </tr>
                     <tr>
                       <td class="text-left">Total Package (Rp)</td>
                       <td class="text-right">{{ formatRupiah(dataMo?.payment.data.finalPrice) }}</td>
@@ -357,17 +348,6 @@
                   </tbody>
                 </q-markup-table>
 
-                <q-separator class="q-my-md" color="light-blue-7" inset />
-                <span class="text-bold q-ml-md " style="font-size: large">POLA PEMBAYARAN</span>
-                <div class="row">
-
-                  <div class="col-md-6">
-                    <q-radio class="q-mt-sm" size="lg" v-model="bayar" val="dp" :label="`Pembayaran ${dataMo?.type_bayar}`" checked /> <br>
-                    
-                  </div>
-                  
-
-                </div>
                 <div class="q-ml-md q-mt-xl">
                   <div class="row">
                     <div class="col-2">

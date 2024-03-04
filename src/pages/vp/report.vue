@@ -162,6 +162,7 @@ export default {
           }
         });
         this.dataList = response.data
+        console.log(response);
 
         
       } catch (error) {

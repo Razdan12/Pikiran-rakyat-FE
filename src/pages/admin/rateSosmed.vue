@@ -541,6 +541,16 @@ export default {
         },
         async addOther() {
             const token = sessionStorage.getItem("token");
+            if (!this.nama || !this.type || !this.rate) {
+                this.other = false
+                this.medium = false
+                Swal.fire({
+                    icon: "warning",
+                    title: "Oops...",
+                    text: "Please fill all the form data",
+                });
+                return;
+            }
             try {
                 this.btn = true;
                 const data = {
@@ -550,6 +560,7 @@ export default {
                     note: this.note,
                     customPrice: this.customPrice,
                 };
+
                 const response = await this.$api.post(`/rate-card/sosmed/create/other`, data, {
                     headers: {
                         Authorization: `Bearer ${token}`,

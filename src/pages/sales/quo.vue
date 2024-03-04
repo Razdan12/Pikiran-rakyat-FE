@@ -102,10 +102,10 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr v-for="(item, index) in data.data" :key="item.id">
+                        <tr v-for="(item, index) in data?.data" :key="item.id">
                           <td class="text-center">{{ item?.kategori }}</td>
                           <td class="text-center">{{ item?.produk }}</td>
-                          <td class="text-center">{{ item?.camp_name }}</td>
+                          <td class="text-center">{{ data?.camp_name }}</td>
                           <td class="text-center">{{ data?.qty }}</td>
                           <td class="text-center">{{ data?.day }}</td>
                           <td class="text-center">{{ data?.remaks }}</td>
@@ -165,6 +165,7 @@
                         <tbody>
                           <tr>
                             <td class="text-left">Total Package (Rp)</td>
+                            <!-- <td class="text-right">{{ data?.payment.data.finalPrice }}</td> -->
                             <td class="text-right">{{ formatRupiah(data?.payment.data.finalPrice) }}</td>
 
                           </tr>

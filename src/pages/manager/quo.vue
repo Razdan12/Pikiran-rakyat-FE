@@ -101,10 +101,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(item, index) in data.data" :key="item.id">
+                      <tr v-for="(item, index) in data?.data" :key="item.id">
                         <td class="text-center">{{ item?.kategori }}</td>
                         <td class="text-center">{{ item?.produk }}</td>
-                        <td class="text-center">{{ item?.camp_name }}</td>
+                        <td class="text-center">{{ data?.camp_name }}</td>
                         <td class="text-center">{{ data?.qty }}</td>
                         <td class="text-center">{{ data?.day }}</td>
                         <td class="text-center">{{ data?.remaks }}</td>
@@ -247,6 +247,7 @@ export default {
             'Authorization': `Bearer ${token}`
           }
         });
+        console.log(response.data);
         this.data = response.data
         this.camp_name = response.data.camp_name
         this.camp_period = `${response.data.period_start} - ${response.data.period_end}`
