@@ -36,7 +36,7 @@
                     <td class="text-left">{{ item.custname }}</td>
                     <td class="text-center">{{ item.contactName }}</td>
                     <td class="text-center">
-                      {{ item.phone}}
+                      {{ item.phone }}
                     </td>
                     <td class="text-center">
                       {{ item.email }}
@@ -48,12 +48,19 @@
                       {{ item.finName }}
                     </td>
                     <td class="text-center">
-                      {{ item.finContact  }}
+                      {{ item.finContact }}
                     </td>
                     <td class="text-center">
                       <q-btn-group>
-                        <q-btn color="orange" icon="border_color" @click="handleEdit(item.id)">
-                          <q-tooltip class="bg-orange text-body2" :offset="[10, 10]">
+                        <q-btn
+                          color="orange"
+                          icon="border_color"
+                          @click="handleEdit(item.id)"
+                        >
+                          <q-tooltip
+                            class="bg-orange text-body2"
+                            :offset="[10, 10]"
+                          >
                             Edit
                           </q-tooltip>
                         </q-btn>
@@ -62,8 +69,15 @@
                             Detail
                           </q-tooltip>
                         </q-btn> -->
-                        <q-btn color="red" icon="delete" @click="deleteItem(item.id)">
-                          <q-tooltip class="bg-red text-body2" :offset="[10, 10]">
+                        <q-btn
+                          color="red"
+                          icon="delete"
+                          @click="deleteItem(item.id)"
+                        >
+                          <q-tooltip
+                            class="bg-red text-body2"
+                            :offset="[10, 10]"
+                          >
                             Hapus
                           </q-tooltip>
                         </q-btn>
@@ -82,7 +96,10 @@
     </div>
 
     <q-dialog v-model="medium">
-      <q-card style="width: 700px; max-width: 80vw" class="justify-center q-pa-md">
+      <q-card
+        style="width: 700px; max-width: 80vw"
+        class="justify-center q-pa-md"
+      >
         <q-scroll-area style="height: 70vh" class="q-pa-sm">
           <p class="text-center text-bold" style="font-size: x-large">
             CUSTOMER FORM
@@ -98,14 +115,42 @@
 
                 <q-card class="bg-light-blue-1 text-center text-bold" flat>
                   <q-card-section>
-                    <q-radio class="text-blue" v-model="type" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
-                      val="AGENCY" label="AGENCY" style="font-size: larger" />
-                    <q-radio class="text-blue" v-model="type" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
-                      val="BRAND" label="BRAND" style="font-size: larger" />
-                    <q-radio class="text-blue" v-model="type" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
-                      val="COMPANY" label="COMPANY" style="font-size: larger" />
-                    <q-radio class="text-blue" v-model="type" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
-                      val="FREELANCER" label="FREELANCER" style="font-size: larger" />
+                    <q-radio
+                      class="text-blue"
+                      v-model="type"
+                      checked-icon="task_alt"
+                      unchecked-icon="panorama_fish_eye"
+                      val="AGENCY"
+                      label="AGENCY"
+                      style="font-size: larger"
+                    />
+                    <q-radio
+                      class="text-blue"
+                      v-model="type"
+                      checked-icon="task_alt"
+                      unchecked-icon="panorama_fish_eye"
+                      val="BRAND"
+                      label="BRAND"
+                      style="font-size: larger"
+                    />
+                    <q-radio
+                      class="text-blue"
+                      v-model="type"
+                      checked-icon="task_alt"
+                      unchecked-icon="panorama_fish_eye"
+                      val="COMPANY"
+                      label="COMPANY"
+                      style="font-size: larger"
+                    />
+                    <q-radio
+                      class="text-blue"
+                      v-model="type"
+                      checked-icon="task_alt"
+                      unchecked-icon="panorama_fish_eye"
+                      val="FREELANCER"
+                      label="FREELANCER"
+                      style="font-size: larger"
+                    />
                   </q-card-section>
                 </q-card>
               </div>
@@ -113,70 +158,134 @@
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="portrait" />
                   <span class="text-bold" style="font-size: medium">
-                    Customer Name</span>
+                    Customer Name</span
+                  >
                 </p>
-                <q-input v-model="customerName" class="q-my-md" dense outlined label="Customer Name" />
+                <q-input
+                  v-model="customerName"
+                  class="q-my-md"
+                  dense
+                  outlined
+                  label="Customer Name"
+                />
               </div>
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="portrait" />
                   <span class="text-bold" style="font-size: medium">
-                    Contact Name</span>
+                    Contact Name</span
+                  >
                 </p>
-                <q-input v-model="contactName" class="q-my-md" dense outlined label="Contact Name" />
+                <q-input
+                  v-model="contactName"
+                  class="q-my-md"
+                  dense
+                  outlined
+                  label="Contact Name"
+                />
               </div>
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="local_phone" />
                   <span class="text-bold" style="font-size: medium">
-                    Contact Phone Number</span>
+                    Contact Phone Number</span
+                  >
                 </p>
-                <q-input v-model="phoneNumber" class="q-my-md" dense outlined label="Contact Phone Number" />
+                <q-input
+                  v-model="phoneNumber"
+                  class="q-my-md"
+                  dense
+                  outlined
+                  label="Contact Phone Number"
+                />
               </div>
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="email" />
                   <span class="text-bold" style="font-size: medium">
-                    Company Email</span>
+                    Company Email</span
+                  >
                 </p>
-                <q-input v-model="companyEmail" class="q-my-md" dense outlined label="Company Email" />
+                <q-input
+                  v-model="companyEmail"
+                  class="q-my-md"
+                  dense
+                  outlined
+                  label="Company Email"
+                />
               </div>
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="numbers" />
                   <span class="text-bold" style="font-size: medium">
-                    Company NPWP</span>
+                    Company NPWP</span
+                  >
                 </p>
-                <q-input v-model="companyNPWP" class="q-my-md" dense outlined label="Company NPWP" mask="##.###.###.#-###.###" fill-mask />
+                <q-input
+                  v-model="companyNPWP"
+                  class="q-my-md"
+                  dense
+                  outlined
+                  label="Company NPWP"
+                  mask="##.###.###.#-###.###"
+                  fill-mask
+                />
               </div>
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="home_filled" />
                   <span class="text-bold" style="font-size: medium">
-                    Company Address</span>
+                    Company Address</span
+                  >
                 </p>
-                <q-input v-model="companyAdress" class="q-my-md" dense outlined label="Company Address" />
+                <q-input
+                  v-model="companyAdress"
+                  class="q-my-md"
+                  dense
+                  outlined
+                  label="Company Address"
+                />
               </div>
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="portrait" />
                   <span class="text-bold" style="font-size: medium">
-                    Finance Contact Name (Optional)</span>
+                    Finance Contact Name (Optional)</span
+                  >
                 </p>
-                <q-input v-model="finNameContact" class="q-my-md" dense outlined label="Finance Contact Name" />
+                <q-input
+                  v-model="finNameContact"
+                  class="q-my-md"
+                  dense
+                  outlined
+                  label="Finance Contact Name"
+                />
               </div>
               <div>
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="local_phone" />
                   <span class="text-bold" style="font-size: medium">
-                    Finance Phone Number</span>
+                    Finance Phone Number</span
+                  >
                 </p>
-                <q-input v-model="finPhone" class="q-my-md" dense outlined label="Finance Phone Number" />
+                <q-input
+                  v-model="finPhone"
+                  class="q-my-md"
+                  dense
+                  outlined
+                  label="Finance Phone Number"
+                />
               </div>
             </div>
             <div class="text-right">
               <q-card-actions align="right">
-                <q-btn class="q-mx-sm" type="submit" color="secondary" label="Create" :disable="btn" />
+                <q-btn
+                  class="q-mx-sm"
+                  type="submit"
+                  color="secondary"
+                  label="Create"
+                  :disable="btn"
+                />
                 <q-btn color="black" label="Cancel" v-close-popup />
               </q-card-actions>
             </div>
@@ -185,7 +294,10 @@
       </q-card>
     </q-dialog>
     <q-dialog v-model="edit">
-      <q-card style="width: 700px; max-width: 80vw" class="justify-center q-pa-md">
+      <q-card
+        style="width: 700px; max-width: 80vw"
+        class="justify-center q-pa-md"
+      >
         <q-scroll-area style="height: 70vh" class="q-pa-sm">
           <p class="text-center text-bold" style="font-size: x-large">
             EDIT CUSTOMER
@@ -193,148 +305,234 @@
           <q-separator class="q-my-lg" color="orange" inset />
           <q-form @submit.prevent="editCustomer">
             <div class="col">
-
               <div class="q-mt-md">
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="portrait" />
                   <span class="text-bold" style="font-size: medium">
-                    Customer Name</span>
+                    Customer Name</span
+                  >
                 </p>
                 <q-card class="my-card q-pa-sm" flat bordered>
                   <div class="cursor-pointer">
-                    {{ customerName == 'null' ? '-' : customerName }}
-                    <q-popup-edit v-model="customerName" auto-save v-slot="scope">
-                      <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
+                    {{ customerName == "null" ? "-" : customerName }}
+                    <q-popup-edit
+                      v-model="customerName"
+                      auto-save
+                      v-slot="scope"
+                    >
+                      <q-input
+                        v-model="scope.value"
+                        dense
+                        autofocus
+                        counter
+                        @keyup.enter="scope.set"
+                      />
                     </q-popup-edit>
                   </div>
                 </q-card>
-
               </div>
               <div class="tw-mt-5">
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="portrait" />
                   <span class="text-bold" style="font-size: medium">
-                    Contact Name</span>
+                    Contact Name</span
+                  >
                 </p>
                 <q-card class="my-card q-pa-sm" flat bordered>
                   <div class="cursor-pointer">
-                    {{ contactName == 'null' ? '-' : contactName }}
-                    <q-popup-edit v-model="contactName" auto-save v-slot="scope">
-                      <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
+                    {{ contactName == "null" ? "-" : contactName }}
+                    <q-popup-edit
+                      v-model="contactName"
+                      auto-save
+                      v-slot="scope"
+                    >
+                      <q-input
+                        v-model="scope.value"
+                        dense
+                        autofocus
+                        counter
+                        @keyup.enter="scope.set"
+                      />
                     </q-popup-edit>
                   </div>
                 </q-card>
-
               </div>
               <div class="tw-mt-5">
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="local_phone" />
                   <span class="text-bold" style="font-size: medium">
-                    Contact Phone Number</span>
+                    Contact Phone Number</span
+                  >
                 </p>
                 <q-card class="my-card q-pa-sm" flat bordered>
                   <div class="cursor-pointer">
-                    {{ phoneNumber == 'null' ? '-' : phoneNumber }}
-                    <q-popup-edit v-model="phoneNumber" auto-save v-slot="scope">
-                      <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
+                    {{ phoneNumber == "null" ? "-" : phoneNumber }}
+                    <q-popup-edit
+                      v-model="phoneNumber"
+                      auto-save
+                      v-slot="scope"
+                    >
+                      <q-input
+                        v-model="scope.value"
+                        dense
+                        autofocus
+                        counter
+                        @keyup.enter="scope.set"
+                      />
                     </q-popup-edit>
                   </div>
                 </q-card>
-
               </div>
               <div class="tw-mt-5">
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="email" />
                   <span class="text-bold" style="font-size: medium">
-                    Company Email</span>
+                    Company Email</span
+                  >
                 </p>
                 <q-card class="my-card q-pa-sm" flat bordered>
                   <div class="cursor-pointer">
-                    {{ companyEmail == 'null' ? '-' : companyEmail }}
-                    <q-popup-edit v-model="companyEmail" auto-save v-slot="scope">
-                      <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
+                    {{ companyEmail == "null" ? "-" : companyEmail }}
+                    <q-popup-edit
+                      v-model="companyEmail"
+                      auto-save
+                      v-slot="scope"
+                    >
+                      <q-input
+                        v-model="scope.value"
+                        dense
+                        autofocus
+                        counter
+                        @keyup.enter="scope.set"
+                      />
                     </q-popup-edit>
                   </div>
                 </q-card>
-
               </div>
               <div class="tw-mt-5">
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="numbers" />
                   <span class="text-bold" style="font-size: medium">
-                    Company NPWP</span>
+                    Company NPWP</span
+                  >
                 </p>
                 <q-card class="my-card q-pa-sm" flat bordered>
                   <div class="cursor-pointer">
-                    {{ companyNPWP == 'null' ? '-' : companyNPWP }}
-                    <q-popup-edit v-model="companyNPWP" auto-save v-slot="scope">
-                      <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" mask="##.###.###.#-###.###" fill-mask />
+                    {{ companyNPWP == "null" ? "-" : companyNPWP }}
+                    <q-popup-edit
+                      v-model="companyNPWP"
+                      auto-save
+                      v-slot="scope"
+                    >
+                      <q-input
+                        v-model="scope.value"
+                        dense
+                        autofocus
+                        counter
+                        @keyup.enter="scope.set"
+                        mask="##.###.###.#-###.###"
+                        fill-mask
+                      />
                     </q-popup-edit>
                   </div>
                 </q-card>
-
               </div>
               <div class="tw-mt-5">
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="home_filled" />
                   <span class="text-bold" style="font-size: medium">
-                    Company Address</span>
+                    Company Address</span
+                  >
                 </p>
                 <q-card class="my-card q-pa-sm" flat bordered>
                   <div class="cursor-pointer">
-                    {{ companyAdress == 'null' ? '-' : companyAdress }}
-                    <q-popup-edit v-model="companyAdress" auto-save v-slot="scope">
-                      <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
+                    {{ companyAdress == "null" ? "-" : companyAdress }}
+                    <q-popup-edit
+                      v-model="companyAdress"
+                      auto-save
+                      v-slot="scope"
+                    >
+                      <q-input
+                        v-model="scope.value"
+                        dense
+                        autofocus
+                        counter
+                        @keyup.enter="scope.set"
+                      />
                     </q-popup-edit>
                   </div>
                 </q-card>
-
               </div>
               <div class="tw-mt-5">
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="portrait" />
                   <span class="text-bold" style="font-size: medium">
-                    Finance Contact Name (Optional)</span>
+                    Finance Contact Name (Optional)</span
+                  >
                 </p>
                 <q-card class="my-card q-pa-sm" flat bordered>
                   <div class="cursor-pointer">
-                    {{ finNameContact == 'null' ? '-' : finNameContact }}
-                    <q-popup-edit v-model="finNameContact" auto-save v-slot="scope">
-                      <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
+                    {{ finNameContact == "null" ? "-" : finNameContact }}
+                    <q-popup-edit
+                      v-model="finNameContact"
+                      auto-save
+                      v-slot="scope"
+                    >
+                      <q-input
+                        v-model="scope.value"
+                        dense
+                        autofocus
+                        counter
+                        @keyup.enter="scope.set"
+                      />
                     </q-popup-edit>
                   </div>
                 </q-card>
-
               </div>
               <div class="tw-mt-5">
                 <p class="text-bold text-blue" style="font-size: medium">
                   <q-icon name="local_phone" />
                   <span class="text-bold" style="font-size: medium">
-                    Finance Phone Number</span>
+                    Finance Phone Number</span
+                  >
                 </p>
                 <q-card class="my-card q-pa-sm" flat bordered>
                   <div class="cursor-pointer">
-                    {{ finPhone == 'null' ? '-' : finPhone }}
+                    {{ finPhone == "null" ? "-" : finPhone }}
                     <q-popup-edit v-model="finPhone" auto-save v-slot="scope">
-                      <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
+                      <q-input
+                        v-model="scope.value"
+                        dense
+                        autofocus
+                        counter
+                        @keyup.enter="scope.set"
+                      />
                     </q-popup-edit>
                   </div>
                 </q-card>
-
               </div>
             </div>
             <div class="text-right">
               <q-card-actions align="right">
-                <q-btn class="q-mx-sm" type="submit" color="secondary" label="Create" :disable="btn" />
-                <q-btn color="black" label="Cancel" v-close-popup @click="resetForm()" />
+                <q-btn
+                  class="q-mx-sm"
+                  type="submit"
+                  color="secondary"
+                  label="Create"
+                  :disable="btn"
+                />
+                <q-btn
+                  color="black"
+                  label="Cancel"
+                  v-close-popup
+                  @click="resetForm()"
+                />
               </q-card-actions>
             </div>
           </q-form>
         </q-scroll-area>
       </q-card>
     </q-dialog>
-
-
   </q-page>
 </template>
 
@@ -352,15 +550,15 @@ export default {
       edit: ref(false),
       customerName: ref(),
       contactName: ref(),
-      phoneNumber: ref('-'),
+      phoneNumber: ref("-"),
       companyEmail: ref(),
-      companyNPWP: ref('-'),
-      companyAdress: ref('-'),
-      finNameContact: ref('-'),
-      finPhone: ref('-'),
+      companyNPWP: ref("-"),
+      companyAdress: ref("-"),
+      finNameContact: ref("-"),
+      finPhone: ref("-"),
       type: ref(),
       btn: ref(false),
-      id: ref('')
+      id: ref(""),
     };
   },
 
@@ -390,11 +588,10 @@ export default {
 
       if (
         !this.customerName ||
-        !this.type  ||
-        !this.contactName  ||
+        !this.type ||
+        !this.contactName ||
         !this.companyEmail
       ) {
-       
         this.medium = false;
         Swal.fire({
           icon: "warning",
@@ -436,15 +633,15 @@ export default {
     },
 
     resetForm() {
-      this.type = '';
-      this.customerName = '';
-      this.contactName = '';
-      this.phoneNumber = '';
-      this.companyEmail = '';
-      this.companyNPWP = '';
-      this.companyAdress = '';
-      this.finNameContact = '';
-      this.finPhone = '';
+      this.type = "";
+      this.customerName = "";
+      this.contactName = "";
+      this.phoneNumber = "";
+      this.companyEmail = "";
+      this.companyNPWP = "";
+      this.companyAdress = "";
+      this.finNameContact = "";
+      this.finPhone = "";
     },
 
     async getCustData() {
@@ -460,7 +657,7 @@ export default {
         );
 
         this.custList = response.data.data;
-       
+
         this.current = response.data.pageNumber;
         this.totalPage = response.data.totalPage;
       } catch (error) {
@@ -482,7 +679,7 @@ export default {
           text: "Customer has been deleted.",
           icon: "success",
         });
-        this.getCustData()
+        this.getCustData();
       } catch (error) {
         console.log(error);
       }
@@ -507,32 +704,29 @@ export default {
     async getCustomerById(id) {
       const token = sessionStorage.getItem("token");
       try {
-        const response = await this.$api.get(
-          `/customer/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await this.$api.get(`/customer/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         console.log(response);
-        this.customerName = response.data.name
-        this.contactName = response.data.picName
-        this.phoneNumber = response.data.phone
-        this.companyEmail = response.data.email
-        this.companyNPWP = response.data.npwp
-        this.companyAdress = response.data.address
-        this.finNameContact = response.data.finContact
-        this.finPhone = response.data.finPhone
+        this.customerName = response.data.name;
+        this.contactName = response.data.picName;
+        this.phoneNumber = response.data.phone;
+        this.companyEmail = response.data.email;
+        this.companyNPWP = response.data.npwp;
+        this.companyAdress = response.data.address;
+        this.finNameContact = response.data.finContact;
+        this.finPhone = response.data.finPhone;
       } catch (error) {
         console.log(error);
       }
     },
 
     handleEdit(id) {
-      this.edit = true
-      this.getCustomerById(id)
-      this.id = id
+      this.edit = true;
+      this.getCustomerById(id);
+      this.id = id;
     },
 
     async editCustomer() {
@@ -545,20 +739,24 @@ export default {
         address: this.companyAdress,
         fincontact: this.finNameContact,
         fincontact_phone: this.finPhone,
-      }
+      };
       const token = sessionStorage.getItem("token");
       try {
         this.btn = true;
 
-        const response = await this.$api.patch(`/customer/edit-cust/${this.id}`, data, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await this.$api.patch(
+          `/customer/edit-cust/${this.id}`,
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         if (response) {
-          this.edit = false
-          this.resetForm()
+          this.edit = false;
+          this.resetForm();
           Swal.fire({
             position: "center",
             icon: "success",
@@ -566,11 +764,11 @@ export default {
             showConfirmButton: false,
             timer: 1500,
           });
-          this.getCustData()
+          this.getCustData();
         }
       } catch (error) {
         // console.log(error);
-        this.edit = false
+        this.edit = false;
 
         Swal.fire({
           icon: "error",
@@ -581,7 +779,6 @@ export default {
         this.btn = false;
       }
     },
-
   },
 };
 </script>
