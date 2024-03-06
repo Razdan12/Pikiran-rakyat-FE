@@ -36,8 +36,8 @@
                             <p class="text-left text-bold q-ml-md" style="font-size: larger">
                               Phone :
                             </p>
-                            <q-input v-model="picNumber" class="q-ml-md" outlined :options="options" label="Phone" disable
-                              readonly />
+                            <q-input v-model="picNumber" class="q-ml-md" outlined :options="options" label="Phone"
+                              disable readonly />
                           </div>
                         </div>
                       </div>
@@ -138,6 +138,9 @@
                           <q-card>
                             <q-card-section>
                               <div>
+                                <q-input type="number" v-model="postArtikel" outlined label="Jumlah Post"
+                                  style="width: 30%; margin-bottom: 20px" />
+
                                 <q-markup-table>
                                   <thead>
                                     <tr>
@@ -165,21 +168,21 @@
                                       </td>
                                       <td class="text-center" v-if="modelTayang != 'Mitra'">
                                         {{
-                                          item.is_custom_price_prmn
-                                          ? "Custom Price"
-                                          : item.prmn === 0 || null
-                                            ? "-"
-                                            : formatRupiah(item.prmn)
-                                        }}
+                          item.is_custom_price_prmn
+                            ? "Custom Price"
+                            : item.prmn === 0 || null
+                              ? "-"
+                              : formatRupiah(item.prmn)
+                        }}
                                       </td>
                                       <td class="text-center" v-if="modelTayang == 'Mitra'">
                                         {{
-                                          item.is_custom_price_mitra
-                                          ? "Custom Price"
-                                          : item.mitra === 0 || null
-                                            ? "-"
-                                            : formatRupiah(item.mitra)
-                                        }}
+                          item.is_custom_price_mitra
+                            ? "Custom Price"
+                            : item.mitra === 0 || null
+                              ? "-"
+                              : formatRupiah(item.mitra)
+                        }}
                                       </td>
                                       <td class="text-center">
                                         {{ item.note }}
@@ -198,8 +201,15 @@
                           <q-separator />
                           <q-card>
                             <q-card-section>
-                              <q-select outlined v-model="sosmedOption" :options="optionsSosmed" label="Sosmed"
-                                style="width: 30%; margin-bottom: 20px" />
+                              <div class="flex tw-gap-2">
+
+                                <q-select outlined v-model="sosmedOption" :options="optionsSosmed" label="Sosmed"
+                                  style="width: 30%; margin-bottom: 20px" />
+
+                                <q-input type="number" v-model="postSosmed" outlined label="Jumlah Post"
+                                  style="width: 30%; margin-bottom: 20px" />
+
+                              </div>
                               <div v-if="sosmedOption !== null">
                                 <q-markup-table v-if="sosmedOption !== 'Lainnya'">
                                   <thead>
@@ -228,17 +238,17 @@
                                       </td>
                                       <td class="text-center" v-if="sosmedOption == 'Instagram'">
                                         {{
-                                          item.instagram
-                                          ? formatRupiah(item.instagram)
-                                          : " - "
-                                        }}
+                          item.instagram
+                            ? formatRupiah(item.instagram)
+                            : " - "
+                        }}
                                       </td>
                                       <td class="text-center" v-if="sosmedOption == 'Facebook'">
                                         {{
-                                          item.facebook
-                                          ? formatRupiah(item.facebook)
-                                          : "-"
-                                        }}
+                          item.facebook
+                            ? formatRupiah(item.facebook)
+                            : "-"
+                        }}
                                       </td>
                                       <td class="text-center">
                                         {{ item.note }}
@@ -270,10 +280,10 @@
                                       </td>
                                       <td class="text-center">
                                         {{
-                                          item.is_custom_price
-                                          ? "Custom Price"
-                                          : formatRupiah(item.rate)
-                                        }}
+                          item.is_custom_price
+                            ? "Custom Price"
+                            : formatRupiah(item.rate)
+                        }}
                                       </td>
 
                                       <td class="text-center">
@@ -311,10 +321,10 @@
                                     <td class="text-center">{{ item.name }}</td>
                                     <td class="text-center">
                                       {{
-                                        item.is_custom_price
-                                        ? "custom price"
-                                        : formatRupiah(item.rate)
-                                      }}
+                          item.is_custom_price
+                            ? "custom price"
+                            : formatRupiah(item.rate)
+                        }}
                                     </td>
                                     <td class="text-center">{{ item.note }}</td>
                                   </tr>
@@ -357,12 +367,12 @@
                                         <q-checkbox v-model="dataProduk"
                                           :val="typeCpd === 'home' ? (item.name + '#' + item.rate_home + '#' + 'cpd') : typeCpd === 'detail' ? (item.name + '#' + item.rate_detail + '#' + 'cpd') : (item.name + '#' + item.rate_section + '#' + 'cpd')"
                                           :disable="(typeCpd === 'home' &&
-                                            item.rate_home === null) ||
-                                            (typeCpd === 'detail' &&
-                                              item.rate_detail === null) ||
-                                            (typeCpd === 'section' &&
-                                              item.rate_section === null)
-                                            " />
+                          item.rate_home === null) ||
+                          (typeCpd === 'detail' &&
+                            item.rate_detail === null) ||
+                          (typeCpd === 'section' &&
+                            item.rate_section === null)
+                          " />
                                       </td>
                                       <td class="text-center">
                                         {{ item.name }}
@@ -375,24 +385,24 @@
                                       </td>
                                       <td class="text-center" :hidden="typeCpd != 'home'">
                                         {{
-                                          item.rate_home
-                                          ? formatRupiah(item.rate_home)
-                                          : "tidak tersedia"
-                                        }}
+                          item.rate_home
+                            ? formatRupiah(item.rate_home)
+                            : "tidak tersedia"
+                        }}
                                       </td>
                                       <td class="text-center" :hidden="typeCpd != 'detail'">
                                         {{
-                                          item.rate_detail
-                                          ? formatRupiah(item.rate_detail)
-                                          : "tidak tersedia"
-                                        }}
+                          item.rate_detail
+                            ? formatRupiah(item.rate_detail)
+                            : "tidak tersedia"
+                        }}
                                       </td>
                                       <td class="text-center" :hidden="typeCpd != 'section'">
                                         {{
-                                          item.rate_section
-                                          ? formatRupiah(item.rate_section)
-                                          : "tidak tersedia"
-                                        }}
+                          item.rate_section
+                            ? formatRupiah(item.rate_section)
+                            : "tidak tersedia"
+                        }}
                                       </td>
                                     </tr>
                                   </tbody>
@@ -466,6 +476,7 @@
                         </div>
                         <div class="col-md-4">
                           <q-input filled v-model="date2" mask="date" :rules="['date2']" dense>
+
                             <template v-slot:append>
                               <q-icon name="event" class="cursor-pointer">
                                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -486,6 +497,7 @@
                         </div>
                         <div class="col-md-4">
                           <q-input filled v-model="date3" mask="date" :rules="['date3']" dense>
+
                             <template v-slot:append>
                               <q-icon name="event" class="cursor-pointer">
                                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -547,18 +559,18 @@
                         Metode Pembayaran :
                       </p>
                       <div class="q-gutter-sm">
-                        <q-radio size="lg" dense v-model="pay" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
-                          val="cash" label="Cash" />
-                        <q-radio size="lg" dense v-model="pay" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
-                          val="barter" label="Barter" />
-                        <q-radio size="lg" dense v-model="pay" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
-                          val="semi" label="Semi Barter" />
-                        <q-radio size="lg" dense v-model="pay" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
-                          val="kredit" label="Kredit" />
-                        <q-radio size="lg" dense v-model="pay" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
-                          val="termin" label="Termin" />
-                        <q-radio size="lg" dense v-model="pay" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
-                          val="deposit" label="Deposit" />
+                        <q-radio size="lg" dense v-model="pay" checked-icon="task_alt"
+                          unchecked-icon="panorama_fish_eye" val="cash" label="Cash" />
+                        <q-radio size="lg" dense v-model="pay" checked-icon="task_alt"
+                          unchecked-icon="panorama_fish_eye" val="barter" label="Barter" />
+                        <q-radio size="lg" dense v-model="pay" checked-icon="task_alt"
+                          unchecked-icon="panorama_fish_eye" val="semi" label="Semi Barter" />
+                        <q-radio size="lg" dense v-model="pay" checked-icon="task_alt"
+                          unchecked-icon="panorama_fish_eye" val="kredit" label="Kredit" />
+                        <q-radio size="lg" dense v-model="pay" checked-icon="task_alt"
+                          unchecked-icon="panorama_fish_eye" val="termin" label="Termin" />
+                        <q-radio size="lg" dense v-model="pay" checked-icon="task_alt"
+                          unchecked-icon="panorama_fish_eye" val="deposit" label="Deposit" />
                       </div>
 
                       <div class="q-mt-md">
@@ -569,18 +581,20 @@
                               <p class="text-left text-bold" style="font-size: large">
                                 Total :
                                 {{
-                                  formattedFinalRate
-                                  ? formatRupiah(finalRate)
-                                  : formattedFinalRate
-                                }}
+                          formattedFinalRate
+                            ? formatRupiah(finalRate)
+                            : formattedFinalRate
+                        }}
                               </p>
-                              <q-input prefix="Rp" v-model="finalRate" type="number" outlined dense style="width: 90%" />
+                              <q-input prefix="Rp" v-model="finalRate" type="number" outlined dense
+                                style="width: 90%" />
                             </div>
                             <div class="col-md-4">
                               <p class="text-left text-bold" style="font-size: large">
                                 Jatuh Tempo :
                               </p>
                               <q-input filled v-model="tempo" mask="date" :rules="['date']" dense style="width: 90%">
+
                                 <template v-slot:append>
                                   <q-icon name="event" class="cursor-pointer">
                                     <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -602,16 +616,18 @@
                               <p class="text-left text-bold" style="font-size: large">
                                 Nilai Barter :
                                 {{
-                                  formattedFinalRate
-                                  ? formatRupiah(finalRate)
-                                  : formattedFinalRate
-                                }}
+                          formattedFinalRate
+                            ? formatRupiah(finalRate)
+                            : formattedFinalRate
+                        }}
                               </p>
-                              <q-input prefix="Rp" v-model="finalRate" type="number" outlined dense style="width: 90%" />
+                              <q-input prefix="Rp" v-model="finalRate" type="number" outlined dense
+                                style="width: 90%" />
                               <p class="text-left text-bold" style="font-size: large">
                                 Jatuh Tempo :
                               </p>
                               <q-input filled v-model="date" mask="date" :rules="['date']" dense style="width: 90%">
+
                                 <template v-slot:append>
                                   <q-icon name="event" class="cursor-pointer">
                                     <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -629,7 +645,8 @@
                               <p class="text-left text-bold" style="font-size: large">
                                 Item Barang :
                               </p>
-                              <q-input outlined v-model="barangBarter" dense style="width: 90%" type="textarea"></q-input>
+                              <q-input outlined v-model="barangBarter" dense style="width: 90%"
+                                type="textarea"></q-input>
                             </div>
                           </div>
                         </div>
@@ -637,10 +654,10 @@
                           <p class="text-left text-bold" style="font-size: large">
                             Total :
                             {{
-                              finalRate == 0
-                              ? getTotalSemi()
-                              : formatRupiah(finalRate)
-                            }}
+                          finalRate == 0
+                            ? getTotalSemi()
+                            : formatRupiah(finalRate)
+                        }}
                           </p>
                           <div class="row">
                             <div class="col-md-4">
@@ -653,6 +670,7 @@
                                 Jatuh Tempo :
                               </p>
                               <q-input filled v-model="date" mask="date" :rules="['date']" dense style="width: 90%">
+
                                 <template v-slot:append>
                                   <q-icon name="event" class="cursor-pointer">
                                     <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -675,6 +693,7 @@
                                 Jatuh Tempo :
                               </p>
                               <q-input filled v-model="date2" mask="date" :rules="['date']" dense style="width: 90%">
+
                                 <template v-slot:append>
                                   <q-icon name="event" class="cursor-pointer">
                                     <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -692,7 +711,8 @@
                               <p class="text-left text-bold" style="font-size: large">
                                 Item Barang :
                               </p>
-                              <q-input outlined v-model="barangBarter" dense style="width: 90%" type="textarea"></q-input>
+                              <q-input outlined v-model="barangBarter" dense style="width: 90%"
+                                type="textarea"></q-input>
                             </div>
                           </div>
                         </div>
@@ -702,18 +722,20 @@
                               <p class="text-left text-bold" style="font-size: large">
                                 Nilai Kredit :
                                 {{
-                                  formattedFinalRate
-                                  ? formatRupiah(finalRate)
-                                  : formattedFinalRate
-                                }}
+                          formattedFinalRate
+                            ? formatRupiah(finalRate)
+                            : formattedFinalRate
+                        }}
                               </p>
-                              <q-input prefix="Rp" v-model="finalRate" type="number" outlined dense style="width: 90%" />
+                              <q-input prefix="Rp" v-model="finalRate" type="number" outlined dense
+                                style="width: 90%" />
                             </div>
                             <div class="col-md-4">
                               <p class="text-left text-bold" style="font-size: large">
                                 Jatuh Tempo :
                               </p>
                               <q-input filled v-model="date" mask="date" :rules="['date']" dense style="width: 90%">
+
                                 <template v-slot:append>
                                   <q-icon name="event" class="cursor-pointer">
                                     <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -733,8 +755,8 @@
                           <p class="text-left text-bold" style="font-size: large">
                             Total :
                             {{
-                              finalRate ? getTotalTermin() : formattedFinalRate
-                            }}
+                          finalRate ? getTotalTermin() : formattedFinalRate
+                        }}
                           </p>
                           <div class="row">
                             <div class="col-md-4">
@@ -746,6 +768,7 @@
                                 Jatuh Tempo :
                               </p>
                               <q-input filled v-model="date" mask="date" :rules="['date']" dense style="width: 90%">
+
                                 <template v-slot:append>
                                   <q-icon name="event" class="cursor-pointer">
                                     <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -768,6 +791,7 @@
                                 Jatuh Tempo :
                               </p>
                               <q-input filled v-model="date2" mask="date" :rules="['date']" dense style="width: 90%">
+
                                 <template v-slot:append>
                                   <q-icon name="event" class="cursor-pointer">
                                     <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -790,6 +814,7 @@
                                 Jatuh Tempo :
                               </p>
                               <q-input filled v-model="date3" mask="date" :rules="['date']" dense style="width: 90%">
+
                                 <template v-slot:append>
                                   <q-icon name="event" class="cursor-pointer">
                                     <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -811,7 +836,8 @@
                               <p class="text-left text-bold" style="font-size: large">
                                 Minimal Bayar / Deposit :
                               </p>
-                              <q-input prefix="Rp" v-model="minDeposit" type="number" outlined dense style="width: 90%" />
+                              <q-input prefix="Rp" v-model="minDeposit" type="number" outlined dense
+                                style="width: 90%" />
                             </div>
                             <div class="col-md-4">
                               <p class="text-left text-bold" style="font-size: large">
@@ -941,7 +967,9 @@ export default {
       cpmData: ref([]),
       artikelData: ref([]),
       totalHarga: ref(0),
-      isCpm: ref()
+      isCpm: ref(),
+      postArtikel: ref(),
+      postSosmed: ref(),
     };
   },
   watch: {
@@ -1025,7 +1053,7 @@ export default {
 
   methods: {
     getTotalSemi() {
-      if(parseInt(this.semiCash) > this.finalRate){
+      if (parseInt(this.semiCash) > this.finalRate) {
         Swal.fire({
           icon: "warning",
           title: "Oops...",
@@ -1074,7 +1102,7 @@ export default {
       const jumlah =
         this.modelTayang === "PRMN"
           ? this.totalRate * qtyOrder
-          : this.totalRate * this.mitraData.length * qtyOrder;
+          : this.totalRate * qtyOrder;
 
       const finalPrice = jumlah - discountAmount;
 
@@ -1172,7 +1200,7 @@ export default {
         const [produk, rate, kategori] = card.split('#');
         return { produk, rate, kategori };
       });
-     
+
       const data = {
         idCust: this.custname.value,
         idUser: id,
